@@ -1,0 +1,12 @@
+# Claude Code (private)
+.claude/
+CLAUDE.md
+
+# Internal dev docs
+.planning/
+.ai-context/
+BugTraceAI/.ai-context/
+WebSite/.ai-context/
+
+# Comparison notes
+BUGTRACE_VS_BURP_COMPARISON.md
