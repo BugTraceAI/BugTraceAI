@@ -1,0 +1,9 @@
+[submodule "BugTraceAI-CLI"]
+	path = BugTraceAI-CLI
+	url = https://github.com/BugTraceAI/BugTraceAI-CLI.git
+[submodule "BugTraceAI-WEB"]
+	path = BugTraceAI-WEB
+	url = https://github.com/BugTraceAI/BugTraceAI-WEB.git
+[submodule "BugTraceAI-Launcher"]
+	path = BugTraceAI-Launcher
+	url = https://github.com/BugTraceAI/BugTraceAI-Launcher.git
