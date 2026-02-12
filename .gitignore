@@ -4,9 +4,12 @@ CLAUDE.md
 
 # Internal dev docs
 .planning/
-.ai-context/
-BugTraceAI/.ai-context/
-WebSite/.ai-context/
 
-# Comparison notes
-BUGTRACE_VS_BURP_COMPARISON.md
+# Local folders (not for public repo)
+BugTraceAI-DEV/
+BugTraceAI/
+arxiv/
+logs/
+api_debug.log
+MASTER_INDEX.md
+reporte_burp_scanner_completo.md
