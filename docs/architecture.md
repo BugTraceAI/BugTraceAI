@@ -10,7 +10,7 @@ BugTraceAI is a distributed security platform with three main components working
 
 ```
                     ┌─────────────────────────────────────┐
-                    │           User Browser               │
+                    │           User Browser              │
                     └────────────────┬────────────────────┘
                                      │
          ┌───────────────────────────┼───────────────────────────┐
@@ -44,66 +44,66 @@ BugTraceAI is a distributed security platform with three main components working
 The CLI implements a robust 6-phase penetration testing pipeline:
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
+┌──────────────────────────────────────────────────────────────────────────────┐
 │                         BUGTRACE SCAN PIPELINE                               │
-├─────────────────────────────────────────────────────────────────────────────┤
+├──────────────────────────────────────────────────────────────────────────────┤
 │                                                                              │
-│  PHASE 1: DISCOVERY                    Concurrency: 1 (GoSpider)            │
+│  PHASE 1: DISCOVERY                    Concurrency: 1 (GoSpider)             │
 │  ┌──────────────────┐                                                        │
-│  │    GoSpider      │ → URLs discovered → stored in DB                      │
+│  │    GoSpider      │ → URLs discovered → stored in DB                       │
 │  │  (URL Crawling)  │                                                        │
-│  │    + Nuclei      │ → CVE scanning with templates                         │
+│  │    + Nuclei      │ → CVE scanning with templates                          │
 │  └────────┬─────────┘                                                        │
 │           │                                                                  │
 │           ▼                                                                  │
-│  PHASE 2: ANALYSIS                     Concurrency: 5 (configurable)        │
+│  PHASE 2: ANALYSIS                     Concurrency: 5 (configurable)         │
 │  ┌──────────────────┐                                                        │
-│  │   DASTySAST      │ → 5 LLM personas (Red Team, SAST, DAST, Fuzzer, etc.) │
-│  │ (analysis_agent) │ → Consensus voting (4/5 required)                     │
-│  │                  │ → SkepticalAgent (FP filtering with Claude Haiku)     │
+│  │   DASTySAST      │ → 5 LLM personas (Red Team, SAST, DAST, Fuzzer, etc.)  │
+│  │ (analysis_agent) │ → Consensus voting (4/5 required)                      │
+│  │                  │ → SkepticalAgent (FP filtering with Claude Haiku)      │
 │  └────────┬─────────┘                                                        │
 │           │                                                                  │
 │           ▼                                                                  │
-│  PHASE 3: THINKING CONSOLIDATION       (Event-driven, no semaphore)         │
+│  PHASE 3: THINKING CONSOLIDATION       (Event-driven, no semaphore)          │
 │  ┌──────────────────┐                                                        │
-│  │ ThinkingConsol.  │ → Deduplication by (vuln_type, parameter, url_path)   │
-│  │     Agent        │ → FP Filter (fp_confidence < 0.5 threshold)           │
-│  │                  │ → SQLi BYPASSES FP filter (SQLMap decides)            │
-│  │                  │ → probe_validated BYPASSES FP filter                  │
-│  │                  │ → Priority scoring by severity + evidence             │
-│  │                  │ → Queue distribution to specialist agents             │
+│  │ ThinkingConsol.  │ → Deduplication by (vuln_type, parameter, url_path)    │
+│  │     Agent        │ → FP Filter (fp_confidence < 0.5 threshold)            │
+│  │                  │ → SQLi BYPASSES FP filter (SQLMap decides)             │
+│  │                  │ → probe_validated BYPASSES FP filter                   │
+│  │                  │ → Priority scoring by severity + evidence              │
+│  │                  │ → Queue distribution to specialist agents              │
 │  └────────┬─────────┘                                                        │
 │           │                                                                  │
 │           ▼                                                                  │
-│  PHASE 4: EXPLOITATION                 Concurrency: 10 (configurable)       │
+│  PHASE 4: EXPLOITATION                 Concurrency: 10 (configurable)        │
 │  ┌──────────────────┐                                                        │
-│  │   Specialists    │ → XSSAgent (Playwright multi-context)                 │
-│  │  (11 queues)     │ → SQLiAgent (SQLMap integration)                      │
-│  │                  │ → CSTIAgent, LFIAgent, IDORAgent                      │
-│  │                  │ → SSRFAgent, XXEAgent, RCEAgent                       │
-│  │                  │ → JWTAgent, OpenRedirectAgent                         │
-│  │                  │ → PrototypePollutionAgent, HeaderInjectionAgent       │
-│  │                  │ → FileUploadAgent                                     │
+│  │   Specialists    │ → XSSAgent (Playwright multi-context)                  │
+│  │  (11 queues)     │ → SQLiAgent (SQLMap integration)                       │
+│  │                  │ → CSTIAgent, LFIAgent, IDORAgent                       │
+│  │                  │ → SSRFAgent, XXEAgent, RCEAgent                        │
+│  │                  │ → JWTAgent, OpenRedirectAgent                          │
+│  │                  │ → PrototypePollutionAgent, HeaderInjectionAgent        │
+│  │                  │ → FileUploadAgent                                      │
 │  └────────┬─────────┘                                                        │
 │           │                                                                  │
 │           ▼                                                                  │
-│  PHASE 5: VALIDATION                   Concurrency: 1 (CDP HARDCODED)       │
+│  PHASE 5: VALIDATION                   Concurrency: 1 (CDP HARDCODED)        │
 │  ┌──────────────────┐                                                        │
-│  │ AgenticValidator │ → CDP (Chrome DevTools Protocol)                      │
-│  │  (Final Audit)   │ → Vision AI verification on screenshots              │
-│  │                  │ → SINGLE-THREADED (CDP limitation)                    │
-│  │                  │ → 45s timeout per finding to prevent alert() hangs    │
+│  │ AgenticValidator │ → CDP (Chrome DevTools Protocol)                       │
+│  │  (Final Audit)   │ → Vision AI verification on screenshots                │
+│  │                  │ → SINGLE-THREADED (CDP limitation)                     │
+│  │                  │ → 45s timeout per finding to prevent alert() hangs     │
 │  └────────┬─────────┘                                                        │
 │           │                                                                  │
 │           ▼                                                                  │
-│  PHASE 6: REPORTING                    Concurrency: 1 (Sequential)          │
+│  PHASE 6: REPORTING                    Concurrency: 1 (Sequential)           │
 │  ┌──────────────────┐                                                        │
-│  │  ReportingAgent  │ → Aggregate findings from all sources                 │
-│  │                  │ → Generate JSON, Markdown, HTML reports               │
-│  │                  │ → Final quality audit & artifact preservation         │
+│  │  ReportingAgent  │ → Aggregate findings from all sources                  │
+│  │                  │ → Generate JSON, Markdown, HTML reports                │
+│  │                  │ → Final quality audit & artifact preservation          │
 │  └──────────────────┘                                                        │
 │                                                                              │
-└─────────────────────────────────────────────────────────────────────────────┘
+└──────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### Phase Details
