@@ -98,22 +98,22 @@ Each component works **independently**. Use the WEB alone for AI analysis, the C
 ```
                     +----------------------------+
                     |      BugTraceAI-WEB        |
-                    |   React + Express + PgSQL   |
+                    |   React + Express + PgSQL  |
                     |   Port 6869 / Port 3001    |
                     +-------------+--------------+
                                   |
                           REST API + WebSocket
                                   |
-                    +-------------+--------------+
-                    |      BugTraceAI-CLI        |
-                    |   FastAPI + SQLite + LanceDB|
-                    |        Port 8000           |
-                    +---+--------+----------+----+
-                        |        |          |
-                   +----+--+ +---+---+ +----+----+
-                   |Go     | |Playwright| |AI Agents|
-                   |Fuzzers| |Browser  | |OpenRouter|
-                   +-------+ +---------+ +---------+
+                    +-------------+-----------------+
+                    |      BugTraceAI-CLI           |
+                    |   FastAPI + SQLite + LanceDB  |
+                    |        Port 8000              |
+                    +---+--------+-------------+----+
+                        |        |             |
+                   +----+--+ +---+------+ +----+------+
+                   |Go     | |Playwright| |AI Agents  |
+                   |Fuzzers| |Browser   | |OpenRouter |
+                   +-------+ +----------+ +-----------+
 ```
 
 **SQLite** is the source of truth for all scan data. **PostgreSQL** is local to each WEB instance for chats, settings, and analysis. They work **autonomously OR together** -- multiple WEB instances can connect to one CLI over the network.
