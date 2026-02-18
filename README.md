@@ -12,6 +12,7 @@
   <a href="https://bugtraceai.com"><img src="https://img.shields.io/badge/Website-bugtraceai.com-blue?logo=google-chrome&logoColor=white" alt="Website"/></a>
   <a href="https://github.com/BugTraceAI/BugTraceAI/wiki"><img src="https://img.shields.io/badge/Wiki-Documentation-000?logo=wikipedia&logoColor=white" alt="Wiki"/></a>
   <a href="https://deepwiki.com/BugTraceAI/BugTraceAI"><img src="https://img.shields.io/badge/DeepWiki-AI_Docs-5A5AFF?logo=bookstack&logoColor=white" alt="DeepWiki"/></a>
+  <a href="https://github.com/BugTraceAI/BugTraceAI/releases/download/demo-report/BugTraceAI-Demo-Report.zip"><img src="https://img.shields.io/badge/Demo_Report-Download-red?logo=files&logoColor=white" alt="Demo Report"/></a>
   <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License"/>
   <img src="https://img.shields.io/badge/Version-1.0.0_Beta-orange" alt="Version"/>
 </p>
@@ -135,6 +136,22 @@ The CLI runs a **5-phase autonomous pipeline**:
 | 5 | **Validation** | Chrome DevTools Protocol + Vision AI screenshot analysis confirms findings |
 
 For the full pipeline documentation, see the [Wiki](https://github.com/BugTraceAI/BugTraceAI/wiki/Scanning-Pipeline).
+
+---
+
+## Demo Report
+
+Want to see what BugTraceAI produces? Download a real scan report generated against [BugStore](https://bugstore.bugtraceai.com/) -- our deliberately vulnerable practice app.
+
+<p align="center">
+  <a href="https://github.com/BugTraceAI/BugTraceAI/releases/download/demo-report/BugTraceAI-Demo-Report.zip">
+    <img src="https://img.shields.io/badge/Download-Demo_Report_(488_KB)-coral?style=for-the-badge&logo=files&logoColor=white" alt="Download Demo Report"/>
+  </a>
+</p>
+
+**Scan highlights**: 50 findings (39 confirmed) -- SQL Injection, XSS, LFI, CSTI, IDOR, JWT, RCE, Broken Access Control, and more. Estimated API cost: **$0.59**.
+
+The zip includes the full markdown report, validated findings JSON, specialist agent results with WET/DRY traceability, reconnaissance data, and PoC enrichment output.
 
 ---
 
