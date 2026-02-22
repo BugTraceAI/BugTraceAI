@@ -14,7 +14,7 @@
   <a href="https://deepwiki.com/BugTraceAI/BugTraceAI"><img src="https://img.shields.io/badge/DeepWiki-AI_Docs-5A5AFF?logo=bookstack&logoColor=white" alt="DeepWiki"/></a>
   <a href="https://demo.bugtraceai.com/bugtraceai"><img src="https://img.shields.io/badge/Live_Demo-Try_It-2EAD33?logo=google-chrome&logoColor=white" alt="Live Demo"/></a>
   <a href="https://github.com/BugTraceAI/BugTraceAI/releases/download/demo-report/BugTraceAI-Demo-Report.zip"><img src="https://img.shields.io/badge/Demo_Report-Download-red?logo=files&logoColor=white" alt="Demo Report"/></a>
-  <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License"/>
+  <img src="https://img.shields.io/badge/License-AGPL--3.0-blue.svg" alt="License"/>
   <img src="https://img.shields.io/badge/Version-2.0.3_Beta-orange" alt="Version"/>
 </p>
 
@@ -53,7 +53,7 @@ This is **NOT** a wrapper around existing tools. It is an autonomous multi-agent
 | Principle | Description |
 |-----------|-------------|
 | **Privacy-First** | Everything runs locally. No telemetry, no tracking, no cloud dependency |
-| **Opensource** | MIT licensed. All code, prompts, and algorithms are public |
+| **Opensource** | AGPL-3.0 licensed. All code, prompts, and algorithms are public |
 | **Self-Hosted** | Your data stays on your infrastructure |
 | **Modular** | Use components independently or together |
 | **Docker-Native** | One-command deployment via Launcher |
@@ -239,7 +239,7 @@ We welcome contributions: bug reports, feature requests, PRs, documentation impr
 
 ## License
 
-**MIT License** -- Free to use, modify, and distribute.
+**AGPL-3.0 License** — Free to use, modify, and distribute. If you modify and distribute or offer as a service, you must share your changes under the same license.
 
 See LICENSE file in each repository.
 
