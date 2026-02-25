@@ -12,9 +12,10 @@
   <a href="https://bugtraceai.com"><img src="https://img.shields.io/badge/Website-bugtraceai.com-blue?logo=google-chrome&logoColor=white" alt="Website"/></a>
   <a href="https://github.com/BugTraceAI/BugTraceAI/wiki"><img src="https://img.shields.io/badge/Wiki-Documentation-000?logo=wikipedia&logoColor=white" alt="Wiki"/></a>
   <a href="https://deepwiki.com/BugTraceAI/BugTraceAI"><img src="https://img.shields.io/badge/DeepWiki-AI_Docs-5A5AFF?logo=bookstack&logoColor=white" alt="DeepWiki"/></a>
+  <a href="https://demo.bugtraceai.com/bugtraceai"><img src="https://img.shields.io/badge/Live_Demo-Try_It-2EAD33?logo=google-chrome&logoColor=white" alt="Live Demo"/></a>
   <a href="https://github.com/BugTraceAI/BugTraceAI/releases/download/demo-report/BugTraceAI-Demo-Report.zip"><img src="https://img.shields.io/badge/Demo_Report-Download-red?logo=files&logoColor=white" alt="Demo Report"/></a>
   <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License"/>
-  <img src="https://img.shields.io/badge/Version-1.0.0_Beta-orange" alt="Version"/>
+  <img src="https://img.shields.io/badge/Version-2.0.3_Beta-orange" alt="Version"/>
 </p>
 
 <p align="center">
@@ -125,15 +126,18 @@ For detailed architecture documentation, see the [Wiki](https://github.com/BugTr
 
 ## Scanning Pipeline
 
-The CLI runs a **5-phase autonomous pipeline**:
+The CLI runs a **6-phase autonomous pipeline**:
 
 | Phase | Name | Description |
 |-------|------|-------------|
 | 1 | **Discovery** | Crawl and spider the target to map the attack surface |
 | 2 | **Analysis** | Multi-persona AI analysis with consensus voting |
 | 3 | **Consolidation** | Deduplicate findings and distribute to specialist queues |
-| 4 | **Exploitation** | 10 specialist agents (XSS, SQLi, SSRF, IDOR, LFI, RCE, XXE, JWT, Open Redirect, Prototype Pollution) attempt exploitation with Go fuzzers and AI-mutated payloads |
+| 4 | **Exploitation** | 14 specialist agents (XSS, SQLi, SSRF, IDOR, LFI, RCE, XXE, JWT, Open Redirect, Prototype Pollution, CSTI, Mass Assignment, Header Injection, BAC Detection) with Go fuzzers and AI-mutated payloads |
 | 5 | **Validation** | Chrome DevTools Protocol + Vision AI screenshot analysis confirms findings |
+| 6 | **Reporting** | PoC enrichment with WET/DRY traceability, AI-generated technical and executive reports |
+
+The pipeline includes a **circuit breaker** that auto-pauses scanning when the target becomes unresponsive, and supports **authenticated scanning** with pre-configured tokens or automatic login flows.
 
 For the full pipeline documentation, see the [Wiki](https://github.com/BugTraceAI/BugTraceAI/wiki/Scanning-Pipeline).
 
@@ -141,15 +145,19 @@ For the full pipeline documentation, see the [Wiki](https://github.com/BugTraceA
 
 ## Demo Report
 
-Want to see what BugTraceAI produces? Download a real scan report generated against [BugStore](https://bugstore.bugtraceai.com/) -- our deliberately vulnerable practice app.
+Want to see what BugTraceAI produces? Try the **live demo** or download a real scan report generated against [BugStore](https://bugstore.bugtraceai.com/) -- our deliberately vulnerable practice app.
 
 <p align="center">
+  <a href="https://demo.bugtraceai.com/bugtraceai">
+    <img src="https://img.shields.io/badge/Live_Demo-Try_It_Now-blue?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Live Demo"/>
+  </a>
+  &nbsp;
   <a href="https://github.com/BugTraceAI/BugTraceAI/releases/download/demo-report/BugTraceAI-Demo-Report.zip">
-    <img src="https://img.shields.io/badge/Download-Demo_Report_(488_KB)-coral?style=for-the-badge&logo=files&logoColor=white" alt="Download Demo Report"/>
+    <img src="https://img.shields.io/badge/Download-Demo_Report-coral?style=for-the-badge&logo=files&logoColor=white" alt="Download Demo Report"/>
   </a>
 </p>
 
-**Scan highlights**: 50 findings (39 confirmed) -- SQL Injection, XSS, LFI, CSTI, IDOR, JWT, RCE, Broken Access Control, and more. Estimated API cost: **$0.59**.
+**Scan highlights**: 145 findings (43 validated) -- SQL Injection, XSS, LFI, CSTI, IDOR, JWT, RCE, Broken Access Control, Open Redirect, Prototype Pollution, GraphQL, SSRF, and more.
 
 The zip includes the full markdown report, validated findings JSON, specialist agent results with WET/DRY traceability, reconnaissance data, and PoC enrichment output.
 
