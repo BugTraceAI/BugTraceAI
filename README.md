@@ -50,13 +50,13 @@ This is **NOT** a wrapper around existing tools. It is an autonomous multi-agent
 
 ### Core Principles
 
-| Principle | Description |
-|-----------|-------------|
+| Principle         | Description                                                             |
+| ----------------- | ----------------------------------------------------------------------- |
 | **Privacy-First** | Everything runs locally. No telemetry, no tracking, no cloud dependency |
-| **Opensource** | AGPL-3.0 licensed. All code, prompts, and algorithms are public |
-| **Self-Hosted** | Your data stays on your infrastructure |
-| **Modular** | Use components independently or together |
-| **Docker-Native** | One-command deployment via Launcher |
+| **Opensource**    | AGPL-3.0 licensed. All code, prompts, and algorithms are public         |
+| **Self-Hosted**   | Your data stays on your infrastructure                                  |
+| **Modular**       | Use components independently or together                                |
+| **Docker-Native** | One-command deployment via Launcher                                     |
 
 ---
 
@@ -88,6 +88,12 @@ BugTraceAI is composed of **3 independent but interconnected components**:
     <td>One-command Docker deployment wizard with interactive setup and service management</td>
     <td>Bash + Docker Compose</td>
     <td><a href="https://github.com/BugTraceAI/BugTraceAI-Launcher">BugTraceAI-Launcher</a></td>
+  </tr>
+  <tr>
+    <td><strong>MCP Ecosystem</strong></td>
+    <td>Extensible agent framework using the Model Context Protocol. Includes integrated Kali Linux and ReconFTW agents</td>
+    <td>MCP + Docker + Python</td>
+    <td><a href="https://github.com/BugTraceAI/reconftw-mcp">reconftw-mcp</a></td>
   </tr>
 </table>
 
@@ -128,14 +134,14 @@ For detailed architecture documentation, see the [Wiki](https://github.com/BugTr
 
 The CLI runs a **6-phase autonomous pipeline**:
 
-| Phase | Name | Description |
-|-------|------|-------------|
-| 1 | **Discovery** | Crawl and spider the target to map the attack surface |
-| 2 | **Analysis** | Multi-persona AI analysis with consensus voting |
-| 3 | **Consolidation** | Deduplicate findings and distribute to specialist queues |
-| 4 | **Exploitation** | 14 specialist agents (XSS, SQLi, SSRF, IDOR, LFI, RCE, XXE, JWT, Open Redirect, Prototype Pollution, CSTI, Mass Assignment, Header Injection, BAC Detection) with Go fuzzers and AI-mutated payloads |
-| 5 | **Validation** | Chrome DevTools Protocol + Vision AI screenshot analysis confirms findings |
-| 6 | **Reporting** | PoC enrichment with WET/DRY traceability, AI-generated technical and executive reports |
+| Phase | Name              | Description                                                                                                                                                                                          |
+| ----- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1     | **Discovery**     | Crawl and spider the target to map the attack surface                                                                                                                                                |
+| 2     | **Analysis**      | Multi-persona AI analysis with consensus voting                                                                                                                                                      |
+| 3     | **Consolidation** | Deduplicate findings and distribute to specialist queues                                                                                                                                             |
+| 4     | **Exploitation**  | 14 specialist agents (XSS, SQLi, SSRF, IDOR, LFI, RCE, XXE, JWT, Open Redirect, Prototype Pollution, CSTI, Mass Assignment, Header Injection, BAC Detection) with Go fuzzers and AI-mutated payloads |
+| 5     | **Validation**    | Chrome DevTools Protocol + Vision AI screenshot analysis confirms findings                                                                                                                           |
+| 6     | **Reporting**     | PoC enrichment with WET/DRY traceability, AI-generated technical and executive reports                                                                                                               |
 
 The pipeline includes a **circuit breaker** that auto-pauses scanning when the target becomes unresponsive, and supports **authenticated scanning** with pre-configured tokens or automatic login flows.
 
@@ -184,11 +190,11 @@ The interactive wizard handles deployment mode selection, API key configuration,
 
 ### Deployment Modes
 
-| Mode | What You Get | Use Case |
-|------|-------------|----------|
-| **Full Platform** | WEB + CLI auto-connected | Complete scanning + dashboard |
-| **Standalone CLI** | Headless scanner + API | CI/CD pipelines, automation |
-| **Standalone WEB** | Dashboard + AI tools | Manual analysis without scanning |
+| Mode               | What You Get             | Use Case                         |
+| ------------------ | ------------------------ | -------------------------------- |
+| **Full Platform**  | WEB + CLI auto-connected | Complete scanning + dashboard    |
+| **Standalone CLI** | Headless scanner + API   | CI/CD pipelines, automation      |
+| **Standalone WEB** | Dashboard + AI tools     | Manual analysis without scanning |
 
 ### Alternative: Individual Components
 
@@ -223,13 +229,13 @@ Full documentation is available in the **[Project Wiki](https://github.com/BugTr
 
 ## Community & Support
 
-| Resource | Link |
-|----------|------|
-| Website | [bugtraceai.com](https://bugtraceai.com) |
-| Wiki | [GitHub Wiki](https://github.com/BugTraceAI/BugTraceAI/wiki) |
-| DeepWiki | [AI-powered docs](https://deepwiki.com/BugTraceAI/BugTraceAI) |
-| Issues | [GitHub Issues](https://github.com/BugTraceAI/BugTraceAI/issues) |
-| Twitter | [@yz9yt](https://x.com/yz9yt) |
+| Resource | Link                                                             |
+| -------- | ---------------------------------------------------------------- |
+| Website  | [bugtraceai.com](https://bugtraceai.com)                         |
+| Wiki     | [GitHub Wiki](https://github.com/BugTraceAI/BugTraceAI/wiki)     |
+| DeepWiki | [AI-powered docs](https://deepwiki.com/BugTraceAI/BugTraceAI)    |
+| Issues   | [GitHub Issues](https://github.com/BugTraceAI/BugTraceAI/issues) |
+| Twitter  | [@yz9yt](https://x.com/yz9yt)                                    |
 
 ### Contributing
 
