@@ -2,6 +2,8 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
 export default defineConfig({
+	site: 'https://bugtraceai.github.io',
+	base: '/BugTraceAI',
 	integrations: [
 		starlight({
 			title: 'BugTraceAI Docs',
