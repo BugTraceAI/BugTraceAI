@@ -1,18 +1,40 @@
-/* THE ABSOLUTE FINAL HUB OVERRIDE - CENTERING & PERFECTION */
+/* BUGTRACE AI HUB - PREMIUM ZERO-SCROLL WITH STARLIGHT HEADER */
 
-/* Force Dark Colors */
-:root {
+/* Force Dark Colors Globally */
+:root, [data-theme="light"], [data-theme="dark"] {
   --sl-color-bg: #1e1233 !important;
+  --sl-color-bg-nav: #1e1233 !important;
   --sl-color-accent: #FF7F50 !important;
   --sl-color-text: #ffffff !important;
+  --sl-nav-height: 72px !important;
 }
 
-/* KILL ALL STARLIGHT COMPONENTS UNIVERSALLY */
-header, aside, footer:not(.footer-small), .header, .sidebar-pane, .right-sidebar-container, 
-.mobile-preferences, nav.sidebar, h1#_top, .page-header {
+/* KILL sidebar, footer, etc. */
+aside, .sidebar-pane, .right-sidebar-container,
+.mobile-preferences, nav.sidebar, h1#_top {
   display: none !important;
+  visibility: hidden !important;
   opacity: 0 !important;
-  pointer-events: none !important;
+}
+
+/* Force Header to be Dark and Premium */
+header, .header, .header.astro-vrdttmbt {
+  background-color: #1e1233 !important;
+  background: #1e1233 !important;
+  border-bottom: 1px solid rgba(255, 127, 80, 0.2) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+/* Fix Branding and Search within Header */
+.site-title, .site-title *, a.site-title {
+  color: #FF7F50 !important;
+  text-decoration: none !important;
+}
+
+site-search .search-input, .search-input {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 127, 80, 0.3) !important;
 }
 
 /* Page Frame Reset */
@@ -20,34 +42,33 @@ body {
   background: radial-gradient(circle at 50% -20%, #3D2B5F 0%, #1e1233 100%) !important;
   margin: 0 !important;
   padding: 0 !important;
-  height: 100vh !important;
-  width: 100vw !important;
   overflow: hidden !important;
 }
 
-/* Break out of Starlight's grid for perfect centering */
+/* Overlay the hub below the Starlight nav header */
 .ultimate-hub {
   position: fixed !important;
-  top: 0 !important;
+  /* Starlight header is ~72px tall */
+  top: var(--sl-nav-height, 72px) !important;
   left: 0 !important;
   width: 100vw !important;
-  height: 100vh !important;
+  height: calc(100vh - var(--sl-nav-height, 72px)) !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: space-around !important;
-  padding: 3vh 0 !important;
+  padding: 2vh 0 !important;
   box-sizing: border-box !important;
   z-index: 9999 !important;
   align-items: center !important;
 }
 
-/* Compact Premium Branding */
+/* Main Title */
 .mini-branding {
   text-align: center;
 }
 
 .mini-branding h1 {
-  font-size: 2.8rem !important;
+  font-size: 2.6rem !important;
   margin: 0 !important;
   background: linear-gradient(90deg, #fff, #FF7F50);
   -webkit-background-clip: text;
@@ -57,38 +78,33 @@ body {
   filter: drop-shadow(0 0 10px rgba(255, 127, 80, 0.4));
 }
 
-.mini-branding p {
-  font-size: 1.1rem !important;
-  color: rgba(255, 255, 255, 0.5) !important;
-  margin: 0.5vh 0 0 !important;
-}
-
-/* Grid Optimized for 1080p fit and Huge Cards */
+/* Grid - 4 huge cards, 2x2 */
 .hub-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 3vh 3vw;
+  gap: 2.5vh 3vw;
   width: 90vw;
   max-width: 1200px;
-  justify-items: center;
 }
 
 .hub-card {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 127, 80, 0.3);
   border-radius: 16px;
-  padding: 3vh 2.5vw;
+  padding: 2.5vh 2.5vw;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   backdrop-filter: blur(15px);
   width: 100%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .hub-card:hover {
   transform: translateY(-4px);
   border-color: #FF7F50;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .card-header {
@@ -112,10 +128,10 @@ body {
   font-size: 0.95rem !important;
   color: rgba(255, 255, 255, 0.6) !important;
   line-height: 1.5;
-  margin: 1.5vh 0 !important;
+  margin: 1.2vh 0 !important;
 }
 
-/* Premium Action Buttons */
+/* Action Buttons */
 .card-actions {
   display: flex;
   gap: 1.5rem;
@@ -124,16 +140,21 @@ body {
 .btn-p, .btn-s {
   flex: 1;
   text-align: center;
-  padding: 0.8vh 0;
+  padding: 0.7vh 0;
   border-radius: 10px;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 700;
   text-decoration: none !important;
+  transition: all 0.2s;
 }
 
 .btn-p {
   background: #FF7F50 !important;
   color: #1e1233 !important;
+}
+
+.btn-p:hover {
+  background: #ff9a75 !important;
 }
 
 .btn-s {
@@ -146,32 +167,15 @@ body {
   background: rgba(255, 255, 255, 0.15) !important;
 }
 
-/* Bottom Bar Centered */
-.bottom-bar {
-  text-align: center;
-}
-
-.secondary-nav {
-  display: flex;
-  justify-content: center;
-  gap: 5vw;
-  margin-bottom: 1vh;
-}
-
-.secondary-nav a {
-  color: rgba(255, 255, 255, 0.4);
-  text-decoration: none;
-  font-size: 1rem;
-  font-weight: 700;
-}
-
-.footer-small {
-  font-size: 0.8rem;
-  opacity: 0.2;
-}
-
+/* Mobile fallback */
 @media (max-width: 800px) {
   .hub-grid { grid-template-columns: 1fr; width: 95vw; }
-  .ultimate-hub { position: relative !important; height: auto !important; overflow: auto !important; padding: 4rem 1rem !important; }
-  body { overflow: auto !important; height: auto !important; }
+  .ultimate-hub {
+    position: relative !important;
+    top: 0 !important;
+    height: auto !important;
+    overflow: auto !important;
+    padding: 3rem 1rem !important;
+  }
+  body { overflow: auto !important; }
 }
