@@ -20,7 +20,7 @@ body::before {
   position: absolute;
   top: 5%; left: 0%;
   width: 60vw; height: 60vh;
-  background: radial-gradient(circle, rgba(255, 127, 80, 0.22) 0%, transparent 75%);
+  background: radial-gradient(circle, rgba(255, 127, 80, 0.18) 0%, transparent 75%);
   filter: blur(120px);
   z-index: 1;
   pointer-events: none;
@@ -32,7 +32,7 @@ body::after {
   position: absolute;
   bottom: 5%; right: 0%;
   width: 60vw; height: 60vh;
-  background: radial-gradient(circle, rgba(120, 80, 255, 0.35) 0%, transparent 75%);
+  background: radial-gradient(circle, rgba(120, 80, 255, 0.3) 0%, transparent 75%);
   filter: blur(120px);
   z-index: 1;
   pointer-events: none;
@@ -42,7 +42,7 @@ body::after {
 /* Header Styling - Glassmorphism */
 header, .header {
   background: rgba(15, 10, 26, 0.6) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
   backdrop-filter: blur(25px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(25px) saturate(180%) !important;
 }
@@ -57,8 +57,8 @@ header, .header {
 
 /* Search Styling - Dark Glass Pill */
 site-search button, .search-input, site-search input {
-  background: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
   backdrop-filter: blur(15px) !important;
   color: #fff !important;
   border-radius: 99px !important;
@@ -130,9 +130,9 @@ main {
 
 .hub-card {
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 28px;
   padding: 3vh 2.5vw;
   display: flex;
@@ -145,12 +145,12 @@ main {
   box-shadow: 
     0 20px 50px -10px rgba(0, 0, 0, 0.7), 
     inset 0 0 20px rgba(255, 255, 255, 0.03),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .hub-card:hover {
   transform: translateY(-12px) scale(1.03);
-  border-color: rgba(255, 127, 80, 0.7);
+  border-color: rgba(255, 127, 80, 0.6);
   box-shadow: 
     0 40px 80px -15px rgba(255, 127, 80, 0.3), 
     inset 0 0 30px rgba(255, 127, 80, 0.1);
@@ -193,30 +193,36 @@ main {
   flex: 1;
   text-align: center;
   padding: 0.7vh 0;
-  border-radius: 10px;
+  border-radius: 12px;
   font-size: 1.05rem;
   font-weight: 700;
   text-decoration: none !important;
-  transition: all 0.2s;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .btn-p {
   background: #FF7F50 !important;
-  color: #1e1233 !important;
+  color: #0c0816 !important;
+  box-shadow: 0 4px 15px rgba(255, 127, 80, 0.3);
 }
 
 .btn-p:hover {
   background: #ff9a75 !important;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 127, 80, 0.4);
 }
 
 .btn-s {
-  border: 2px solid #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
   color: #ffffff !important;
   background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(5px);
 }
 
 .btn-s:hover {
-  background: rgba(255, 255, 255, 0.15) !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  transform: translateY(-3px);
 }
 
 /* Mobile fallback */
