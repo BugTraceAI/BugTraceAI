@@ -39,12 +39,14 @@ body::after {
   animation: moveGlow 20s ease-in-out infinite reverse;
 }
 
-/* Header Styling - Glassmorphism */
-header, .header {
+/* Header Styling - Glassmorphism (WIPE ALL BORDERS) */
+header, .header, header.header {
   background: rgba(15, 10, 26, 0.6) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border: none !important;
+  border-bottom: none !important;
   backdrop-filter: blur(25px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(25px) saturate(180%) !important;
+  box-shadow: none !important;
 }
 
 /* Site Title Branding */
@@ -58,10 +60,34 @@ header, .header {
 /* Search Styling - Dark Glass Pill */
 site-search button, .search-input, site-search input {
   background: rgba(255, 255, 255, 0.04) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
   backdrop-filter: blur(15px) !important;
   color: #fff !important;
   border-radius: 99px !important;
+}
+
+/* Wipe Starlight's default dividers and hairlines in Splash Page */
+.splash hr, .splash .hairline, .splash .content-panel {
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+}
+
+.splash main::before, .splash main::after {
+  display: none !important; /* Remove any default pseudo-element borders if they exist */
+}
+
+/* Target specific Starlight dividers */
+[data-template="splash"] .main-frame {
+  border: none !important;
+}
+
+[data-template="splash"] .content-panel {
+  border: none !important;
+}
+
+[data-template="splash"] h1#_top {
+  display: none !important; /* Hide the hidden title causing space/lines */
 }
 
 /* Page Frame Reset */
