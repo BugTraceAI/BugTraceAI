@@ -1,20 +1,11 @@
-/* BUGTRACE AI HUB - PREMIUM ZERO-SCROLL WITH STARLIGHT HEADER */
+/* BUGTRACE AI HUB - PREMIUM DOCUMENTATION STYLING */
 
-/* Force Dark Colors Globally */
+/* Theme Configuration */
 :root, [data-theme="light"], [data-theme="dark"] {
-  --sl-color-bg: #1e1233 !important;
-  --sl-color-bg-nav: #1e1233 !important;
-  --sl-color-accent: #FF7F50 !important;
-  --sl-color-text: #ffffff !important;
-  --sl-nav-height: 72px !important;
-}
-
-/* KILL sidebar, footer, etc. */
-aside, .sidebar-pane, .right-sidebar-container,
-.mobile-preferences, nav.sidebar, h1#_top {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
+  --sl-color-bg: #0c0816;
+  --sl-color-bg-nav: #1e1233;
+  --sl-color-accent: #FF7F50;
+  --sl-color-text: #ffffff;
 }
 
 /* ULTRA GLASS - Animated Background Glows */
@@ -48,37 +39,29 @@ body::after {
   animation: moveGlow 20s ease-in-out infinite reverse;
 }
 
-/* Force Header to be ULTRA GLASS */
-header, .header, .header.astro-vrdttmbt {
-  background: rgba(15, 10, 26, 0.5) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(35px) saturate(200%) !important;
-  -webkit-backdrop-filter: blur(35px) saturate(200%) !important;
-  z-index: 10000 !important;
+/* Header Styling - Glassmorphism */
+header, .header {
+  background: rgba(15, 10, 26, 0.6) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(25px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(25px) saturate(180%) !important;
 }
 
-/* Fix Branding and Search within Header */
-.site-title, .site-title *, a.site-title {
+/* Site Title Branding */
+.site-title {
   color: #FF7F50 !important;
-  text-decoration: none !important;
   font-weight: 950 !important;
-  letter-spacing: -1.2px;
-  filter: drop-shadow(0 0 12px rgba(255, 127, 80, 0.4));
+  letter-spacing: -1px;
+  filter: drop-shadow(0 0 10px rgba(255, 127, 80, 0.3));
 }
 
-/* Specific Starlight Search Button Fix */
-site-search button, .search-input, .search-input * {
+/* Search Styling - Dark Glass Pill */
+site-search button, .search-input, site-search input {
   background: rgba(255, 255, 255, 0.05) !important;
   border: 1px solid rgba(255, 255, 255, 0.15) !important;
   backdrop-filter: blur(15px) !important;
   color: #fff !important;
   border-radius: 99px !important;
-  padding: 0.5rem 1.5rem !important;
-}
-
-/* Search Icon and Text within Button */
-site-search button svg, site-search button span {
-  color: rgba(255, 255, 255, 0.8) !important;
 }
 
 /* Page Frame Reset */
@@ -90,7 +73,13 @@ body {
   position: relative;
 }
 
-/* Overlay the hub below the Starlight nav header */
+/* Main Content - Allow proper scrolling on other pages */
+main {
+  position: relative;
+  z-index: 2;
+}
+
+/* Hub Positioning - Fixed for Zero-Scroll */
 .ultimate-hub {
   position: fixed !important;
   top: var(--sl-nav-height, 72px) !important;
@@ -100,7 +89,7 @@ body {
   display: flex !important;
   flex-direction: column !important;
   justify-content: space-around !important;
-  padding: 1vh 0 !important;
+  padding: 1.5vh 0 !important;
   box-sizing: border-box !important;
   z-index: 5 !important;
   align-items: center !important;
@@ -118,7 +107,7 @@ body {
 }
 
 .mini-branding h1 {
-  font-size: 3.4rem !important;
+  font-size: 3.2rem !important;
   margin: 0 !important;
   background: linear-gradient(135deg, #fff 10%, #FF7F50 50%, #fff 90%);
   background-size: 200% auto;
@@ -127,45 +116,45 @@ body {
   -webkit-text-fill-color: transparent !important;
   font-weight: 950 !important;
   animation: titleGlow 5s ease-in-out infinite;
-  letter-spacing: -1.8px;
+  letter-spacing: -1.5px;
 }
 
 /* Grid - 4 huge cards, 2x2 */
 .hub-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 4vh 4vw;
+  gap: 3vh 3.5vw;
   width: 90vw;
-  max-width: 1150px;
+  max-width: 1100px;
 }
 
 .hub-card {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-top: 1px solid rgba(255, 255, 255, 0.25);
-  border-left: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 32px;
-  padding: 3.5vh 3vw;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 28px;
+  padding: 3vh 2.5vw;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  backdrop-filter: blur(45px) saturate(180%);
-  -webkit-backdrop-filter: blur(45px) saturate(180%);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
   width: 100%;
-  transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 
     0 20px 50px -10px rgba(0, 0, 0, 0.7), 
-    inset 0 0 25px rgba(255, 255, 255, 0.04),
+    inset 0 0 20px rgba(255, 255, 255, 0.03),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .hub-card:hover {
-  transform: translateY(-15px) scale(1.04);
-  border-color: rgba(255, 127, 80, 0.8);
+  transform: translateY(-12px) scale(1.03);
+  border-color: rgba(255, 127, 80, 0.7);
   box-shadow: 
-    0 50px 100px -20px rgba(255, 127, 80, 0.35), 
-    inset 0 0 40px rgba(255, 127, 80, 0.15);
-  background: rgba(255, 255, 255, 0.06);
+    0 40px 80px -15px rgba(255, 127, 80, 0.3), 
+    inset 0 0 30px rgba(255, 127, 80, 0.1);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .card-header {
@@ -175,23 +164,23 @@ body {
 }
 
 .card-icon {
-  font-size: 3.2rem;
-  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+  font-size: 3rem;
+  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.25));
 }
 
 .hub-card h3 {
-  font-size: 1.9rem !important;
+  font-size: 1.8rem !important;
   color: #fff !important;
   margin: 0 !important;
-  font-weight: 950 !important;
-  letter-spacing: -0.8px;
+  font-weight: 900 !important;
+  letter-spacing: -0.5px;
 }
 
 .hub-card p {
-  font-size: 1.1rem !important;
-  color: rgba(255, 255, 255, 0.75) !important;
+  font-size: 1.05rem !important;
+  color: rgba(255, 255, 255, 0.7) !important;
   line-height: 1.6;
-  margin: 2vh 0 !important;
+  margin: 1.5vh 0 !important;
 }
 
 /* Action Buttons */
@@ -231,14 +220,57 @@ body {
 }
 
 /* Mobile fallback */
-@media (max-width: 800px) {
-  .hub-grid { grid-template-columns: 1fr; width: 95vw; }
-  .ultimate-hub {
-    position: relative !important;
-    top: 0 !important;
-    height: auto !important;
-    overflow: auto !important;
-    padding: 3rem 1rem !important;
+@media (max-width: 1024px) {
+  .hub-grid {
+    grid-template-columns: 1fr;
+    width: 95vw;
+    gap: 3vh 0;
   }
-  body { overflow: auto !important; }
+
+  .mini-branding h1 {
+    font-size: 2.5rem !important;
+  }
+
+  .hub-card {
+    padding: 2.5vh 2vw;
+  }
+}
+
+@media (max-width: 640px) {
+  .ultimate-hub {
+    padding: 2vh 1rem;
+  }
+
+  .mini-branding h1 {
+    font-size: 2rem !important;
+  }
+
+  .hub-card h3 {
+    font-size: 1.4rem !important;
+  }
+
+  .hub-card p {
+    font-size: 0.95rem !important;
+  }
+
+  .card-actions {
+    flex-direction: column;
+  }
+
+  .btn-p, .btn-s {
+    width: 100%;
+  }
+}
+
+/* Starlight Pages - Default behavior */
+main > article {
+  position: relative;
+  z-index: 3;
+}
+
+/* Ensure Sidebar is visible on non-splash pages */
+:not(.splash) aside {
+  display: block;
+  visibility: visible;
+  opacity: 1;
 }
