@@ -17,38 +17,82 @@ aside, .sidebar-pane, .right-sidebar-container,
   opacity: 0 !important;
 }
 
-/* Force Header to be Dark and Premium */
+/* ULTRA GLASS - Animated Background Glows */
+@keyframes moveGlow {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(8vw, 4vh); }
+  100% { transform: translate(0, 0); }
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 5%; left: 0%;
+  width: 60vw; height: 60vh;
+  background: radial-gradient(circle, rgba(255, 127, 80, 0.22) 0%, transparent 75%);
+  filter: blur(120px);
+  z-index: 1;
+  pointer-events: none;
+  animation: moveGlow 15s ease-in-out infinite;
+}
+
+body::after {
+  content: "";
+  position: absolute;
+  bottom: 5%; right: 0%;
+  width: 60vw; height: 60vh;
+  background: radial-gradient(circle, rgba(120, 80, 255, 0.35) 0%, transparent 75%);
+  filter: blur(120px);
+  z-index: 1;
+  pointer-events: none;
+  animation: moveGlow 20s ease-in-out infinite reverse;
+}
+
+/* Force Header to be ULTRA GLASS */
 header, .header, .header.astro-vrdttmbt {
-  background-color: #1e1233 !important;
-  background: #1e1233 !important;
-  border-bottom: 1px solid rgba(255, 127, 80, 0.2) !important;
-  backdrop-filter: blur(10px) !important;
+  background: rgba(15, 10, 26, 0.5) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(35px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(35px) saturate(200%) !important;
+  z-index: 10000 !important;
 }
 
 /* Fix Branding and Search within Header */
 .site-title, .site-title *, a.site-title {
   color: #FF7F50 !important;
   text-decoration: none !important;
+  font-weight: 950 !important;
+  letter-spacing: -1.2px;
+  filter: drop-shadow(0 0 12px rgba(255, 127, 80, 0.4));
 }
 
-site-search .search-input, .search-input {
+/* Specific Starlight Search Button Fix */
+site-search button, .search-input, .search-input * {
   background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(15px) !important;
   color: #fff !important;
-  border: 1px solid rgba(255, 127, 80, 0.3) !important;
+  border-radius: 99px !important;
+  padding: 0.5rem 1.5rem !important;
+}
+
+/* Search Icon and Text within Button */
+site-search button svg, site-search button span {
+  color: rgba(255, 255, 255, 0.8) !important;
 }
 
 /* Page Frame Reset */
 body {
-  background: radial-gradient(circle at 50% -20%, #3D2B5F 0%, #1e1233 100%) !important;
+  background-color: #0c0816 !important;
   margin: 0 !important;
   padding: 0 !important;
   overflow: hidden !important;
+  position: relative;
 }
 
 /* Overlay the hub below the Starlight nav header */
 .ultimate-hub {
   position: fixed !important;
-  /* Starlight header is ~72px tall */
   top: var(--sl-nav-height, 72px) !important;
   left: 0 !important;
   width: 100vw !important;
@@ -56,79 +100,98 @@ body {
   display: flex !important;
   flex-direction: column !important;
   justify-content: space-around !important;
-  padding: 2vh 0 !important;
+  padding: 1vh 0 !important;
   box-sizing: border-box !important;
-  z-index: 9999 !important;
+  z-index: 5 !important;
   align-items: center !important;
 }
 
-/* Main Title */
+/* Main Title - Pulsing Premium Glow */
+@keyframes titleGlow {
+  0%, 100% { filter: drop-shadow(0 0 25px rgba(255, 127, 80, 0.5)); transform: scale(1); }
+  50% { filter: drop-shadow(0 0 45px rgba(255, 127, 80, 0.7)); transform: scale(1.01); }
+}
+
 .mini-branding {
   text-align: center;
+  z-index: 10;
 }
 
 .mini-branding h1 {
-  font-size: 2.6rem !important;
+  font-size: 3.4rem !important;
   margin: 0 !important;
-  background: linear-gradient(90deg, #fff, #FF7F50);
+  background: linear-gradient(135deg, #fff 10%, #FF7F50 50%, #fff 90%);
+  background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent !important;
   font-weight: 950 !important;
-  filter: drop-shadow(0 0 10px rgba(255, 127, 80, 0.4));
+  animation: titleGlow 5s ease-in-out infinite;
+  letter-spacing: -1.8px;
 }
 
 /* Grid - 4 huge cards, 2x2 */
 .hub-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 2.5vh 3vw;
+  gap: 4vh 4vw;
   width: 90vw;
-  max-width: 1200px;
+  max-width: 1150px;
 }
 
 .hub-card {
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 127, 80, 0.3);
-  border-radius: 16px;
-  padding: 2.5vh 2.5vw;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  border-left: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 32px;
+  padding: 3.5vh 3vw;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(45px) saturate(180%);
+  -webkit-backdrop-filter: blur(45px) saturate(180%);
   width: 100%;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+  box-shadow: 
+    0 20px 50px -10px rgba(0, 0, 0, 0.7), 
+    inset 0 0 25px rgba(255, 255, 255, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .hub-card:hover {
-  transform: translateY(-4px);
-  border-color: #FF7F50;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  transform: translateY(-15px) scale(1.04);
+  border-color: rgba(255, 127, 80, 0.8);
+  box-shadow: 
+    0 50px 100px -20px rgba(255, 127, 80, 0.35), 
+    inset 0 0 40px rgba(255, 127, 80, 0.15);
   background: rgba(255, 255, 255, 0.06);
 }
 
 .card-header {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
 .card-icon {
-  font-size: 2.5rem;
+  font-size: 3.2rem;
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
 }
 
 .hub-card h3 {
-  font-size: 1.6rem !important;
+  font-size: 1.9rem !important;
   color: #fff !important;
   margin: 0 !important;
-  font-weight: 850 !important;
+  font-weight: 950 !important;
+  letter-spacing: -0.8px;
 }
 
 .hub-card p {
-  font-size: 0.95rem !important;
-  color: rgba(255, 255, 255, 0.6) !important;
-  line-height: 1.5;
-  margin: 1.2vh 0 !important;
+  font-size: 1.1rem !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+  line-height: 1.6;
+  margin: 2vh 0 !important;
 }
 
 /* Action Buttons */
