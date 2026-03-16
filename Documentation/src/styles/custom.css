@@ -17,24 +17,24 @@
 
 body::before {
   content: "";
-  position: absolute;
+  position: fixed;
   top: 5%; left: 0%;
   width: 60vw; height: 60vh;
   background: radial-gradient(circle, rgba(255, 127, 80, 0.18) 0%, transparent 75%);
   filter: blur(120px);
-  z-index: 1;
+  z-index: 0;
   pointer-events: none;
   animation: moveGlow 15s ease-in-out infinite;
 }
 
 body::after {
   content: "";
-  position: absolute;
+  position: fixed;
   bottom: 5%; right: 0%;
   width: 60vw; height: 60vh;
   background: radial-gradient(circle, rgba(120, 80, 255, 0.3) 0%, transparent 75%);
   filter: blur(120px);
-  z-index: 1;
+  z-index: 0;
   pointer-events: none;
   animation: moveGlow 20s ease-in-out infinite reverse;
 }
@@ -52,18 +52,14 @@ header, .header, header.header {
 /* Site Title Branding */
 .site-title {
   color: #FF7F50 !important;
-  font-weight: 950 !important;
+  font-weight: 900 !important;
   letter-spacing: -1px;
   filter: drop-shadow(0 0 10px rgba(255, 127, 80, 0.3));
 }
 
-/* Search Styling - Dark Glass Pill */
-site-search button, .search-input, site-search input {
-  background: rgba(255, 255, 255, 0.04) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  backdrop-filter: blur(15px) !important;
-  color: #fff !important;
-  border-radius: 99px !important;
+/* Remove Search Bar as per user request */
+site-search, .search-input {
+  display: none !important;
 }
 
 /* Wipe ALL Starlight dividers and lines */
@@ -100,12 +96,12 @@ body {
   position: relative;
 }
 
-/* Remove scrollbar for splash page */
-.splash {
-  overflow: hidden !important;
+/* Remove overflow for splash page */
+[data-template="splash"] {
+  overflow: hidden;
 }
 
-/* Main Content - Allow proper scrolling on other pages */
+/* Main Content */
 main {
   position: relative;
   z-index: 2;
@@ -151,7 +147,7 @@ main::before, main::after {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent !important;
-  font-weight: 950 !important;
+  font-weight: 900 !important;
   animation: titleGlow 5s ease-in-out infinite;
   letter-spacing: -1.5px;
 }
@@ -209,7 +205,7 @@ main::before, main::after {
   font-size: 1.8rem !important;
   color: #fff !important;
   margin: 0 !important;
-  font-weight: 900 !important;
+  font-weight: 800 !important;
   letter-spacing: -0.5px;
 }
 
@@ -312,7 +308,7 @@ main > article {
 }
 
 /* Ensure Sidebar is visible on non-splash pages */
-:not(.splash) aside {
+:not([data-template="splash"]) aside {
   display: block;
   visibility: visible;
   opacity: 1;
