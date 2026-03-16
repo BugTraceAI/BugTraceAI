@@ -2,36 +2,59 @@
 title: BugTraceAI Documentation Hub
 description: The central knowledge hub for autonomous AI security.
 template: splash
-hero:
-  tagline: "The central hub for BugTraceAI's deep documentation, wikis, and repositories."
-  image:
-    file: ../../assets/logo.svg
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-<CardGrid>
-	<Card title="Unified Hub" icon="document">
-		The consolidated knowledge base for the entire project.
-        
-        [**Open Wiki**](https://deepwiki.com/BugTraceAI/BugTraceAI)
-	</Card>
-	<Card title="CLI Deep Docs" icon="rocket">
-		Technical deep-dive into the scanning pipeline and agent logic.
-        
-        [**Open Docs**](https://deepwiki.com/BugTraceAI/BugTraceAI-CLI)
-	</Card>
-	<Card title="WEB Deep Docs" icon="laptop">
-		Technical details on the dashboard and security toolkit.
-        
-        [**Open Docs**](https://deepwiki.com/BugTraceAI/BugTraceAI-WEB)
-	</Card>
-	<Card title="Project Wiki" icon="list-format">
-		Original project notes and community documentation.
-        
-        [**Open Wiki**](https://github.com/BugTraceAI/BugTraceAI/wiki)
-	</Card>
-</CardGrid>
+<div className="main-hub-grid">
+	<div className="hub-card">
+		<div className="card-header">
+			<span className="card-icon">📚</span>
+			<h3>BugTraceAI Core</h3>
+		</div>
+		<p>The consolidated knowledge base for the entire project.</p>
+		<div className="card-actions">
+			<a href="https://deepwiki.com/BugTraceAI/BugTraceAI" className="btn-primary">Read Docs</a>
+			<a href="https://deepwiki.com/BugTraceAI/BugTraceAI" className="btn-secondary">Ask to the AI</a>
+		</div>
+	</div>
+
+	<div className="hub-card">
+		<div className="card-header">
+			<span className="card-icon">🚀</span>
+			<h3>BugTraceAI CLI</h3>
+		</div>
+		<p>Technical deep-dive into the scanning pipeline and agent logic.</p>
+		<div className="card-actions">
+			<a href="https://deepwiki.com/BugTraceAI/BugTraceAI-CLI" className="btn-primary">Read Docs</a>
+			<a href="https://deepwiki.com/BugTraceAI/BugTraceAI-CLI" className="btn-secondary">Ask to the AI</a>
+		</div>
+	</div>
+
+	<div className="hub-card">
+		<div className="card-header">
+			<span className="card-icon">💻</span>
+			<h3>BugTraceAI WEB</h3>
+		</div>
+		<p>Technical details on the dashboard and security toolkit.</p>
+		<div className="card-actions">
+			<a href="https://deepwiki.com/BugTraceAI/BugTraceAI-WEB" className="btn-primary">Read Docs</a>
+			<a href="https://deepwiki.com/BugTraceAI/BugTraceAI-WEB" className="btn-secondary">Ask to the AI</a>
+		</div>
+	</div>
+
+	<div className="hub-card">
+		<div className="card-header">
+			<span className="card-icon">📝</span>
+			<h3>Project Wiki</h3>
+		</div>
+		<p>Original project notes and community documentation.</p>
+		<div className="card-actions">
+			<a href="https://github.com/BugTraceAI/BugTraceAI/wiki" className="btn-primary">Read Docs</a>
+			<a href="https://github.com/BugTraceAI/BugTraceAI/wiki" className="btn-secondary">Ask to the AI</a>
+		</div>
+	</div>
+</div>
 
 <div className="compact-links-row">
   <div className="link-item">[GitHub-CLI](https://github.com/BugTraceAI/BugTraceAI-CLI)</div>

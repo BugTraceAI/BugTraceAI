@@ -106,58 +106,138 @@ starlight-theme-select {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Changed from center to top-aligned flex */
+    justify-content: center;
     overflow: hidden;
-    padding-top: 2rem;
+    padding: 0 !important;
+    background: radial-gradient(circle at center, #2D1B4D 0%, #1e1233 100%);
 }
 
 .template-splash .hero {
-    padding-top: 0 !important;
-    padding-bottom: 1rem !important;
-    flex-direction: row-reverse !important;
-    justify-content: center !important;
+    display: none !important;
+}
+
+/* Custom Hub Grid */
+.main-hub-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    width: 100%;
 }
 
-.template-splash .hero img {
-    height: 120px !important;
-    width: auto !important;
+.hub-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 127, 80, 0.2);
+    border-radius: 20px;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.hub-card:hover {
+    border-color: var(--sl-color-accent);
+    background: rgba(255, 127, 80, 0.08);
+    transform: scale(1.03);
+    box-shadow: 0 0 50px rgba(255, 127, 80, 0.2);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.card-icon {
+    font-size: 3rem;
+}
+
+.hub-card h3 {
     margin: 0 !important;
+    font-size: 2rem !important;
+    font-weight: 800 !important;
+    color: #fff !important;
+    background: linear-gradient(135deg, #fff, var(--sl-color-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.template-splash .hero .sl-flex {
-    text-align: left !important;
-    align-items: flex-start !important;
-}
-
-.template-splash .hero h1 {
-    font-size: 2.5rem !important;
+.hub-card p {
     margin: 0 !important;
+    font-size: 1.15rem !important;
+    color: var(--sl-color-gray-2) !important;
+    line-height: 1.6;
 }
 
-.template-splash .hero .tagline {
-    font-size: 1rem !important;
-    margin: 0.5rem 0 0 0 !important;
-    max-width: 500px;
+.card-actions {
+    display: flex;
+    gap: 1.25rem;
+    margin-top: 1rem;
+}
+
+.btn-primary, .btn-secondary {
+    flex: 1;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid transparent;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--sl-color-accent-high), var(--sl-color-accent));
+    color: white;
+    box-shadow: 0 4px 20px rgba(255, 127, 80, 0.4);
+}
+
+.btn-primary:hover {
+    filter: brightness(1.2);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(255, 127, 80, 0.6);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 127, 80, 0.1);
+    border-color: var(--sl-color-accent);
+    color: var(--sl-color-accent);
 }
 
 /* Secondary Links Row */
 .compact-links-row {
+    position: absolute;
+    bottom: 2rem;
+    left: 0;
+    right: 0;
     display: flex;
-    gap: 1.5rem;
+    gap: 3rem;
     justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 2rem;
-    padding: 0.75rem;
-    background: rgba(255, 255, 255, 0.02);
-    border-top: 1px solid rgba(255, 127, 80, 0.05);
+    padding: 1rem;
 }
 
 .link-item a {
     color: var(--sl-color-gray-3);
     text-decoration: none;
-    font-size: 0.85rem;
-    transition: all 0.2s;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
 }
 
 .link-item a:hover {
@@ -165,39 +245,17 @@ starlight-theme-select {
 }
 
 .footer-credits {
-    margin-top: 1rem;
-    font-size: 0.75rem;
-    opacity: 0.5;
+    position: absolute;
+    bottom: 0.5rem;
+    width: 100%;
     text-align: center;
+    font-size: 0.8rem;
+    opacity: 0.3;
 }
 
-/* Card Overrides for Hub */
-.card-grid {
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 1rem !important;
-    max-width: 1000px;
-    margin: 0 auto !important;
-}
-
-.card {
-    padding: 1rem !important;
-}
-
-.card .title {
-    font-size: 1.1rem !important;
-}
-
-.card p {
-    font-size: 0.85rem !important;
-}
-
-@media (max-width: 900px) {
-    .card-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-    }
-    .template-splash .hero {
-        flex-direction: column !important;
-        text-align: center !important;
+@media (max-width: 800px) {
+    .main-hub-grid {
+        grid-template-columns: 1fr;
     }
 }
 
