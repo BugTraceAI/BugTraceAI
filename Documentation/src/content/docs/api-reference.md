@@ -1,0 +1,323 @@
+---
+title: Api Reference
+---
+
+# API Reference
+
+The BugTraceAI-CLI exposes a REST API via FastAPI on port 8000. This API provides complete programmatic access to scan management, findings, reports, configuration, and metrics. The API follows the OpenAPI 3.1 specification.
+
+---
+
+## Base URL
+
+```
+http://localhost:8000
+```
+
+Interactive API documentation (Swagger UI) is available at:
+
+```
+http://localhost:8000/docs
+```
+
+---
+
+## Scan Management
+
+### Create a Scan
+
+```http
+POST /api/scans
+Content-Type: application/json
+
+{
+  "target_url": "https://example.com",
+  "scan_type": "full",
+  "config": {
+    "max_depth": 3,
+    "max_urls": 500,
+    "safe_mode": false
+  }
+}
+```
+
+**Response** (201 Created):
+```json
+{
+  "id": "scan_abc123",
+  "status": "QUEUED",
+  "target_url": "https://example.com",
+  "origin": "web",
+  "created_at": "2026-02-10T14:30:00Z"
+}
+```
+
+The `origin` field indicates where the scan was launched from:
+
+| Value | Meaning |
+|-------|---------|
+| `"cli"` | Scan launched from the CLI directly |
+| `"web"` | Scan launched from the WEB dashboard |
+| `"unknown"` | Origin could not be determined |
+
+### List Scans
+
+```http
+GET /api/scans
+```
+
+Returns all scans with their current status.
+
+### Get Scan Status
+
+```http
+GET /api/scans/{id}/status
+```
+
+**Response**:
+```json
+{
+  "id": "scan_abc123",
+  "status": "RUNNING",
+  "phase": "exploitation",
+  "progress": 65,
+  "findings_count": 12,
+  "active_agents": ["xss_specialist", "sqli_specialist"],
+  "elapsed_seconds": 342
+}
+```
+
+### Start a Scan
+
+```http
+POST /api/scans/{id}/start
+```
+
+### Stop a Scan
+
+```http
+POST /api/scans/{id}/stop
+```
+
+### Pause a Scan
+
+```http
+POST /api/scans/{id}/pause
+```
+
+### Resume a Scan
+
+```http
+POST /api/scans/{id}/resume
+```
+
+---
+
+## Findings
+
+### Get Scan Findings
+
+```http
+GET /api/scans/{id}/findings
+```
+
+**Response**:
+```json
+{
+  "findings": [
+    {
+      "id": "finding_001",
+      "type": "XSS",
+      "subtype": "reflected",
+      "severity": "HIGH",
+      "confidence": 0.92,
+      "url": "https://example.com/search?q=test",
+      "parameter": "q",
+      "payload": "<script>alert(1)</script>",
+      "validation_status": "VALIDATED_CONFIRMED",
+      "agent": "xss_specialist",
+      "discovered_at": "2026-02-10T14:35:22Z"
+    }
+  ],
+  "total": 12
+}
+```
+
+### Get Individual Finding
+
+```http
+GET /api/scans/{id}/findings/{finding_id}
+```
+
+---
+
+## Reports
+
+### Generate Report
+
+```http
+GET /api/scans/{id}/report/{format}
+```
+
+**Supported formats**:
+
+| Format | Content-Type | Description |
+|--------|-------------|-------------|
+| `html` | `text/html` | Interactive HTML viewer with filtering and sorting |
+| `json` | `application/json` | Machine-readable structured data |
+| `markdown` | `text/markdown` | Human-readable Markdown document |
+
+### Download Report as ZIP
+
+```http
+GET /api/scans/{id}/report-zip
+```
+
+**Response**: Binary ZIP file containing the complete report directory (final report, validated findings, specialist results, reconnaissance data, PoC enrichment, and all evidence files).
+
+```bash
+curl -o report.zip http://localhost:8000/api/scans/{id}/report-zip
+```
+
+### Get Report Files
+
+```http
+GET /api/scans/{id}/files/{filename}
+```
+
+Returns individual files associated with a scan report (e.g., screenshots, evidence files).
+
+---
+
+## Configuration
+
+### Get Current Configuration
+
+```http
+GET /api/config
+```
+
+**Response**:
+```json
+{
+  "SAFE_MODE": false,
+  "MAX_DEPTH": 3,
+  "MAX_URLS": 500,
+  "DEFAULT_MODEL": "google/gemini-2.5-flash",
+  "CODE_MODEL": "anthropic/claude-sonnet-4",
+  "ANALYSIS_MODEL": "google/gemini-2.5-pro",
+  "HEADLESS_BROWSER": true,
+  "EARLY_EXIT_ON_FINDING": false,
+  "STOP_ON_CRITICAL": false,
+  "REPORT_ONLY_VALIDATED": true,
+  "OPENROUTER_API_KEY": "sk-or-...****"
+}
+```
+
+Note: API keys are **masked** in GET responses for security.
+
+### Update Configuration
+
+```http
+PATCH /api/config
+Content-Type: application/json
+
+{
+  "MAX_DEPTH": 5,
+  "SAFE_MODE": true
+}
+```
+
+See [Configuration](/configuration) for details on all configuration options.
+
+---
+
+## Metrics
+
+### Get Scan Metrics
+
+```http
+GET /api/scans/{id}/metrics
+```
+
+Returns performance metrics for a specific scan including depth reached, URLs processed, throughput, and per-agent statistics.
+
+### Get Global Metrics
+
+```http
+GET /api/metrics
+```
+
+Returns aggregate metrics across all scans.
+
+---
+
+## WebSocket Endpoints
+
+In addition to REST, the CLI provides WebSocket endpoints for real-time event streaming:
+
+| Endpoint | Purpose |
+|----------|---------|
+| `/ws/scans/{id}` | Per-scan real-time events |
+| `/ws/global` | Global events across all scans |
+
+See [WebSocket Events](/websocket-events) for the full event protocol.
+
+---
+
+## Authentication
+
+The CLI API supports API key authentication via the `Authorization` header:
+
+```http
+Authorization: Bearer <api-key>
+```
+
+API key configuration is managed through the CLI configuration file or environment variables.
+
+---
+
+## Error Responses
+
+All error responses follow a consistent format:
+
+```json
+{
+  "detail": "Scan not found",
+  "status_code": 404
+}
+```
+
+### Common Status Codes
+
+| Code | Meaning |
+|------|---------|
+| `200` | Success |
+| `201` | Resource created |
+| `400` | Bad request (invalid parameters) |
+| `404` | Resource not found |
+| `409` | Conflict (e.g., scan already running) |
+| `422` | Validation error |
+| `500` | Internal server error |
+
+---
+
+## Rate Limiting
+
+The API does not impose rate limits by default. In production deployments, rate limiting should be configured at the reverse proxy level (e.g., Nginx).
+
+---
+
+## OpenAPI Specification
+
+The full OpenAPI 3.1 specification is auto-generated by FastAPI and available at:
+
+- **Swagger UI**: `http://localhost:8000/docs`
+- **ReDoc**: `http://localhost:8000/redoc`
+- **JSON Spec**: `http://localhost:8000/openapi.json`
+
+---
+
+**Parent**: [Architecture](/architecture)
+
+**See also**: [WebSocket Events](/websocket-events) | [Configuration](/configuration) | [BugTraceAI-CLI](/bugtraceai-cli)

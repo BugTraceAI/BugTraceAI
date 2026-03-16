@@ -1,0 +1,77 @@
+:root {
+	/* BugTraceAI Corporate Colors */
+	--sl-color-accent-low: #3D2B5F;
+	--sl-color-accent: #FF7F50;
+	--sl-color-accent-high: #ff8c32;
+	
+	--sl-color-bg: #2D1B4D;
+	--sl-color-bg-nav: rgba(45, 27, 77, 0.8);
+	--sl-color-bg-sidebar: #2D1B4D;
+	
+	--sl-color-white: #F8F9FA;
+	--sl-color-gray-1: #F8F9FA;
+	--sl-color-gray-2: #C8C0D8;
+	--sl-color-gray-3: #8894a0;
+	--sl-color-gray-4: #4b5563;
+	--sl-color-gray-5: #374151;
+	--sl-color-gray-6: #1f2937;
+	--sl-color-black: #1e1233;
+}
+
+[data-theme='light'] {
+	--sl-color-accent-low: #e0e7ff;
+	--sl-color-accent: #FF7F50;
+	--sl-color-accent-high: #312e81;
+}
+
+/* Glassmorphism for the sidebar */
+.sidebar-content {
+	backdrop-filter: blur(16px);
+	background: rgba(45, 27, 77, 0.6) !important;
+}
+
+/* Header polish */
+header {
+	background: rgba(45, 27, 77, 0.8) !important;
+	backdrop-filter: blur(16px);
+	border-bottom: 1px solid #3D2B5F !important;
+}
+
+/* Gradient text for titles like in the Hero Shimmer */
+h1 {
+	background: linear-gradient(90deg, #fff 20%, #ff8c32 40%, #fff 60%, #ff8c32 80%, #fff 100%);
+	background-size: 300% auto;
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	font-weight: 800;
+	animation: shimmer 6s linear infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% center; }
+    100% { background-position: -200% center; }
+}
+
+/* Code blocks style */
+pre {
+	background: #1e1233 !important;
+	border: 1px solid #3D2B5F !important;
+}
+
+/* Custom scrollbar matching Website */
+::-webkit-scrollbar {
+	width: 8px;
+}
+::-webkit-scrollbar-track {
+	background: #2D1B4D;
+}
+::-webkit-scrollbar-thumb {
+	background: #3D2B5F;
+	border-radius: 4px;
+}
+/* Hide Theme Selector */
+starlight-theme-select {
+	display: none !important;
+}
+
