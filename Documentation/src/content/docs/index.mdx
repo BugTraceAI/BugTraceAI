@@ -1,37 +1,43 @@
 ---
 title: BugTraceAI Documentation Hub
-description: Consolidated knowledge base for autonomous AI security.
+description: The central knowledge hub for autonomous AI security.
 template: splash
 hero:
   tagline: "The central hub for BugTraceAI's deep documentation, wikis, and repositories."
   image:
     file: ../../assets/logo.svg
-  actions:
-    - text: "Open Unified Hub (Wiki)"
-      link: https://deepwiki.com/BugTraceAI/BugTraceAI
-      icon: document
-      variant: primary
-    - text: CLI Deep Docs
-      link: https://deepwiki.com/BugTraceAI/BugTraceAI-CLI
-      icon: external
-      variant: secondary
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
+<CardGrid>
+	<Card title="Unified Hub" icon="document">
+		The consolidated knowledge base for the entire project.
+        
+        [**Open Wiki**](https://deepwiki.com/BugTraceAI/BugTraceAI)
+	</Card>
+	<Card title="CLI Deep Docs" icon="rocket">
+		Technical deep-dive into the scanning pipeline and agent logic.
+        
+        [**Open Docs**](https://deepwiki.com/BugTraceAI/BugTraceAI-CLI)
+	</Card>
+	<Card title="WEB Deep Docs" icon="laptop">
+		Technical details on the dashboard and security toolkit.
+        
+        [**Open Docs**](https://deepwiki.com/BugTraceAI/BugTraceAI-WEB)
+	</Card>
+	<Card title="Project Wiki" icon="list-format">
+		Original project notes and community documentation.
+        
+        [**Open Wiki**](https://github.com/BugTraceAI/BugTraceAI/wiki)
+	</Card>
+</CardGrid>
+
 <div className="compact-links-row">
-  <div className="link-item">
-    [**BugTraceAI-CLI**](https://github.com/BugTraceAI/BugTraceAI-CLI)
-  </div>
-  <div className="link-item">
-    [**BugTraceAI-WEB**](https://github.com/BugTraceAI/BugTraceAI-WEB)
-  </div>
-  <div className="link-item">
-    [**BugTraceAI-Launcher**](https://github.com/BugTraceAI/BugTraceAI-Launcher)
-  </div>
-  <div className="link-item">
-    [**reconftw-mcp**](https://github.com/BugTraceAI/reconftw-mcp)
-  </div>
+  <div className="link-item">[GitHub-CLI](https://github.com/BugTraceAI/BugTraceAI-CLI)</div>
+  <div className="link-item">[GitHub-WEB](https://github.com/BugTraceAI/BugTraceAI-WEB)</div>
+  <div className="link-item">[Launcher](https://github.com/BugTraceAI/BugTraceAI-Launcher)</div>
+  <div className="link-item">[BugStore](https://bugstore.bugtraceai.com/)</div>
 </div>
 
 <div className="footer-credits">

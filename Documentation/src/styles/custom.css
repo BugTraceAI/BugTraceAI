@@ -106,48 +106,57 @@ starlight-theme-select {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start; /* Changed from center to top-aligned flex */
     overflow: hidden;
+    padding-top: 2rem;
 }
 
 .template-splash .hero {
-    padding-top: 1rem !important;
-    padding-bottom: 2rem !important;
+    padding-top: 0 !important;
+    padding-bottom: 1rem !important;
+    flex-direction: row-reverse !important;
+    justify-content: center !important;
+    gap: 2rem;
 }
 
 .template-splash .hero img {
-    height: 180px !important;
+    height: 120px !important;
     width: auto !important;
-    margin-bottom: 1rem;
+    margin: 0 !important;
+}
+
+.template-splash .hero .sl-flex {
+    text-align: left !important;
+    align-items: flex-start !important;
 }
 
 .template-splash .hero h1 {
-    font-size: 3.5rem !important;
+    font-size: 2.5rem !important;
+    margin: 0 !important;
 }
 
 .template-splash .hero .tagline {
-    font-size: 1.25rem !important;
-    max-width: 600px;
-    margin: 0 auto;
+    font-size: 1rem !important;
+    margin: 0.5rem 0 0 0 !important;
+    max-width: 500px;
 }
 
 /* Secondary Links Row */
 .compact-links-row {
     display: flex;
-    gap: 2rem;
+    gap: 1.5rem;
     justify-content: center;
     flex-wrap: wrap;
-    margin-top: 1rem;
-    padding: 1rem;
-    background: rgba(255, 255, 255, 0.03);
-    border-top: 1px solid rgba(255, 127, 80, 0.1);
-    border-bottom: 1px solid rgba(255, 127, 80, 0.1);
+    margin-top: 2rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-top: 1px solid rgba(255, 127, 80, 0.05);
 }
 
 .link-item a {
-    color: var(--sl-color-gray-2);
+    color: var(--sl-color-gray-3);
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     transition: all 0.2s;
 }
 
@@ -156,18 +165,39 @@ starlight-theme-select {
 }
 
 .footer-credits {
-    margin-top: 2rem;
-    font-size: 0.8rem;
-    opacity: 0.6;
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    opacity: 0.5;
     text-align: center;
 }
 
-@media (max-height: 900px) {
-    .template-splash .hero img {
-        height: 120px !important;
+/* Card Overrides for Hub */
+.card-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 1rem !important;
+    max-width: 1000px;
+    margin: 0 auto !important;
+}
+
+.card {
+    padding: 1rem !important;
+}
+
+.card .title {
+    font-size: 1.1rem !important;
+}
+
+.card p {
+    font-size: 0.85rem !important;
+}
+
+@media (max-width: 900px) {
+    .card-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
     }
-    .template-splash .hero h1 {
-        font-size: 2.5rem !important;
+    .template-splash .hero {
+        flex-direction: column !important;
+        text-align: center !important;
     }
 }
 
