@@ -75,3 +75,38 @@ starlight-theme-select {
 	display: none !important;
 }
 
+/* Landing Page Hub Styles */
+.hero img {
+    filter: drop-shadow(0 0 30px var(--sl-color-accent));
+    animation: btai-pulse 4s infinite ease-in-out;
+}
+
+@keyframes btai-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.9; }
+    50% { transform: scale(1.05); opacity: 1; }
+}
+
+.card {
+    background: rgba(45, 27, 77, 0.4) !important;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 127, 80, 0.2) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border-radius: 1rem !important;
+}
+
+.card:hover {
+    background: rgba(45, 27, 77, 0.6) !important;
+    border-color: rgba(255, 127, 80, 0.5) !important;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 127, 80, 0.1);
+}
+
+.card p.title {
+    color: var(--sl-color-accent) !important;
+    font-weight: 700 !important;
+    background: linear-gradient(90deg, #FF7F50, #ffb38a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
