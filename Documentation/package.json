@@ -14,7 +14,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@astrojs/starlight": "^0.21.0",
-    "astro": "^4.16.19"
+    "@astrojs/starlight": "^0.21.5",
+    "astro": "^4.16.18",
+    "zod": "^3.23.8"
   }
 }
