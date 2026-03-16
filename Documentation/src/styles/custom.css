@@ -66,28 +66,30 @@ site-search button, .search-input, site-search input {
   border-radius: 99px !important;
 }
 
-/* Wipe Starlight's default dividers and hairlines in Splash Page */
-.splash hr, .splash .hairline, .splash .content-panel {
+/* Wipe ALL Starlight dividers and lines */
+hr, .hairline, .content-panel, .main-frame {
   border: none !important;
+  border-left: none !important;
+  border-right: none !important;
   border-top: none !important;
   border-bottom: none !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
-.splash main::before, .splash main::after {
-  display: none !important; /* Remove any default pseudo-element borders if they exist */
+/* Hide problematic Starlight structural elements */
+aside {
+  border-right: none !important;
+  border-left: none !important;
 }
 
-/* Target specific Starlight dividers */
-[data-template="splash"] .main-frame {
-  border: none !important;
+main {
+  border-left: none !important;
+  border-right: none !important;
 }
 
-[data-template="splash"] .content-panel {
-  border: none !important;
-}
-
-[data-template="splash"] h1#_top {
-  display: none !important; /* Hide the hidden title causing space/lines */
+h1#_top {
+  display: none !important;
 }
 
 /* Page Frame Reset */
@@ -95,14 +97,23 @@ body {
   background-color: #0c0816 !important;
   margin: 0 !important;
   padding: 0 !important;
-  overflow: hidden !important;
   position: relative;
+}
+
+/* Remove scrollbar for splash page */
+.splash {
+  overflow: hidden !important;
 }
 
 /* Main Content - Allow proper scrolling on other pages */
 main {
   position: relative;
   z-index: 2;
+  border: none !important;
+}
+
+main::before, main::after {
+  content: none !important;
 }
 
 /* Hub Positioning - Fixed for Zero-Scroll */
