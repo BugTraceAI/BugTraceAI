@@ -1,1 +1,58 @@
-[]
+[
+  {
+    "id": "telegram-discord-alerts",
+    "title": "Telegram & Discord Alerts",
+    "desc": "Real-time vulnerability notifications",
+    "url": "https://github.com/BugTraceAI/BugTraceAI/discussions/7",
+    "discussion": 7,
+    "votes": 0
+  },
+  {
+    "id": "scheduled-scans",
+    "title": "Scheduled Scans",
+    "desc": "Recurring scans with delta reporting",
+    "url": "https://github.com/BugTraceAI/BugTraceAI/discussions/6",
+    "discussion": 6,
+    "votes": 0
+  },
+  {
+    "id": "burp-suite-export",
+    "title": "Burp Suite Export",
+    "desc": "Findings to Burp project files",
+    "url": "https://github.com/BugTraceAI/BugTraceAI/discussions/5",
+    "discussion": 5,
+    "votes": 0
+  },
+  {
+    "id": "nuclei-integration",
+    "title": "Nuclei Integration",
+    "desc": "CVE and misconfiguration discovery",
+    "url": "https://github.com/BugTraceAI/BugTraceAI/discussions/4",
+    "discussion": 4,
+    "votes": 0
+  },
+  {
+    "id": "ai-report-generation",
+    "title": "AI Report Generation",
+    "desc": "Markdown / PDF / HTML output",
+    "url": "https://github.com/BugTraceAI/BugTraceAI/discussions/3",
+    "discussion": 3,
+    "votes": 0
+  },
+  {
+    "id": "exploit-chaining",
+    "title": "Exploit Chaining",
+    "desc": "AI multi-step exploit sequences",
+    "url": "https://github.com/BugTraceAI/BugTraceAI/discussions/2",
+    "discussion": 2,
+    "votes": 0
+  },
+  {
+    "id": "welcome-to-bugtraceai-discussions",
+    "title": "\ud83d\udc7e Welcome to BugTraceAI Discussions",
+    "desc": "This is the community hub for BugTraceAI \u2014 the open-source agentic security platform built for bug bounty hunters, pentesters and security researchers. --- What this space is for C",
+    "url": "https://github.com/BugTraceAI/BugTraceAI/discussions/1",
+    "discussion": 1,
+    "votes": 0
+  }
+]
