@@ -17,6 +17,8 @@ jobs:
 
       - name: Setup or checkout data-votes branch
         run: |
+          git config --global user.name "bugtrace-bot"
+          git config --global user.email "bot@bugtraceai.com"
           git fetch origin || true
           if git ls-remote --exit-code --heads origin data-votes; then
             git checkout data-votes
