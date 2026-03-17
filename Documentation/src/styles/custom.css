@@ -308,47 +308,49 @@ main::before, main::after {
   justify-content: space-between;
   width: 90vw;
   max-width: 1100px;
-  padding: 2.5vh 3vw;
-  border-radius: 20px;
-  background: linear-gradient(135deg, rgba(255, 127, 80, 0.12) 0%, rgba(120, 80, 255, 0.12) 100%);
-  border: 1px solid rgba(255, 127, 80, 0.35);
+  padding: 1.1rem 2rem;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
   text-decoration: none !important;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 8px 32px -8px rgba(255, 127, 80, 0.15);
-  gap: 2rem;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(255, 255, 255, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  gap: 1.5rem;
 }
 
 .roadmap-banner:hover {
-  transform: translateY(-4px);
-  border-color: rgba(255, 127, 80, 0.7);
-  box-shadow: 0 20px 50px -10px rgba(255, 127, 80, 0.3);
-  background: linear-gradient(135deg, rgba(255, 127, 80, 0.18) 0%, rgba(120, 80, 255, 0.18) 100%);
+  transform: translateY(-6px) scale(1.01);
+  border-color: rgba(255, 127, 80, 0.5);
+  box-shadow: 0 40px 80px -15px rgba(255, 127, 80, 0.2), inset 0 0 30px rgba(255, 127, 80, 0.07);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .roadmap-banner-left {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.1rem;
 }
 
 .roadmap-banner-icon {
-  font-size: 2.5rem;
+  font-size: 1.75rem;
   flex-shrink: 0;
-  filter: drop-shadow(0 0 12px rgba(255, 127, 80, 0.5));
 }
 
 .roadmap-banner h3 {
-  font-size: 1.3rem !important;
+  font-size: 1.05rem !important;
   color: #fff !important;
-  margin: 0 0 0.3rem 0 !important;
-  font-weight: 800 !important;
+  margin: 0 0 0.2rem 0 !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.2px;
 }
 
 .roadmap-banner p {
-  font-size: 0.95rem !important;
-  color: rgba(255, 255, 255, 0.65) !important;
+  font-size: 0.875rem !important;
+  color: rgba(255, 255, 255, 0.55) !important;
   margin: 0 !important;
   line-height: 1.4;
 }
@@ -358,27 +360,27 @@ main::before, main::after {
   background: #FF7F50;
   color: #0c0816 !important;
   font-weight: 800;
-  font-size: 1rem;
-  padding: 0.6rem 1.5rem;
+  font-size: 0.875rem;
+  padding: 0.5rem 1.25rem;
   border-radius: 12px;
   white-space: nowrap;
-  box-shadow: 0 4px 15px rgba(255, 127, 80, 0.35);
+  box-shadow: 0 4px 15px rgba(255, 127, 80, 0.3);
   transition: all 0.3s ease;
 }
 
 .roadmap-banner:hover .roadmap-banner-cta {
   background: #ff9a75;
   transform: translateX(3px);
-  box-shadow: 0 8px 25px rgba(255, 127, 80, 0.5);
+  box-shadow: 0 6px 20px rgba(255, 127, 80, 0.45);
 }
 
 @media (max-width: 640px) {
   .roadmap-banner {
     flex-direction: column;
     align-items: flex-start;
-    gap: 1.2rem;
+    gap: 1rem;
     width: 95vw;
-    padding: 2vh 1.2rem;
+    padding: 1rem 1.25rem;
   }
   .roadmap-banner-cta {
     width: 100%;
