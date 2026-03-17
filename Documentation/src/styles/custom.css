@@ -225,9 +225,9 @@ main::before, main::after {
 .btn-p, .btn-s {
   flex: 1;
   text-align: center;
-  padding: 0.7vh 0;
-  border-radius: 12px;
-  font-size: 1.05rem;
+  padding: 0.45rem 0;
+  border-radius: 10px;
+  font-size: 0.875rem;
   font-weight: 700;
   text-decoration: none !important;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
