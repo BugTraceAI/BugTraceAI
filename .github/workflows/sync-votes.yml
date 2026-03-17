@@ -15,10 +15,13 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup or checkout data-votes branch
+      - name: Configure git identity
         run: |
           git config --global user.name "bugtrace-bot"
           git config --global user.email "bot@bugtraceai.com"
+
+      - name: Setup or checkout data-votes branch
+        run: |
           git fetch origin || true
           if git ls-remote --exit-code --heads origin data-votes; then
             git checkout data-votes
@@ -27,7 +30,7 @@ jobs:
             git rm -rf . 2>/dev/null || true
             echo '[]' > votes.json
             git add votes.json
-            git commit -m "chore: initialize data-votes branch"
+            git -c user.name="bugtrace-bot" -c user.email="bot@bugtraceai.com" commit -m "chore: initialize data-votes branch"
           fi
 
       - name: Fetch all Feature Requests discussions dynamically
