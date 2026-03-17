@@ -1,5 +1,13 @@
 [
   {
+    "id": "bulk-url-swagger-file-import-for-automated-scanning",
+    "title": "Bulk URL & Swagger File Import for Automated Scanning",
+    "desc": "Enable users to upload and manage lists of target URLs as well as Swagger/OpenAPI JSON files for automated analysis. This feature should support bulk ingestion, parsing, and valida",
+    "url": "https://github.com/BugTraceAI/BugTraceAI/discussions/8",
+    "discussion": 8,
+    "votes": 0
+  },
+  {
     "id": "telegram-discord-alerts",
     "title": "Telegram & Discord Alerts",
     "desc": "Real-time vulnerability notifications",
