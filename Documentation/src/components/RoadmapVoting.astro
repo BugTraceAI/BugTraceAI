@@ -1,12 +1,6 @@
 ---
-const FEATURES = [
-  { id: 'exploit-chaining',   title: 'Exploit Chaining',          desc: 'Automatically chain discovered vulnerabilities into multi-step exploit sequences with AI-generated proof-of-concept.', icon: '🔗', discussion: 2 },
-  { id: 'ai-report-gen',      title: 'AI Report Generation',      desc: 'One-click professional vulnerability report generation in Markdown, PDF and HTML formats with executive summaries.',   icon: '📄', discussion: 3 },
-  { id: 'nuclei-integration', title: 'Nuclei Integration',        desc: 'Direct integration with Nuclei templates for fast discovery of CVEs and misconfigs alongside existing agents.',          icon: '📡', discussion: 4 },
-  { id: 'burp-export',        title: 'Burp Suite Export',         desc: 'Export scan findings directly to Burp Suite project files for seamless manual testing continuation.',                    icon: '🔀', discussion: 5 },
-  { id: 'scheduled-scans',    title: 'Scheduled Scans',           desc: 'Configure recurring scans on targets with automated change detection and delta reporting.',                              icon: '🗓️', discussion: 6 },
-  { id: 'discord-alerts',     title: 'Telegram & Discord Alerts', desc: 'Real-time notifications when new vulnerabilities are found, with severity triage and direct evidence links.',           icon: '🔔', discussion: 7 },
-];
+// Features are loaded dynamically at runtime from votes.json (data-votes branch).
+// Any Discussion in the "Feature Requests" category appears automatically — no code changes needed.
 ---
 
 <div class="voting-section">
@@ -15,27 +9,7 @@ const FEATURES = [
   </p>
 
   <div class="voting-grid" id="voting-grid">
-    {FEATURES.map(f => (
-      <a
-        href={`https://github.com/BugTraceAI/BugTraceAI/discussions/${f.discussion}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="voting-card"
-        data-id={f.id}
-      >
-        <div class="card-top">
-          <span class="card-icon">{f.icon}</span>
-          <h3 class="card-title">{f.title}</h3>
-        </div>
-        <p class="card-desc">{f.desc}</p>
-        <div class="card-footer">
-          <div class="vote-bar-wrap">
-            <div class="vote-bar" data-bar={f.id} style="width: 0%"></div>
-          </div>
-          <span class="vote-count" data-count={f.id}>… votes</span>
-        </div>
-      </a>
-    ))}
+    <p class="voting-loading" id="voting-loading">Loading features…</p>
   </div>
 
   <p class="voting-note">Vote counts sync hourly from GitHub Discussions.</p>
@@ -44,20 +18,55 @@ const FEATURES = [
 <script>
 const VOTES_URL = 'https://raw.githubusercontent.com/BugTraceAI/BugTraceAI/data-votes/votes.json';
 
+function escapeHtml(s) {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
 async function loadVotes() {
+  const grid = document.getElementById('voting-grid');
+
   try {
-    const res = await fetch(`${VOTES_URL}?t=${Date.now()}`);
-    if (!res.ok) return;
-    const data: Record<string, { votes: number; discussion: number }> = await res.json();
+    const res = await fetch(VOTES_URL + '?t=' + Date.now());
+    if (!res.ok) {
+      grid.innerHTML = '<p class="voting-loading">No features yet — check back soon.</p>';
+      return;
+    }
 
-    const counts = Object.values(data).map(d => d.votes);
-    const max = Math.max(1, ...counts);
+    const features = await res.json();
 
-    for (const [id, entry] of Object.entries(data)) {
-      const countEl = document.querySelector(`[data-count="${id}"]`);
-      const barEl = document.querySelector<HTMLElement>(`[data-bar="${id}"]`);
-      if (countEl) countEl.textContent = `${entry.votes} vote${entry.votes !== 1 ? 's' : ''}`;
-      if (barEl) barEl.style.width = `${Math.round((entry.votes / max) * 100)}%`;
+    if (!features.length) {
+      grid.innerHTML = '<p class="voting-loading">No features yet — check back soon.</p>';
+      return;
+    }
+
+    const max = Math.max(1, ...features.map(f => f.votes));
+    grid.innerHTML = '';
+
+    for (const f of features) {
+      const pct = Math.round((f.votes / max) * 100);
+      const voteText = f.votes + ' vote' + (f.votes !== 1 ? 's' : '');
+
+      const card = document.createElement('a');
+      card.href = f.url;
+      card.target = '_blank';
+      card.rel = 'noopener noreferrer';
+      card.className = 'voting-card';
+      card.innerHTML =
+        '<div class="card-top">' +
+          '<h3 class="card-title">' + escapeHtml(f.title) + '</h3>' +
+        '</div>' +
+        '<p class="card-desc">' + escapeHtml(f.desc) + '</p>' +
+        '<div class="card-footer">' +
+          '<div class="vote-bar-wrap">' +
+            '<div class="vote-bar" style="width: ' + pct + '%"></div>' +
+          '</div>' +
+          '<span class="vote-count">' + voteText + '</span>' +
+        '</div>';
+      grid.appendChild(card);
     }
   } catch (_) {
     // silently fail — votes are non-critical
@@ -75,6 +84,11 @@ loadVotes();
   color: var(--sl-color-text-accent);
   margin-bottom: 1.5rem;
   font-size: 0.95rem;
+}
+.voting-loading {
+  color: var(--sl-color-text);
+  opacity: 0.5;
+  font-size: 0.9rem;
 }
 .voting-grid {
   display: grid;
@@ -102,10 +116,6 @@ loadVotes();
   display: flex;
   align-items: center;
   gap: 0.6rem;
-}
-.card-icon {
-  font-size: 1.3rem;
-  flex-shrink: 0;
 }
 .card-title {
   font-size: 0.95rem;

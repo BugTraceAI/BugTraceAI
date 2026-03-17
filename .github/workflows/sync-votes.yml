@@ -23,29 +23,85 @@ jobs:
           else
             git checkout --orphan data-votes
             git rm -rf . 2>/dev/null || true
-            echo '{}' > votes.json
+            echo '[]' > votes.json
             git add votes.json
             git commit -m "chore: initialize data-votes branch"
           fi
 
-      - name: Query GitHub GraphQL for discussion reactions
+      - name: Fetch all Feature Requests discussions dynamically
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          RESPONSE=$(curl -s -X POST \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Content-Type: application/json" \
-            -d '{"query": "{ repository(owner: \"BugTraceAI\", name: \"BugTraceAI\") { d2: discussion(number: 2) { reactionGroups { content reactors { totalCount } } } d3: discussion(number: 3) { reactionGroups { content reactors { totalCount } } } d4: discussion(number: 4) { reactionGroups { content reactors { totalCount } } } d5: discussion(number: 5) { reactionGroups { content reactors { totalCount } } } d6: discussion(number: 6) { reactionGroups { content reactors { totalCount } } } d7: discussion(number: 7) { reactionGroups { content reactors { totalCount } } } } }"}' \
-            https://api.github.com/graphql)
+          python3 - <<'PYEOF'
+          import subprocess, json, re, os, sys
 
-          echo "$RESPONSE" | jq '{
-            "exploit-chaining":   { "votes": ([.data.repository.d2.reactionGroups[] | select(.content=="THUMBS_UP") | .reactors.totalCount][0] // 0), "discussion": 2 },
-            "ai-report-gen":      { "votes": ([.data.repository.d3.reactionGroups[] | select(.content=="THUMBS_UP") | .reactors.totalCount][0] // 0), "discussion": 3 },
-            "nuclei-integration": { "votes": ([.data.repository.d4.reactionGroups[] | select(.content=="THUMBS_UP") | .reactors.totalCount][0] // 0), "discussion": 4 },
-            "burp-export":        { "votes": ([.data.repository.d5.reactionGroups[] | select(.content=="THUMBS_UP") | .reactors.totalCount][0] // 0), "discussion": 5 },
-            "scheduled-scans":    { "votes": ([.data.repository.d6.reactionGroups[] | select(.content=="THUMBS_UP") | .reactors.totalCount][0] // 0), "discussion": 6 },
-            "discord-alerts":     { "votes": ([.data.repository.d7.reactionGroups[] | select(.content=="THUMBS_UP") | .reactors.totalCount][0] // 0), "discussion": 7 }
-          }' > votes.json
+          TOKEN = os.environ["GH_TOKEN"]
+
+          def graphql(query):
+              result = subprocess.run(
+                  ["curl", "-s", "-X", "POST",
+                   "-H", f"Authorization: Bearer {TOKEN}",
+                   "-H", "Content-Type: application/json",
+                   "-d", json.dumps({"query": query}),
+                   "https://api.github.com/graphql"],
+                  capture_output=True, text=True
+              )
+              data = json.loads(result.stdout)
+              if "errors" in data:
+                  print("GraphQL errors:", data["errors"], file=sys.stderr)
+                  sys.exit(1)
+              return data
+
+          # Step 1: get the Feature Requests category ID
+          cats = graphql('{ repository(owner: "BugTraceAI", name: "BugTraceAI") { discussionCategories(first: 20) { nodes { id name } } } }')
+          nodes = cats["data"]["repository"]["discussionCategories"]["nodes"]
+          cat_node = next((n for n in nodes if n["name"] == "Feature Requests"), None)
+          if not cat_node:
+              print("Category 'Feature Requests' not found", file=sys.stderr)
+              sys.exit(1)
+          cat_id = cat_node["id"]
+
+          # Step 2: get all discussions in that category with reaction counts
+          query = (
+              '{ repository(owner: "BugTraceAI", name: "BugTraceAI") '
+              '{ discussions(first: 50, categoryId: "%s") '
+              '{ nodes { number title body url '
+              'reactionGroups { content reactors { totalCount } } } } } }' % cat_id
+          )
+          discs = graphql(query)
+
+          def slugify(s):
+              return re.sub(r"-+", "-", re.sub(r"[^a-z0-9]+", "-", s.lower())).strip("-")
+
+          def clean_body(body):
+              body = body or ""
+              body = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', body)
+              body = re.sub(r'[*_`#>|~^]+', '', body)
+              body = re.sub(r'\s+', ' ', body).strip()
+              return body[:180]
+
+          features = []
+          for d in discs["data"]["repository"]["discussions"]["nodes"]:
+              votes = next(
+                  (g["reactors"]["totalCount"] for g in d["reactionGroups"] if g["content"] == "THUMBS_UP"),
+                  0
+              )
+              features.append({
+                  "id": slugify(d["title"]),
+                  "title": d["title"],
+                  "desc": clean_body(d["body"]),
+                  "url": d["url"],
+                  "discussion": d["number"],
+                  "votes": votes,
+              })
+
+          features.sort(key=lambda x: -x["votes"])
+
+          with open("votes.json", "w") as f:
+              json.dump(features, f, indent=2)
+
+          print(f"Written {len(features)} features to votes.json")
+          PYEOF
 
       - name: Commit and push if changed
         run: |
