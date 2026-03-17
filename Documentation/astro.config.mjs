@@ -19,6 +19,7 @@ export default defineConfig({
 					items: [
 						{ label: 'Overview', link: '/overview' },
 						{ label: 'Getting Started', link: '/getting-started' },
+						{ label: 'Roadmap & Voting', link: '/roadmap' },
 					],
 				},
 				{

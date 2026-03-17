@@ -1,0 +1,154 @@
+---
+const FEATURES = [
+  { id: 'exploit-chaining',   title: 'Exploit Chaining',          desc: 'Automatically chain discovered vulnerabilities into multi-step exploit sequences with AI-generated proof-of-concept.', icon: '🔗', discussion: 2 },
+  { id: 'ai-report-gen',      title: 'AI Report Generation',      desc: 'One-click professional vulnerability report generation in Markdown, PDF and HTML formats with executive summaries.',   icon: '📄', discussion: 3 },
+  { id: 'nuclei-integration', title: 'Nuclei Integration',        desc: 'Direct integration with Nuclei templates for fast discovery of CVEs and misconfigs alongside existing agents.',          icon: '📡', discussion: 4 },
+  { id: 'burp-export',        title: 'Burp Suite Export',         desc: 'Export scan findings directly to Burp Suite project files for seamless manual testing continuation.',                    icon: '🔀', discussion: 5 },
+  { id: 'scheduled-scans',    title: 'Scheduled Scans',           desc: 'Configure recurring scans on targets with automated change detection and delta reporting.',                              icon: '🗓️', discussion: 6 },
+  { id: 'discord-alerts',     title: 'Telegram & Discord Alerts', desc: 'Real-time notifications when new vulnerabilities are found, with severity triage and direct evidence links.',           icon: '🔔', discussion: 7 },
+];
+---
+
+<div class="voting-section">
+  <p class="voting-subtitle">
+    Help us prioritize what to build next. Click any feature to open its GitHub Discussion and leave a 👍 to cast your vote.
+  </p>
+
+  <div class="voting-grid" id="voting-grid">
+    {FEATURES.map(f => (
+      <a
+        href={`https://github.com/BugTraceAI/BugTraceAI/discussions/${f.discussion}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="voting-card"
+        data-id={f.id}
+      >
+        <div class="card-top">
+          <span class="card-icon">{f.icon}</span>
+          <h3 class="card-title">{f.title}</h3>
+        </div>
+        <p class="card-desc">{f.desc}</p>
+        <div class="card-footer">
+          <div class="vote-bar-wrap">
+            <div class="vote-bar" data-bar={f.id} style="width: 0%"></div>
+          </div>
+          <span class="vote-count" data-count={f.id}>… votes</span>
+        </div>
+      </a>
+    ))}
+  </div>
+
+  <p class="voting-note">Vote counts sync hourly from GitHub Discussions.</p>
+</div>
+
+<script>
+const VOTES_URL = 'https://raw.githubusercontent.com/BugTraceAI/BugTraceAI/data-votes/votes.json';
+
+async function loadVotes() {
+  try {
+    const res = await fetch(`${VOTES_URL}?t=${Date.now()}`);
+    if (!res.ok) return;
+    const data: Record<string, { votes: number; discussion: number }> = await res.json();
+
+    const counts = Object.values(data).map(d => d.votes);
+    const max = Math.max(1, ...counts);
+
+    for (const [id, entry] of Object.entries(data)) {
+      const countEl = document.querySelector(`[data-count="${id}"]`);
+      const barEl = document.querySelector<HTMLElement>(`[data-bar="${id}"]`);
+      if (countEl) countEl.textContent = `${entry.votes} vote${entry.votes !== 1 ? 's' : ''}`;
+      if (barEl) barEl.style.width = `${Math.round((entry.votes / max) * 100)}%`;
+    }
+  } catch (_) {
+    // silently fail — votes are non-critical
+  }
+}
+
+loadVotes();
+</script>
+
+<style>
+.voting-section {
+  margin: 2rem 0;
+}
+.voting-subtitle {
+  color: var(--sl-color-text-accent);
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+.voting-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.voting-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.2rem;
+  border: 1px solid var(--sl-color-hairline);
+  border-radius: 0.75rem;
+  background: var(--sl-color-bg-inline-code);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.voting-card:hover {
+  border-color: var(--sl-color-accent);
+  transform: translateY(-2px);
+}
+.card-top {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.card-icon {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+.card-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--sl-color-white);
+}
+.card-desc {
+  font-size: 0.8rem;
+  color: var(--sl-color-text);
+  flex: 1;
+  margin: 0;
+}
+.card-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.vote-bar-wrap {
+  flex: 1;
+  height: 4px;
+  background: var(--sl-color-hairline);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.vote-bar {
+  height: 100%;
+  background: var(--sl-color-accent);
+  border-radius: 2px;
+  transition: width 0.6s ease;
+}
+.vote-count {
+  font-size: 0.75rem;
+  color: var(--sl-color-text-accent);
+  white-space: nowrap;
+  min-width: 4rem;
+  text-align: right;
+}
+.voting-note {
+  font-size: 0.75rem;
+  color: var(--sl-color-text);
+  opacity: 0.5;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+</style>

@@ -1,0 +1,56 @@
+name: Sync Discussion Votes
+
+on:
+  schedule:
+    - cron: '0 * * * *'   # every hour
+  workflow_dispatch:        # allow manual trigger
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup or checkout data-votes branch
+        run: |
+          git fetch origin || true
+          if git ls-remote --exit-code --heads origin data-votes; then
+            git checkout data-votes
+          else
+            git checkout --orphan data-votes
+            git rm -rf . 2>/dev/null || true
+            echo '{}' > votes.json
+            git add votes.json
+            git commit -m "chore: initialize data-votes branch"
+          fi
+
+      - name: Query GitHub GraphQL for discussion reactions
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          RESPONSE=$(curl -s -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{"query": "{ repository(owner: \"BugTraceAI\", name: \"BugTraceAI\") { d2: discussion(number: 2) { reactionGroups { content reactors { totalCount } } } d3: discussion(number: 3) { reactionGroups { content reactors { totalCount } } } d4: discussion(number: 4) { reactionGroups { content reactors { totalCount } } } d5: discussion(number: 5) { reactionGroups { content reactors { totalCount } } } d6: discussion(number: 6) { reactionGroups { content reactors { totalCount } } } d7: discussion(number: 7) { reactionGroups { content reactors { totalCount } } } } }"}' \
+            https://api.github.com/graphql)
+
+          echo "$RESPONSE" | jq '{
+            "exploit-chaining":   { "votes": ([.data.repository.d2.reactionGroups[] | select(.content=="THUMBS_UP") | .reactors.totalCount][0] // 0), "discussion": 2 },
+            "ai-report-gen":      { "votes": ([.data.repository.d3.reactionGroups[] | select(.content=="THUMBS_UP") | .reactors.totalCount][0] // 0), "discussion": 3 },
+            "nuclei-integration": { "votes": ([.data.repository.d4.reactionGroups[] | select(.content=="THUMBS_UP") | .reactors.totalCount][0] // 0), "discussion": 4 },
+            "burp-export":        { "votes": ([.data.repository.d5.reactionGroups[] | select(.content=="THUMBS_UP") | .reactors.totalCount][0] // 0), "discussion": 5 },
+            "scheduled-scans":    { "votes": ([.data.repository.d6.reactionGroups[] | select(.content=="THUMBS_UP") | .reactors.totalCount][0] // 0), "discussion": 6 },
+            "discord-alerts":     { "votes": ([.data.repository.d7.reactionGroups[] | select(.content=="THUMBS_UP") | .reactors.totalCount][0] // 0), "discussion": 7 }
+          }' > votes.json
+
+      - name: Commit and push if changed
+        run: |
+          git config --global user.name "bugtrace-bot"
+          git config --global user.email "bot@bugtraceai.com"
+          git add votes.json
+          git diff --cached --quiet || git commit -m "chore: sync votes from discussions [skip ci]"
+          git push origin data-votes
