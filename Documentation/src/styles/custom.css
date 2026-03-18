@@ -96,9 +96,11 @@ body {
   position: relative;
 }
 
-/* Remove overflow for splash page */
-[data-template="splash"] {
-  overflow: hidden;
+/* Remove overflow for splash page - only on desktop */
+@media (min-width: 1025px) {
+  [data-template="splash"] {
+    overflow: hidden;
+  }
 }
 
 /* Main Content */
@@ -260,6 +262,15 @@ main::before, main::after {
 
 /* Mobile fallback */
 @media (max-width: 1024px) {
+  .ultimate-hub {
+    position: relative !important;
+    top: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 2vh 1rem 4vh !important;
+    overflow: visible !important;
+  }
+
   .hub-grid {
     grid-template-columns: 1fr;
     width: 95vw;
@@ -271,7 +282,7 @@ main::before, main::after {
   }
 
   .hub-card {
-    padding: 2.5vh 2vw;
+    padding: 2.5vh 4vw;
   }
 }
 
