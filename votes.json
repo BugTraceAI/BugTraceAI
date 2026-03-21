@@ -1,18 +1,18 @@
 [
   {
-    "id": "enable-integration-with-local-llms-for-improved-performance",
-    "title": "Enable Integration with Local LLMs for Improved Performance",
-    "desc": "Introduce support for connecting BugTraceAI to locally hosted language models (LLMs). This would reduce dependency on external APIs, improve response times, and allow offline usage",
-    "url": "https://github.com/BugTraceAI/BugTraceAI/discussions/9",
-    "discussion": 9,
-    "votes": 0
-  },
-  {
     "id": "bulk-url-swagger-file-import-for-automated-scanning",
     "title": "Bulk URL & Swagger File Import for Automated Scanning",
     "desc": "Enable users to upload and manage lists of target URLs as well as Swagger/OpenAPI JSON files for automated analysis. This feature should support bulk ingestion, parsing, and valida",
     "url": "https://github.com/BugTraceAI/BugTraceAI/discussions/8",
     "discussion": 8,
+    "votes": 0
+  },
+  {
+    "id": "enable-integration-with-local-llms-for-improved-performance",
+    "title": "Enable Integration with Local LLMs for Improved Performance",
+    "desc": "Introduce support for connecting BugTraceAI to locally hosted language models (LLMs). This would reduce dependency on external APIs, improve response times, and allow offline usage",
+    "url": "https://github.com/BugTraceAI/BugTraceAI/discussions/9",
+    "discussion": 9,
     "votes": 0
   },
   {
