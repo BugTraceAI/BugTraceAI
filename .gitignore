@@ -1,0 +1,24 @@
+# Carpetas sin repo Git propio (no son submódulos)
+REDACTED/
+REDACTED/
+REDACTED/
+
+# Archivos temporales / datos de prueba
+test-data/
+*.zip
+*.tar.gz
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+*.egg-info/
+
+# Logs
+logs/
+*.log
+
+# Datos locales
+bugtrace/data/
+data/
