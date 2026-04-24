@@ -1,0 +1,15 @@
+[submodule "BugStore"]
+	path = BugStore
+	url = https://github.com/BugTraceAI/BugStore
+
+[submodule "BugTraceAI-CLI"]
+	path = BugTraceAI-CLI
+	url = https://github.com/BugTraceAI/BugTraceAI-CLI
+
+[submodule "BugTraceAI-WEB"]
+	path = BugTraceAI-WEB
+	url = https://github.com/BugTraceAI/BugTraceAI-WEB
+
+[submodule "reconftw-mcp"]
+	path = reconftw-mcp
+	url = https://github.com/BugTraceAI/reconftw-mcp
