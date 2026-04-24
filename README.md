@@ -27,11 +27,6 @@
   <img src="https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white" alt="Docker"/>
 </p>
 
-> [!IMPORTANT]
-> **BugStore** lives in its own public repository: <https://github.com/BugTraceAI/BugStore>
->
-> If you reached a broken GitHub link inside this monorepo, use the repository above for the public BugStore source.
-
 ---
 
 ## Disclaimer
@@ -101,6 +96,8 @@ BugTraceAI is composed of **3 independent but interconnected components**:
     <td><a href="https://github.com/BugTraceAI/reconftw-mcp">reconftw-mcp</a></td>
   </tr>
 </table>
+
+<p><strong>BugStore</strong>, the deliberately vulnerable practice target used in demos and walkthroughs, lives in its own public repository: <a href="https://github.com/BugTraceAI/BugStore">BugTraceAI/BugStore</a>.</p>
 
 Each component works **independently**. Use the WEB alone for AI analysis, the CLI alone for autonomous scanning, or deploy everything together with the Launcher.
 
