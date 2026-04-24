@@ -62,7 +62,7 @@ This is **NOT** a wrapper around existing tools. It is an autonomous multi-agent
 
 ## The Ecosystem
 
-BugTraceAI is composed of **3 independent but interconnected components**:
+BugTraceAI is composed of **3 independent but interconnected components**, plus a dedicated practice target:
 
 <table>
   <tr>
@@ -95,9 +95,13 @@ BugTraceAI is composed of **3 independent but interconnected components**:
     <td>MCP + Docker + Python</td>
     <td><a href="https://github.com/BugTraceAI/reconftw-mcp">reconftw-mcp</a></td>
   </tr>
+  <tr>
+    <td><strong>BugStore</strong></td>
+    <td>Deliberately vulnerable practice target used in demos and walkthroughs. Full-featured shop riddled with 32 planted OWASP vulnerabilities</td>
+    <td>Python + FastAPI + PostgreSQL</td>
+    <td><a href="https://github.com/BugTraceAI/BugStore">BugTraceAI/BugStore</a></td>
+  </tr>
 </table>
-
-<p><strong>BugStore</strong>, the deliberately vulnerable practice target used in demos and walkthroughs, lives in its own public repository: <a href="https://github.com/BugTraceAI/BugStore">BugTraceAI/BugStore</a>.</p>
 
 Each component works **independently**. Use the WEB alone for AI analysis, the CLI alone for autonomous scanning, or deploy everything together with the Launcher.
 
