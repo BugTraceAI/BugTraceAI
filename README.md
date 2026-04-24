@@ -27,6 +27,11 @@
   <img src="https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white" alt="Docker"/>
 </p>
 
+> [!IMPORTANT]
+> **BugStore** lives in its own public repository: <https://github.com/BugTraceAI/BugStore>
+>
+> If you reached a broken GitHub link inside this monorepo, use the repository above for the public BugStore source.
+
 ---
 
 ## Disclaimer
