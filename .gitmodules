@@ -13,3 +13,6 @@
 [submodule "reconftw-mcp"]
 	path = reconftw-mcp
 	url = https://github.com/BugTraceAI/reconftw-mcp
+[submodule "BugTraceAI-Launcher"]
+	path = BugTraceAI-Launcher
+	url = https://github.com/BugTraceAI/BugTraceAI-Launcher
