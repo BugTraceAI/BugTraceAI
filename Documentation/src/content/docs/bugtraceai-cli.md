@@ -28,6 +28,17 @@ The CLI operates in two modes:
 - **AI-powered analysis**: Multi-persona consensus voting with OpenRouter API
 - **Real-time streaming**: WebSocket events for live scan monitoring
 - **Persistent storage**: SQLite as the source of truth for all scan data
+- **Authenticated scanning**: YAML auth configs with credentials, login flow steps, environment-variable substitution, and optional TOTP/2FA generation
+- **Resumable scans**: `--resume` and recoverable state tracking continue interrupted scans without losing context
+- **Model evaluation**: `tools/model_eval.py` benchmarks configured OpenRouter models and writes `tools/model_eval_results.json`
+
+### What's New in v3.5.7-beta
+
+- `--auth-config` accepts YAML authentication files for login-protected targets.
+- TOTP secrets can be supplied for 2FA-protected applications and injected into browser/login flows as `$totp`.
+- Interrupted scans can be resumed with `--resume` or through the WEB dashboard resume API.
+- `tools/model_eval.py` compares model behavior and latency for model-selection tuning.
+- Lifecycle handling now tracks scan origin, recoverability, orphan cleanup, and safer delete/resume behavior.
 
 ---
 
@@ -104,6 +115,9 @@ The server exposes:
 cd BugTraceAI-CLI
 python -m bugtrace --help
 python -m bugtrace scan url https://example.com
+python -m bugtrace scan url https://example.com --auth-config auth-config.yaml
+python -m bugtrace scan url https://example.com --resume
+python tools/model_eval.py
 ```
 
 ### Docker

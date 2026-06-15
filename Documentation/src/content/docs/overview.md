@@ -105,7 +105,7 @@ BugTraceAI is built on five non-negotiable principles:
 
 1. **Privacy First**: No telemetry, no tracking, no data collection. Everything runs locally. The only external call is to OpenRouter API for AI (and you control what gets sent).
 
-2. **Opensource Always**: MIT licensed. All code, all AI prompts, all algorithms are public. Closed-source security tools are unacceptable.
+2. **Opensource Always**: AGPL-3.0 licensed. All code, all AI prompts, all algorithms are public. Closed-source security tools are unacceptable.
 
 3. **Self-Hosted by Design**: Runs on your infrastructure. We will never offer BugTraceAI.cloud or a managed hosting service.
 

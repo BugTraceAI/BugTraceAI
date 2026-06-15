@@ -70,6 +70,14 @@ The frontend connects to:
 
 ## Features
 
+### What's New in v0.8.6.1-beta
+
+- **API Discovery**: Kiterunner-powered endpoint discovery with wordlists, speed selector, multi-filter views, tag-based sorting, and PostgreSQL persistence.
+- **Authenticated Scanning**: Upload YAML auth configs from the scan form, including credentials and optional TOTP/2FA secrets.
+- **Scan Resume Controls**: Resume recoverable scans from the dashboard through the CLI API.
+- **Web Browsing Toggle**: Enable or disable real-time web lookups in WebSec Agent chat.
+- **Improved CLI Configuration Tab**: Cleaner organization and validation for remote CLI settings.
+
 ### Security Toolkit
 
 20+ specialized AI-powered security analysis tools, each with its own system prompt for targeted analysis. Tools include DAST, SAST, JWT analysis, payload generation, and more.
@@ -80,11 +88,14 @@ See [Security Toolkit](/security-toolkit) for the full tool listing.
 
 When connected to a CLI API server:
 - **Create scans**: Launch new scans against target URLs
+- **Authenticated scans**: Launch scans with YAML auth configs and optional TOTP/2FA support
+- **Resume scans**: Continue recoverable scans without restarting the full workflow
 - **Monitor progress**: Real-time progress bars, phase indicators, and active agent display
 - **View findings**: Browse discovered vulnerabilities with severity and evidence
 - **Download reports**: HTML, JSON, and Markdown reports
 - **Real-time scan dashboard**: Pipeline bar showing current phase with progress, agent activity pills with finding count badges, and collapsible findings accordion
 - **Responsive layout**: The scan dashboard adapts to screen width with a two-row layout that wraps agent pills on narrow screens
+- **API Discovery**: Persist Kiterunner results to PostgreSQL with filters, speed controls, tags, and session history
 
 See [Real-time Scan Monitoring](/real-time-scan-monitoring) for details.
 
@@ -109,9 +120,10 @@ The WEB uses PostgreSQL for its own local data:
 | Chat history | PostgreSQL | Conversations with security toolkit tools |
 | Settings | PostgreSQL | User preferences, API key references |
 | Analysis reports | PostgreSQL | AI-generated analysis from toolkit tools |
+| API Discovery scans | PostgreSQL | Kiterunner endpoint discovery history, filters, tags, and results |
 | Scan data | CLI SQLite (via API) | All scan data lives in the CLI, accessed via REST API |
 
-The WEB does **not** duplicate scan data into PostgreSQL. It reads scan data from the CLI API in real time.
+The WEB does **not** duplicate CLI scan data into PostgreSQL. It reads autonomous scan data from the CLI API in real time, while WEB-native records such as chat history, settings, analysis reports, and API Discovery history remain in PostgreSQL.
 
 See [Dual Database System](/dual-database-system) for the complete data architecture.
 

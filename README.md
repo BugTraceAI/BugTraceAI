@@ -158,17 +158,18 @@ For the full pipeline documentation, see the [Wiki](https://github.com/BugTraceA
 
 ## What's New
 
-### BugTraceAI-WEB v0.8.6
+### BugTraceAI-WEB v0.8.6.1-beta
 - **API Discovery** — Kiterunner-powered active endpoint discovery with multi-filter, sort, speed control, and persistence
 - **Authenticated Scanning (YAML + TOTP/2FA)** — YAML-based login config with automatic 2FA token generation
 - **Web Browsing Toggle** — Real-time web access in WebSec Agent
-- **Aggressive System Prompt Profile** — High-authority mode for deeper offensive analysis
+- **Scan Resume Controls** — Resume recoverable scans from the WEB dashboard via the CLI API
+- **Improved CLI Configuration Tab** — Cleaner remote CLI settings management
 
-### BugTraceAI-CLI v3.5.7
+### BugTraceAI-CLI v3.5.7-beta
 - **YAML Authentication + TOTP** — `--auth-config` flag for scanning login-protected apps
-- **Model Evaluation Tool** — `model_eval` command with openrouter-v2 preset for benchmark testing
+- **Model Evaluation Tool** — `tools/model_eval.py` benchmark script with OpenRouter v2 model comparisons
 - **Scan Lifecycle Improvements** — Origin tracking, orphan cleanup, smart delete
-- **MCP Tools Expanded** — `explain_finding` and `model_eval` tools added
+- **Scan Resumption** — `--resume` support and recoverable scan state tracking
 
 ### BugTraceAI-Launcher v2.5.2
 - **AI-Assisted Installer** — Optional Claude Haiku-powered deployment troubleshooter (`ai_installer.py`)

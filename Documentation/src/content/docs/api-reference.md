@@ -33,6 +33,15 @@ Content-Type: application/json
 {
   "target_url": "https://example.com",
   "scan_type": "full",
+  "resume": false,
+  "auth": {
+    "login_url": "https://example.com/login",
+    "credentials": {
+      "username": "user@example.com",
+      "password": "${TARGET_PASSWORD}",
+      "totp_secret": "JBSWY3DPEHPK3PXP"
+    }
+  },
   "config": {
     "max_depth": 3,
     "max_urls": 500,
@@ -110,6 +119,28 @@ POST /api/scans/{id}/pause
 ```http
 POST /api/scans/{id}/resume
 ```
+
+Resumes scans that have recoverable state, including scans paused by the circuit breaker, interrupted connections, or manual pauses. If system concurrency limits are reached, the API returns HTTP 429 instead of starting unbounded resume work.
+
+### Delete a Scan
+
+```http
+DELETE /api/scans/{id}
+```
+
+Deletes scan metadata and performs cleanup using the scan origin and lifecycle state to avoid removing unrelated reports.
+
+### Authenticated Scan Payloads
+
+The scan creation payload accepts an optional `auth` object. WEB normally builds this object from an uploaded YAML auth config.
+
+| Field | Description |
+|-------|-------------|
+| `auth.login_url` | Login endpoint used before scanning protected pages |
+| `auth.credentials.username` | Username or email value |
+| `auth.credentials.password` | Password value, usually substituted from an environment variable before submission |
+| `auth.credentials.totp_secret` | Optional Base32 TOTP secret used to generate `$totp` codes for 2FA flows |
+| `resume` | Start from recoverable state when available |
 
 ---
 

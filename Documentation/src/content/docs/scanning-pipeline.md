@@ -10,6 +10,8 @@ The BugTraceAI-CLI scanning engine operates as a six-phase pipeline. Each phase 
 
 ## Pipeline Overview
 
+Before Phase 1 starts, BugTraceAI can optionally perform an authenticated login using a YAML auth config. Login flows can include username/password fields, environment-variable substitution, and TOTP/2FA generation via `$totp`.
+
 ```
 Phase 1         Phase 2         Phase 3           Phase 4           Phase 5           Phase 6
 DISCOVERY  -->  ANALYSIS   -->  CONSOLIDATION -->  EXPLOITATION  -->  VALIDATION   -->  REPORTING
@@ -30,6 +32,8 @@ DISCOVERY  -->  ANALYSIS   -->  CONSOLIDATION -->  EXPLOITATION  -->  VALIDATION
 3. Spiders additional paths using wordlists and heuristics
 4. Extracts parameters, endpoints, forms, and API paths
 5. Identifies technologies, frameworks, and server configurations
+
+If authenticated scanning is configured, discovery runs with the authenticated browser/session context so protected routes and APIs can be mapped.
 
 ### Output
 
@@ -226,6 +230,10 @@ The scanning pipeline includes a **circuit breaker** mechanism that protects the
 | `DAST_TIMEOUT_PERCENT_LIMIT` | `50` | Auto-pause if timeout percentage exceeds this threshold |
 
 When triggered, the circuit breaker pauses all active specialist agents and emits an event to connected WEB dashboards. Scanning can be resumed manually once the target recovers.
+
+### Resumable Scans
+
+Recoverable scans store phase progress, retry counters, and previous scan linkage. Use `--resume` in the CLI or the WEB dashboard resume action to continue interrupted, paused, or circuit-breaker-paused scans without restarting the full workflow.
 
 ---
 

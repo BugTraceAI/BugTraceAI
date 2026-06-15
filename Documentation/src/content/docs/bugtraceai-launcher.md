@@ -42,6 +42,7 @@ The interactive wizard guides you through:
 | **Service Lifecycle** | Start, stop, restart, update, uninstall |
 | **Health Checks** | Verifies all services are running correctly |
 | **Log Access** | View logs from any service |
+| **AI-Assisted Installer** | Optional Claude Haiku-powered troubleshooting assistant for failed or complex deployments |
 
 ---
 
@@ -64,6 +65,12 @@ cd BugTraceAI-Launcher
 ```
 
 The Launcher installs to `~/bugtraceai/` by default. No `sudo` required -- only Docker group permissions are needed.
+
+### AI-Assisted Installer
+
+BugTraceAI-Launcher includes an optional AI installer (`ai_installer.py`) for troubleshooting deployment failures. It can inspect logs, explain likely causes, and propose fixes for Docker, port, dependency, and configuration issues.
+
+The assistant is designed as a guided troubleshooting layer: it can suggest commands and fixes, but it does not make changes without user confirmation.
 
 ---
 

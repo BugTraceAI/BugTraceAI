@@ -69,8 +69,29 @@ When enabled, only structurally unique URL patterns are forwarded to specialist 
 | `auth_token` | string | `null` | Pre-existing auth token (Level 1) -- injected directly into all agent requests |
 | `auth.login_url` | string | `null` | Login endpoint URL (Level 2) |
 | `auth.credentials` | object | `null` | Username/password for automatic login (Level 2) |
+| `auth.credentials.totp_secret` | string | `null` | Optional Base32 TOTP secret used to generate 2FA codes |
 
-Level 1 injects the token as-is. Level 2 posts credentials to the login URL, extracts JWT from the response, and injects it into all subsequent requests. See [Scanning Pipeline](/scanning-pipeline) for details.
+Level 1 injects the token as-is. Level 2 posts credentials to the login URL, extracts JWT from the response, and injects it into all subsequent requests. YAML auth configs can also define browser-style login steps and `$totp` placeholders for 2FA flows. See [Scanning Pipeline](/scanning-pipeline) for details.
+
+### YAML Auth Configs
+
+Use `--auth-config` in the CLI or upload the YAML file from WEB's scan form:
+
+```yaml
+authentication:
+  login_url: "https://target.example/login"
+  credentials:
+    username: "${TARGET_USER}"
+    password: "${TARGET_PASSWORD}"
+    totp_secret: "JBSWY3DPEHPK3PXP"
+  login_flow:
+    - "Enter $username in the email field"
+    - "Enter $password in the password field"
+    - "Enter $totp in the code field"
+    - "Click the login button"
+```
+
+Environment variables are substituted before the scan starts. If `totp_secret` is present, BugTraceAI generates a current TOTP code and exposes it to the flow as `$totp`.
 
 ### SAFE_MODE
 
@@ -269,20 +290,8 @@ reporting:
 
 ### Authenticated Scan
 
-```json
-{
-  "SAFE_MODE": false,
-  "MAX_DEPTH": 3,
-  "MAX_URLS": 500,
-  "HEADLESS_BROWSER": true,
-  "auth": {
-    "login_url": "https://target.com/api/auth/login",
-    "credentials": {
-      "username": "testuser",
-      "password": "testpass"
-    }
-  }
-}
+```bash
+python -m bugtrace scan url https://target.example --auth-config auth-config.yaml
 ```
 
 ### CI/CD (Quick Scan)
