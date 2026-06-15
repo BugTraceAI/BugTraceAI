@@ -1,24 +1,50 @@
-# Carpetas sin repo Git propio (no son submódulos)
-REDACTED/
-REDACTED/
-REDACTED/
+# Public submodules (tracked as git submodules)
+# BugTraceAI-WEB, BugTraceAI-CLI, BugTraceAI-Launcher, BugTraceAI (monorepo) are submodules
 
-# Archivos temporales / datos de prueba
+# ─── Internal / private projects (never push to public) ───────────────────────
+REDACTED/
+REDACTED/
+REDACTED/
+REDACTED/
+REDACTED/
+ReactHunter/
+mini-swe-agent/
+REDACTED/
+hf_space/
+
+# ─── Internal research & planning docs ────────────────────────────────────────
+API_HACKING_CONTEXT.md
+REDACTED.md
+REDACTED.md
+REDACTED.md
+TESTING_PLAN_*.md
+bridge.py
+bugstore_*.md
+scan1_*.md
+wakam_*.md
+opera_*.md
+react_targets_no_waf.csv
+bugtraceai-vm-autostart.service
+
+# ─── Real scan reports (private findings, never public) ───────────────────────
+reports/
+
+# ─── reconsitepublic — runtime data (not for git) ─────────────────────────────
+reconsitepublic/recon_records.db
+reconsitepublic/*.db
+reconsitepublic/records_data.json
+reconsitepublic/bounty_data.json
+
+# ─── Common artifacts ──────────────────────────────────────────────────────────
 test-data/
 *.zip
 *.tar.gz
-
-# Python
 __pycache__/
 *.pyc
 *.pyo
 .venv/
 *.egg-info/
-
-# Logs
 logs/
 *.log
-
-# Datos locales
-bugtrace/data/
 data/
+bugtrace/data/
