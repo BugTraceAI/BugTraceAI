@@ -15,7 +15,8 @@
   <a href="https://demo.bugtraceai.com/bugtraceai"><img src="https://img.shields.io/badge/Live_Demo-Try_It-2EAD33?logo=google-chrome&logoColor=white" alt="Live Demo"/></a>
   <a href="https://github.com/BugTraceAI/BugTraceAI/releases/download/demo-report/BugTraceAI-Demo-Report.zip"><img src="https://img.shields.io/badge/Demo_Report-Download-red?logo=files&logoColor=white" alt="Demo Report"/></a>
   <img src="https://img.shields.io/badge/License-AGPL--3.0-blue.svg" alt="License"/>
-  <img src="https://img.shields.io/badge/Version-2.5.1-orange" alt="Version"/>
+  <img src="https://img.shields.io/badge/CLI-v3.5.7--beta-orange" alt="CLI Version"/>
+  <img src="https://img.shields.io/badge/WEB-v0.8.6--beta-orange" alt="WEB Version"/>
 </p>
 
 <p align="center">
@@ -85,8 +86,8 @@ BugTraceAI is composed of **3 independent but interconnected components**, plus 
   </tr>
   <tr>
     <td><strong>BugTraceAI-Launcher</strong></td>
-    <td>One-command Docker deployment wizard with interactive setup and service management</td>
-    <td>Bash + Docker Compose</td>
+    <td>One-command Docker deployment wizard with interactive setup, service management, and optional <strong>AI-assisted installation</strong> (Claude Haiku)</td>
+    <td>Bash + Python + Docker Compose</td>
     <td><a href="https://github.com/BugTraceAI/BugTraceAI-Launcher">BugTraceAI-Launcher</a></td>
   </tr>
   <tr>
@@ -149,9 +150,30 @@ The CLI runs a **6-phase autonomous pipeline**:
 | 5     | **Validation**    | Chrome DevTools Protocol + Vision AI screenshot analysis confirms findings                                                                                                                           |
 | 6     | **Reporting**     | PoC enrichment with WET/DRY traceability, AI-generated technical and executive reports                                                                                                               |
 
-The pipeline includes a **circuit breaker** that auto-pauses scanning when the target becomes unresponsive, and supports **authenticated scanning** with pre-configured tokens or automatic login flows.
+The pipeline includes a **circuit breaker** that auto-pauses scanning when the target becomes unresponsive, and supports **authenticated scanning** via YAML configuration with automatic TOTP/2FA token generation for login-protected targets.
 
 For the full pipeline documentation, see the [Wiki](https://github.com/BugTraceAI/BugTraceAI/wiki/Scanning-Pipeline).
+
+---
+
+## What's New
+
+### BugTraceAI-WEB v0.8.6
+- **API Discovery** — Kiterunner-powered active endpoint discovery with multi-filter, sort, speed control, and persistence
+- **Authenticated Scanning (YAML + TOTP/2FA)** — YAML-based login config with automatic 2FA token generation
+- **Web Browsing Toggle** — Real-time web access in WebSec Agent
+- **Aggressive System Prompt Profile** — High-authority mode for deeper offensive analysis
+
+### BugTraceAI-CLI v3.5.7
+- **YAML Authentication + TOTP** — `--auth-config` flag for scanning login-protected apps
+- **Model Evaluation Tool** — `model_eval` command with openrouter-v2 preset for benchmark testing
+- **Scan Lifecycle Improvements** — Origin tracking, orphan cleanup, smart delete
+- **MCP Tools Expanded** — `explain_finding` and `model_eval` tools added
+
+### BugTraceAI-Launcher v2.5.2
+- **AI-Assisted Installer** — Optional Claude Haiku-powered deployment troubleshooter (`ai_installer.py`)
+- **macOS Apple Silicon** — Full Colima/Docker Desktop support with ARM patches for reconFTW and Kali MCPs
+- **Robust prompts** — Universal terminal compatibility for all prompt types
 
 ---
 
@@ -187,12 +209,20 @@ The zip includes the full markdown report, validated findings JSON, specialist a
 
 ### One-Command Install
 
+**One-liner** (recommended):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/BugTraceAI/BugTraceAI-Launcher/main/install.sh | bash
+```
+
+Or clone and run manually:
+
 ```bash
 git clone https://github.com/BugTraceAI/BugTraceAI-Launcher.git ~/bugtraceai-launcher
 ~/bugtraceai-launcher/launcher.sh
 ```
 
-The interactive wizard handles deployment mode selection, API key configuration, and port assignment.
+The interactive wizard handles deployment mode selection, API key configuration, and port assignment. If anything goes wrong, the optional **AI-assisted installer** (powered by Claude Haiku) can diagnose and fix issues automatically.
 
 ### Deployment Modes
 
