@@ -49,6 +49,8 @@ cd BugTraceAI-Launcher
 ./launcher.sh
 ```
 
+The one-liner/bootstrap flow can also offer the experimental **AI-assisted installer** (`ai_installer.py`). If enabled, Claude Haiku via OpenRouter can inspect failures, explain what is wrong, and run recovery commands after you explicitly opt into AI mode. Use it mainly on clean VMs, VPS instances, or disposable test environments.
+
 The interactive wizard will:
 1. Check your system requirements (Docker, Git, RAM)
 2. Ask you to choose a deployment mode

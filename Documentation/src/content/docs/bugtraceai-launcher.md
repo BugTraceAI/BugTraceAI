@@ -4,7 +4,7 @@ title: Bugtraceai Launcher
 
 # BugTraceAI-Launcher
 
-BugTraceAI-Launcher is a one-command Docker deployment wizard that handles the complete setup and lifecycle management of the BugTraceAI platform. It automates dependency detection, port management, service configuration, and container orchestration.
+BugTraceAI-Launcher is a one-command Docker deployment wizard that handles the complete setup and lifecycle management of the BugTraceAI platform. It automates dependency detection, port management, service configuration, container orchestration, and optional AI-assisted troubleshooting.
 
 **Repository**: [github.com/BugTraceAI/BugTraceAI-Launcher](https://github.com/BugTraceAI/BugTraceAI-Launcher)
 
@@ -28,6 +28,8 @@ The interactive wizard guides you through:
 5. Starting all services
 6. Running health checks
 7. Displaying access URLs
+
+In v2.5.2, the bootstrap installer can also offer an experimental AI-assisted installer powered by Claude Haiku via OpenRouter.
 
 ---
 
@@ -70,7 +72,13 @@ The Launcher installs to `~/bugtraceai/` by default. No `sudo` required -- only 
 
 BugTraceAI-Launcher includes an optional AI installer (`ai_installer.py`) for troubleshooting deployment failures. It can inspect logs, explain likely causes, and propose fixes for Docker, port, dependency, and configuration issues.
 
-The assistant is designed as a guided troubleshooting layer: it can suggest commands and fixes, but it does not make changes without user confirmation.
+The one-liner prompts before entering AI mode:
+
+```text
+Try the new AI-assisted installer (Experimental)? [y/N]
+```
+
+If you choose AI mode, `ai_installer.py` shows a risk warning and requires you to type `YES` before it starts. After that confirmation it can run shell commands through its internal `run_command` tool while diagnosing and completing the install, so use this mode mainly on clean VMs, VPS instances, or disposable test environments.
 
 ---
 
