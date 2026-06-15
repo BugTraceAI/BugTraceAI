@@ -16,7 +16,7 @@
   <a href="https://github.com/BugTraceAI/BugTraceAI/releases/download/demo-report/BugTraceAI-Demo-Report.zip"><img src="https://img.shields.io/badge/Demo_Report-Download-red?logo=files&logoColor=white" alt="Demo Report"/></a>
   <img src="https://img.shields.io/badge/License-AGPL--3.0-blue.svg" alt="License"/>
   <img src="https://img.shields.io/badge/CLI-v3.5.7--beta-orange" alt="CLI Version"/>
-  <img src="https://img.shields.io/badge/WEB-v0.8.6--beta-orange" alt="WEB Version"/>
+  <img src="https://img.shields.io/badge/WEB-v0.8.6.1--beta-orange" alt="WEB Version"/>
 </p>
 
 <p align="center">
