@@ -89,7 +89,7 @@ Choose installer mode:
 
 Choose option `2` to start the AI-assisted installer, or option `1` for the standard guided installer.
 
-If you choose AI mode, `ai_installer.py` shows a risk warning and requires you to type `YES` before it starts. After that confirmation it can run shell commands through its internal `run_command` tool while diagnosing and completing the install, so use this mode mainly on clean VMs, VPS instances, or disposable test environments.
+If you choose AI mode, `ai_installer.py` shows a risk warning and asks for confirmation with a classic `[y/N]` prompt before it starts. After that confirmation it can run shell commands through its internal `run_command` tool while diagnosing and completing the install, so use this mode mainly on clean VMs, VPS instances, or disposable test environments.
 
 ---
 
