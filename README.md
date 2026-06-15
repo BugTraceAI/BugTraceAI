@@ -171,8 +171,8 @@ For the full pipeline documentation, see the [Wiki](https://github.com/BugTraceA
 - **Scan Lifecycle Improvements** — Origin tracking, orphan cleanup, smart delete
 - **Scan Resumption** — `--resume` support and recoverable scan state tracking
 
-### BugTraceAI-Launcher v2.5.2
-- **AI-Assisted Installer** — Optional Claude Haiku-powered deployment troubleshooter (`ai_installer.py`)
+### BugTraceAI-Launcher v2.5.3
+- **AI-Assisted Installer Menu** — Choose standard guided setup or Claude Haiku-powered deployment assistance from the installer flow
 - **macOS Apple Silicon** — Full Colima/Docker Desktop support with ARM patches for reconFTW and Kali MCPs
 - **Robust prompts** — Universal terminal compatibility for all prompt types
 

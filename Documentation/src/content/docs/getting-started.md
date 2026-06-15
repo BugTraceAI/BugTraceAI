@@ -49,17 +49,18 @@ cd BugTraceAI-Launcher
 ./launcher.sh
 ```
 
-The one-liner/bootstrap flow can also offer the experimental **AI-assisted installer** (`ai_installer.py`). If enabled, Claude Haiku via OpenRouter can inspect failures, explain what is wrong, and run recovery commands after you explicitly opt into AI mode. Use it mainly on clean VMs, VPS instances, or disposable test environments.
+The one-liner/bootstrap flow can also offer the experimental **AI-assisted installer** (`ai_installer.py`) before the standard wizard starts. If you run from a local Launcher clone, `./launcher.sh` shows an initial menu for standard vs AI-assisted install. If enabled, Claude Haiku via OpenRouter can inspect failures, explain what is wrong, and run recovery commands after you explicitly opt into AI mode. Use it mainly on clean VMs, VPS instances, or disposable test environments.
 
 The interactive wizard will:
-1. Check your system requirements (Docker, Git, RAM)
-2. Ask you to choose a deployment mode
-3. Pull and build Docker images
-4. Ask for your OpenRouter API key
-5. Configure all services
-6. Start the platform
-7. Run health checks
-8. Display access URLs
+1. Ask you to choose standard or AI-assisted install mode when available
+2. Check your system requirements (Docker, Git, RAM)
+3. Ask you to choose a deployment mode
+4. Pull and build Docker images
+5. Ask for your OpenRouter API key
+6. Configure all services
+7. Start the platform
+8. Run health checks
+9. Display access URLs
 
 After setup completes:
 - **WEB Dashboard**: http://localhost:6869

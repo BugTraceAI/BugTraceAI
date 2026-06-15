@@ -26,7 +26,7 @@ BugTraceAI is a modular security platform composed of three operational componen
 |-----------|---------|------------|
 | **BugTraceAI-CLI** | `v3.5.7-beta` | YAML auth configs, TOTP/2FA, scan resumption, model evaluation script, lifecycle cleanup |
 | **BugTraceAI-WEB** | `v0.8.6.1-beta` | API Discovery persistence, YAML auth upload, scan resume controls, WebSec Agent web browsing toggle, improved CLI configuration |
-| **BugTraceAI-Launcher** | `v2.5.2` | AI-assisted installer, robust terminal prompts, macOS/Apple Silicon deployment improvements |
+| **BugTraceAI-Launcher** | `v2.5.3` | AI-assisted installer menu, robust terminal prompts, macOS/Apple Silicon deployment improvements |
 
 ---
 
@@ -159,7 +159,7 @@ For detailed installation instructions, see [Getting Started](/getting-started).
 | [BugTraceAI](https://github.com/BugTraceAI/BugTraceAI) | Main hub and documentation | Active |
 | [BugTraceAI-CLI](https://github.com/BugTraceAI/BugTraceAI-CLI) | Autonomous scanning engine | v3.5.7-beta |
 | [BugTraceAI-WEB](https://github.com/BugTraceAI/BugTraceAI-WEB) | Dashboard and security toolkit | v0.8.6.1-beta |
-| [BugTraceAI-Launcher](https://github.com/BugTraceAI/BugTraceAI-Launcher) | Deployment automation | v2.5.2 |
+| [BugTraceAI-Launcher](https://github.com/BugTraceAI/BugTraceAI-Launcher) | Deployment automation | v2.5.3 |
 
 ---
 

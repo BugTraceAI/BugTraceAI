@@ -21,15 +21,16 @@ cd BugTraceAI-Launcher
 ```
 
 The interactive wizard guides you through:
-1. Selecting a deployment mode
-2. Checking system requirements
-3. Pulling and building Docker images
-4. Configuring environment variables
-5. Starting all services
-6. Running health checks
-7. Displaying access URLs
+1. Selecting standard or AI-assisted installer mode
+2. Selecting a deployment mode
+3. Checking system requirements
+4. Pulling and building Docker images
+5. Configuring environment variables
+6. Starting all services
+7. Running health checks
+8. Displaying access URLs
 
-In v2.5.2, the bootstrap installer can also offer an experimental AI-assisted installer powered by Claude Haiku via OpenRouter.
+In v2.5.3, the bootstrap installer and `./launcher.sh` can offer an experimental AI-assisted installer powered by Claude Haiku via OpenRouter.
 
 ---
 
@@ -77,6 +78,16 @@ The one-liner prompts before entering AI mode:
 ```text
 Try the new AI-assisted installer (Experimental)? [y/N]
 ```
+
+When running from a local clone, `./launcher.sh` shows an initial installer-mode menu when Python 3 and `ai_installer.py` are available:
+
+```text
+Choose installer mode:
+  1) Standard guided installer (manual choices)
+  2) AI-assisted installer (Experimental)
+```
+
+Choose option `2` to start the AI-assisted installer, or option `1` for the standard guided installer.
 
 If you choose AI mode, `ai_installer.py` shows a risk warning and requires you to type `YES` before it starts. After that confirmation it can run shell commands through its internal `run_command` tool while diagnosing and completing the install, so use this mode mainly on clean VMs, VPS instances, or disposable test environments.
 
