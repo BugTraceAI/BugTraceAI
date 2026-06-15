@@ -12,11 +12,21 @@ BugTraceAI is the first opensource, self-hosted framework designed specifically 
 
 BugTraceAI is a modular security platform composed of three operational components:
 
-- **BugTraceAI-CLI**: The autonomous scanning engine. Python-based with Go high-speed fuzzers (XSS, SSRF, IDOR, LFI), Playwright Chromium for browser-based validation, and AI agents orchestrated via OpenRouter API. Runs as a headless server (FastAPI on port 8000) or as an interactive CLI.
+- **BugTraceAI-CLI**: The autonomous scanning engine. Python-based with Go high-speed fuzzers (XSS, SSRF, IDOR, LFI), Playwright Chromium for browser-based validation, YAML authentication with TOTP/2FA, resumable scan state, and AI agents orchestrated via OpenRouter API. Runs as a headless server (FastAPI on port 8000) or as an interactive CLI.
 
-- **BugTraceAI-WEB**: A React dashboard with 20+ specialized AI-powered security tools. Connects to the CLI API for scan management and real-time monitoring. Features an Express + Prisma + PostgreSQL backend for persistence.
+- **BugTraceAI-WEB**: A React dashboard with 20+ specialized AI-powered security tools. Connects to the CLI API for scan management, scan resume controls, authenticated scan launch, API Discovery, and real-time monitoring. Features an Express + Prisma + PostgreSQL backend for persistence.
 
-- **BugTraceAI-Launcher**: A one-command Docker deployment wizard that handles dependency detection, port management, service configuration, and lifecycle management.
+- **BugTraceAI-Launcher**: A one-command Docker deployment wizard that handles dependency detection, port management, service configuration, lifecycle management, and optional AI-assisted troubleshooting.
+
+---
+
+## Latest Release Highlights
+
+| Component | Version | Highlights |
+|-----------|---------|------------|
+| **BugTraceAI-CLI** | `v3.5.7-beta` | YAML auth configs, TOTP/2FA, scan resumption, model evaluation script, lifecycle cleanup |
+| **BugTraceAI-WEB** | `v0.8.6.1-beta` | API Discovery persistence, YAML auth upload, scan resume controls, WebSec Agent web browsing toggle, improved CLI configuration |
+| **BugTraceAI-Launcher** | `v2.5.2` | AI-assisted installer, robust terminal prompts, macOS/Apple Silicon deployment improvements |
 
 ---
 
@@ -90,9 +100,9 @@ BugTraceAI-WEB (React + Express)         BugTraceAI-CLI (Python + Go + Playwrigh
 ```
 
 - The **CLI** is the scanning engine and API server
-- The **WEB** dashboard connects to the CLI API for management and monitoring
+- The **WEB** dashboard connects to the CLI API for management, authenticated scan launch, resume controls, and monitoring
 - **SQLite** in the CLI is the source of truth for all scan data
-- **PostgreSQL** in the WEB stores local data (chats, settings, analysis reports)
+- **PostgreSQL** in the WEB stores local data (chats, settings, analysis reports, API Discovery history)
 - Multiple WEB instances can connect to a single CLI server
 
 For full architectural details, see [Architecture](/architecture).
@@ -122,9 +132,9 @@ BugTraceAI is built on five non-negotiable principles:
 | Component | Technologies |
 |-----------|-------------|
 | **CLI Scanner** | Python 3.10+, FastAPI, SQLite, LanceDB, Go fuzzers, Playwright |
-| **CLI AI** | OpenRouter API (multi-model: Gemini, Claude, GPT) |
+| **CLI AI** | OpenRouter API (multi-model: Gemini, Claude, GPT), model evaluation tooling |
 | **WEB Frontend** | React 18, TypeScript, Vite, TailwindCSS |
-| **WEB Backend** | Express, Prisma, PostgreSQL |
+| **WEB Backend** | Express, Prisma, PostgreSQL, API Discovery persistence |
 | **Deployment** | Docker, Docker Compose, Nginx, Bash |
 
 ---
@@ -147,9 +157,9 @@ For detailed installation instructions, see [Getting Started](/getting-started).
 | Repository | Description | Status |
 |------------|-------------|--------|
 | [BugTraceAI](https://github.com/BugTraceAI/BugTraceAI) | Main hub and documentation | Active |
-| [BugTraceAI-CLI](https://github.com/BugTraceAI/BugTraceAI-CLI) | Autonomous scanning engine | v1.0.0 |
-| [BugTraceAI-WEB](https://github.com/BugTraceAI/BugTraceAI-WEB) | Dashboard and security toolkit | Beta |
-| [BugTraceAI-Launcher](https://github.com/BugTraceAI/BugTraceAI-Launcher) | Deployment automation | Active |
+| [BugTraceAI-CLI](https://github.com/BugTraceAI/BugTraceAI-CLI) | Autonomous scanning engine | v3.5.7-beta |
+| [BugTraceAI-WEB](https://github.com/BugTraceAI/BugTraceAI-WEB) | Dashboard and security toolkit | v0.8.6.1-beta |
+| [BugTraceAI-Launcher](https://github.com/BugTraceAI/BugTraceAI-Launcher) | Deployment automation | v2.5.2 |
 
 ---
 
