@@ -36,7 +36,7 @@ The BugTraceAI-CLI uses per-specialist task queues and an internal event bus to 
 
 ## Per-Specialist Queues
 
-Each [Specialist Agents|specialist agent](/specialist-agents|specialist-agent) has its own dedicated task queue. Findings from the consolidation phase are distributed to the appropriate queue based on vulnerability type.
+Each [[Specialist Agents|specialist agent]] has its own dedicated task queue. Findings from the consolidation phase are distributed to the appropriate queue based on vulnerability type.
 
 ### Queue Properties
 
@@ -51,16 +51,16 @@ Each [Specialist Agents|specialist agent](/specialist-agents|specialist-agent) h
 
 | Queue Name | Specialist Agent | Fuzzer |
 |-----------|-----------------|--------|
-| `xss_specialist` | XSS Agent | Go XSS Fuzzer |
-| `sqli_specialist` | SQLi Agent | Python AI |
-| `ssrf_specialist` | SSRF Agent | Go SSRF Fuzzer |
-| `idor_specialist` | IDOR Agent | Go IDOR Fuzzer |
-| `lfi_specialist` | LFI Agent | Go LFI Fuzzer |
-| `rce_specialist` | RCE Agent | Python AI |
-| `xxe_specialist` | XXE Agent | Python AI |
-| `jwt_specialist` | JWT Agent | Python AI |
-| `redirect_specialist` | Redirect Agent | Python AI |
-| `prototype_specialist` | Prototype Agent | Python AI |
+| `xss` | XSS Agent | Go XSS Fuzzer |
+| `sqli` | SQLi Agent | Python AI |
+| `ssrf` | SSRF Agent | Go SSRF Fuzzer |
+| `idor` | IDOR Agent | Go IDOR Fuzzer |
+| `lfi` | LFI Agent | Go LFI Fuzzer |
+| `rce` | RCE Agent | Python AI |
+| `xxe` | XXE Agent | Python AI |
+| `jwt` | JWT Agent | Python AI |
+| `openredirect` | Redirect Agent | Python AI |
+| `prototype_pollution` | Prototype Agent | Python AI |
 
 ---
 
@@ -155,14 +155,14 @@ Scanning Engine --> Event Bus --> WebSocket Endpoints
     "finding_id": "finding_007",
     "type": "XSS",
     "severity": "HIGH",
-    "agent": "xss_specialist"
+    "agent": "xss"
   }
 }
 ```
 
 ### WebSocket Consumption
 
-The event bus feeds directly into the WebSocket endpoints (`/ws/scans/{id}` and `/ws/global`). Events are transformed into the WebSocket event format documented in [WebSocket Events](/websocket-events).
+The event bus feeds directly into the WebSocket endpoints (`/ws/scans/{id}` and `/ws/global`). Events are transformed into the WebSocket event format documented in [[WebSocket Events]].
 
 ---
 
@@ -188,6 +188,6 @@ The event bus feeds directly into the WebSocket endpoints (`/ws/scans/{id}` and 
 
 ---
 
-**Parent**: [BugTraceAI-CLI](/bugtraceai-cli)
+**Parent**: [[BugTraceAI-CLI]]
 
-**See also**: [Scanning Pipeline](/scanning-pipeline) | [Specialist Agents](/specialist-agents) | [WebSocket Events](/websocket-events)
+**See also**: [[Scanning Pipeline]] | [[Specialist Agents]] | [[WebSocket Events]]

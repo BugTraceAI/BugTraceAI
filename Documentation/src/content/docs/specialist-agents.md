@@ -4,7 +4,7 @@ title: Specialist Agents
 
 # Specialist Agents
 
-During the exploitation phase of the [Scanning Pipeline](/scanning-pipeline), specialized agents handle each vulnerability class. Each agent consumes from its own task queue, applies AI-driven payload mutation, and reports findings with severity, confidence scores, and validation status.
+During the exploitation phase of the [[Scanning Pipeline]], specialized agents handle each vulnerability class. Each agent consumes from its own task queue, applies AI-driven payload mutation, and reports findings with severity, confidence scores, and validation status.
 
 ---
 
@@ -43,7 +43,7 @@ Each specialist:
 
 ### XSS Specialist
 
-**Queue**: `xss_specialist`
+**Queue**: `xss`
 **Fuzzers**: Go XSS Fuzzer + AI Agent
 
 Handles reflected, stored, and DOM-based cross-site scripting.
@@ -59,7 +59,7 @@ The Go XSS fuzzer handles high-speed payload delivery while the AI agent analyze
 
 ### SQLi Specialist
 
-**Queue**: `sqli_specialist`
+**Queue**: `sqli`
 **Fuzzers**: AI Agent (Python)
 
 Handles SQL injection across multiple database backends.
@@ -74,7 +74,7 @@ Handles SQL injection across multiple database backends.
 
 ### SSRF Specialist
 
-**Queue**: `ssrf_specialist`
+**Queue**: `ssrf`
 **Fuzzers**: Go SSRF Fuzzer + AI Agent
 
 Probes for server-side request forgery vulnerabilities.
@@ -88,7 +88,7 @@ Probes for server-side request forgery vulnerabilities.
 
 ### IDOR Specialist
 
-**Queue**: `idor_specialist`
+**Queue**: `idor`
 **Fuzzers**: Go IDOR Fuzzer + AI Agent
 
 Tests for insecure direct object reference vulnerabilities.
@@ -102,7 +102,7 @@ Tests for insecure direct object reference vulnerabilities.
 
 ### LFI Specialist
 
-**Queue**: `lfi_specialist`
+**Queue**: `lfi`
 **Fuzzers**: Go LFI Fuzzer + AI Agent
 
 Tests for local file inclusion and path traversal.
@@ -116,7 +116,7 @@ Tests for local file inclusion and path traversal.
 
 ### RCE Specialist
 
-**Queue**: `rce_specialist`
+**Queue**: `rce`
 **Fuzzers**: AI Agent (Python)
 
 Tests for remote code execution vulnerabilities.
@@ -130,7 +130,7 @@ Tests for remote code execution vulnerabilities.
 
 ### XXE Specialist
 
-**Queue**: `xxe_specialist`
+**Queue**: `xxe`
 **Fuzzers**: AI Agent (Python)
 
 Tests for XML external entity injection.
@@ -144,7 +144,7 @@ Tests for XML external entity injection.
 
 ### JWT Specialist
 
-**Queue**: `jwt_specialist`
+**Queue**: `jwt`
 **Fuzzers**: AI Agent (Python)
 
 Tests JSON Web Token security.
@@ -158,7 +158,7 @@ Tests JSON Web Token security.
 
 ### Open Redirect Specialist
 
-**Queue**: `redirect_specialist`
+**Queue**: `openredirect`
 **Fuzzers**: AI Agent (Python)
 
 Tests for open redirect vulnerabilities.
@@ -172,7 +172,7 @@ Tests for open redirect vulnerabilities.
 
 ### Prototype Pollution Specialist
 
-**Queue**: `prototype_specialist`
+**Queue**: `prototype_pollution`
 **Fuzzers**: AI Agent (Python)
 
 Tests for JavaScript prototype pollution.
@@ -185,7 +185,7 @@ Tests for JavaScript prototype pollution.
 
 ### CSTI Specialist
 
-**Queue**: `csti_specialist`
+**Queue**: `csti`
 **Fuzzers**: AI Agent (Python)
 
 Tests for client-side template injection in JavaScript frameworks.
@@ -199,7 +199,7 @@ Tests for client-side template injection in JavaScript frameworks.
 
 ### Mass Assignment Specialist
 
-**Queue**: `mass_assignment_specialist`
+**Queue**: `mass_assignment`
 **Fuzzers**: AI Agent (Python)
 
 Tests for mass assignment / parameter binding vulnerabilities.
@@ -213,7 +213,7 @@ Tests for mass assignment / parameter binding vulnerabilities.
 
 ### Header Injection Specialist
 
-**Queue**: `header_injection_specialist`
+**Queue**: `header_injection`
 **Fuzzers**: AI Agent (Python)
 
 Tests for HTTP header injection vulnerabilities.
@@ -224,25 +224,32 @@ Tests for HTTP header injection vulnerabilities.
 | Host header attacks | Host header manipulation for cache poisoning |
 | Header override | X-Forwarded-For, X-Original-URL abuse |
 
-### BAC Detection Specialist
+### API Security Specialist
 
-**Queue**: `bac_specialist`
+**Queue**: `api_security`
 **Fuzzers**: AI Agent (Python)
 
-Tests for broken access control vulnerabilities.
+Tests REST/GraphQL API surfaces, including broken access control (horizontal/vertical privilege, method tampering) and API-specific misconfigurations. Access-control testing is shared with the IDOR specialist; there is no separate "BAC" specialist — BAC is a reporting classification, not a dispatched agent.
 
 | Capability | Description |
 |-----------|-------------|
 | Horizontal privilege | Access resources belonging to other users |
-| Vertical privilege | Access admin/higher-privilege endpoints as regular user |
+| Vertical privilege | Access admin/higher-privilege endpoints as a regular user |
 | Method tampering | HTTP method override (GET vs POST vs PUT) |
-| Path traversal | URL path manipulation to bypass access controls |
+| API misconfig | Verbose errors, missing authz on API routes, GraphQL introspection |
+
+### File Upload Specialist
+
+**Queue**: `file_upload`
+**Fuzzers**: AI Agent (Python)
+
+Tests file-upload endpoints for unrestricted upload, content-type/extension bypasses, and path-based write primitives that can lead to RCE.
 
 ---
 
 ## Autonomous Discovery
 
-All 14 specialist agents implement **autonomous parameter discovery**. When a specialist receives a finding from the consolidation phase, it does NOT only test the hinted parameter. Instead:
+All specialist agents implement **autonomous parameter discovery**. When a specialist receives a finding from the consolidation phase, it does NOT only test the hinted parameter. Instead:
 
 1. Receives the URL as a "signal"
 2. Fetches the page HTML with a browser
@@ -309,6 +316,6 @@ For vulnerability classes with Go fuzzers, the typical flow is:
 
 ---
 
-**Parent**: [BugTraceAI-CLI](/bugtraceai-cli)
+**Parent**: [[BugTraceAI-CLI]]
 
-**See also**: [Scanning Pipeline](/scanning-pipeline) | [Queue and Event System](/queue-and-event-system) | [Validation System](/validation-system)
+**See also**: [[Scanning Pipeline]] | [[Queue and Event System]] | [[Validation System]]

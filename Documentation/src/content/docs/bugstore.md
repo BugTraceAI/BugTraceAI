@@ -12,7 +12,7 @@ BugStore is a **deliberately vulnerable e-commerce application** designed as a p
 
 ## What is BugStore?
 
-BugStore simulates a typical e-commerce platform (product listings, user accounts, shopping cart, forums) with 27+ tracked security vulnerabilities spanning all major vulnerability classes. It serves two purposes:
+BugStore simulates a typical e-commerce platform (product listings, user accounts, shopping cart, forums) with 32 tracked security vulnerabilities spanning all major vulnerability classes. It serves two purposes:
 
 1. **Practice target** -- Learn how BugTraceAI works by scanning a real application with known vulnerabilities
 2. **Benchmarking** -- Measure scanner detection rates against a controlled set of V-IDs (vulnerability identifiers)
@@ -32,7 +32,7 @@ BugStore simulates a typical e-commerce platform (product listings, user account
 
 ## Vulnerability Coverage
 
-BugStore contains 27 tracked vulnerabilities (V-001 through V-027) across these categories:
+BugStore contains 32 tracked vulnerabilities (V-001 through V-032) across these categories:
 
 | Category | Count | Examples |
 |----------|-------|---------|
@@ -97,4 +97,4 @@ A complete scan report from BugStore is available:
 
 ---
 
-**See also**: [Scanning Pipeline](/scanning-pipeline) | [Specialist Agents](/specialist-agents) | [Getting Started](/getting-started)
+**See also**: [[Scanning Pipeline]] | [[Specialist Agents]] | [[Getting Started]]

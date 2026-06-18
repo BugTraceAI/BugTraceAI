@@ -49,18 +49,15 @@ cd BugTraceAI-Launcher
 ./launcher.sh
 ```
 
-The one-liner/bootstrap flow can also offer the experimental **AI-assisted installer** (`ai_installer.py`) before the standard wizard starts. If you run from a local Launcher clone, `./launcher.sh` shows an initial menu for standard vs AI-assisted install. If enabled, Claude Haiku via OpenRouter can inspect failures, explain what is wrong, and run recovery commands after you explicitly opt into AI mode. Use it mainly on clean VMs, VPS instances, or disposable test environments.
-
 The interactive wizard will:
-1. Ask you to choose standard or AI-assisted install mode when available
-2. Check your system requirements (Docker, Git, RAM)
-3. Ask you to choose a deployment mode
-4. Pull and build Docker images
-5. Ask for your OpenRouter API key
-6. Configure all services
-7. Start the platform
-8. Run health checks
-9. Display access URLs
+1. Check your system requirements (Docker, Git, RAM)
+2. Ask you to choose a deployment mode
+3. Pull and build Docker images
+4. Ask for your OpenRouter API key
+5. Configure all services
+6. Start the platform
+7. Run health checks
+8. Display access URLs
 
 After setup completes:
 - **WEB Dashboard**: http://localhost:6869
@@ -176,7 +173,7 @@ The WEB dashboard includes 20+ AI-powered security tools that work without runni
 5. Provide URLs, code snippets, or tokens for analysis
 6. Receive AI-powered security analysis
 
-These tools work independently of the CLI scanner. See [Security Toolkit](/security-toolkit) for the complete tool listing.
+These tools work independently of the CLI scanner. See [[Security Toolkit]] for the complete tool listing.
 
 ---
 
@@ -208,24 +205,23 @@ curl -X PATCH http://localhost:8000/api/config \
   }'
 ```
 
-See [Configuration](/configuration) for all available settings.
+See [[Configuration]] for all available settings.
 
 ---
 
 ## Deployment Modes
 
-The Launcher supports four deployment modes:
+The Launcher supports three deployment modes:
 
 | Mode | What You Get | Command |
 |------|-------------|---------|
 | **Full Platform** | WEB + CLI, auto-connected | `./launcher.sh` (select Full) |
 | **Standalone WEB** | Dashboard and toolkit only | `./launcher.sh` (select WEB) |
-| **Standalone CLI** | Headless API scanner | `./launcher.sh` (select CLI) |
-| **CLI + AI Assistant** | Scanner + MCP for AI control | `./launcher.sh` (select CLI + AI) |
+| **Standalone CLI** | Headless API scanner **+ MCP server** | `./launcher.sh` (select CLI) |
 
-The **CLI + AI Assistant** mode is ideal for users who want to control scans from [OpenClaw](https://openclaw.com), Claude Code, Cursor, or any MCP-compatible AI assistant. See [AI Assistant Integration](/ai-assistant-integration) for details.
+There is no separate "CLI + AI Assistant" mode: the CLI deployment already starts the MCP server (`bugtrace_mcp` on port 8001) alongside the API, so any **Standalone CLI** (or **Full Platform**) install lets you control scans from [OpenClaw](https://openclaw.com), Claude Code, Cursor, or any MCP-compatible AI assistant. See [[AI Assistant Integration]] for details.
 
-See [Deployment Modes](/deployment-modes) for detailed comparisons.
+See [[Deployment Modes]] for detailed comparisons.
 
 ---
 
@@ -335,7 +331,7 @@ curl -X POST http://localhost:8000/api/scans \
   }'
 ```
 
-See [Configuration](/configuration) for full authenticated scanning options.
+See [[Configuration]] for full authenticated scanning options.
 
 ---
 
@@ -343,13 +339,13 @@ See [Configuration](/configuration) for full authenticated scanning options.
 
 After your first scan:
 
-- [Scanning Pipeline](/scanning-pipeline) -- Understand how scans work
-- [Configuration](/configuration) -- Customize scanning behavior
-- [Security Toolkit](/security-toolkit) -- Explore the 20+ analysis tools
-- [Report Generation](/report-generation) -- Export and share reports
-- [AI Assistant Integration](/ai-assistant-integration) -- Control scans from OpenClaw, Claude Code, or any MCP client
-- [API Reference](/api-reference) -- Integrate with your tools and pipelines
-- [BugStore](/bugstore) -- Practice scanning against a deliberately vulnerable app
+- [[Scanning Pipeline]] -- Understand how scans work
+- [[Configuration]] -- Customize scanning behavior
+- [[Security Toolkit]] -- Explore the 20+ analysis tools
+- [[Report Generation]] -- Export and share reports
+- [[AI Assistant Integration]] -- Control scans from OpenClaw, Claude Code, or any MCP client
+- [[API Reference]] -- Integrate with your tools and pipelines
+- [[BugStore]] -- Practice scanning against a deliberately vulnerable app
 
 ---
 
@@ -366,4 +362,4 @@ After your first scan:
 
 ---
 
-**See also**: [Overview](/overview) | [Architecture](/architecture) | [Deployment Modes](/deployment-modes)
+**See also**: [[Overview]] | [[Architecture]] | [[Deployment Modes]]

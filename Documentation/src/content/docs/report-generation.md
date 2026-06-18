@@ -108,7 +108,7 @@ The JSON report is designed for programmatic consumption -- CI/CD integration, c
         "payload": "<script>alert(1)</script>",
         "evidence": "...",
         "validation_status": "VALIDATED_CONFIRMED",
-        "agent": "xss_specialist",
+        "agent": "XSS",
         "discovered_at": "2026-02-10T14:35:22Z",
         "remediation": "Sanitize user input and implement Content Security Policy"
       }
@@ -210,7 +210,7 @@ The `REPORT_ONLY_VALIDATED` setting controls whether unvalidated findings are in
 | `true` (default) | Only findings with `VALIDATED_CONFIRMED` or `MANUAL_REVIEW_RECOMMENDED` appear in reports |
 | `false` | All findings appear, including `PENDING_VALIDATION` and `VALIDATED_FALSE_POSITIVE` |
 
-See [Configuration](/configuration) for all available settings.
+See [[Configuration]] for all available settings.
 
 ---
 
@@ -255,6 +255,6 @@ fi
 
 ---
 
-**Parent**: [BugTraceAI-CLI](/bugtraceai-cli)
+**Parent**: [[BugTraceAI-CLI]]
 
-**See also**: [API Reference](/api-reference) | [Validation System](/validation-system) | [Configuration](/configuration)
+**See also**: [[API Reference]] | [[Validation System]] | [[Configuration]]
