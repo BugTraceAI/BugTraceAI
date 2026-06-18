@@ -94,22 +94,22 @@ Add BugTraceAI to your MCP client configuration:
 
 ## Using the Launcher
 
-The [BugTraceAI-Launcher](/bugtraceai-launcher) includes a dedicated **"CLI + AI Assistant"** deployment mode (Option 4) that automates the entire setup:
+The [[BugTraceAI-Launcher]] starts the MCP server automatically with any CLI deployment — there is no separate menu option for it. Just install the CLI:
 
 ```bash
 git clone https://github.com/BugTraceAI/BugTraceAI-Launcher
 cd BugTraceAI-Launcher
 ./launcher.sh
-# Select option 4: "CLI + AI Assistant"
+# Select: Standalone CLI  (or Full Platform)
 ```
 
-The wizard will:
-- Configure both API and MCP ports
+The CLI container runs both `bugtrace_api` (port 8000) and `bugtrace_mcp` (port 8001). The wizard will:
+- Configure the API (and the MCP server on 8001)
 - Set up the environment
-- Start both services
+- Start the services
 - Display the MCP configuration snippet ready to copy
 
-See [Deployment Modes](/deployment-modes) for all available modes.
+See [[Deployment Modes]] for all available modes.
 
 ---
 
@@ -239,4 +239,4 @@ curl -sf http://localhost:8001/sse
 
 ---
 
-**See also**: [Deployment Modes](/deployment-modes) | [Getting Started](/getting-started) | [BugTraceAI-CLI](/bugtraceai-cli) | [API Reference](/api-reference)
+**See also**: [[Deployment Modes]] | [[Getting Started]] | [[BugTraceAI-CLI]] | [[API Reference]]

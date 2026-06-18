@@ -4,7 +4,7 @@ title: Bugtraceai Launcher
 
 # BugTraceAI-Launcher
 
-BugTraceAI-Launcher is a one-command Docker deployment wizard that handles the complete setup and lifecycle management of the BugTraceAI platform. It automates dependency detection, port management, service configuration, container orchestration, and optional AI-assisted troubleshooting.
+BugTraceAI-Launcher is a one-command Docker deployment wizard that handles the complete setup and lifecycle management of the BugTraceAI platform. It automates dependency detection, port management, service configuration, container orchestration, and an optional AI Setup & Repair Assistant that can install *or* diagnose and repair a deployment.
 
 **Repository**: [github.com/BugTraceAI/BugTraceAI-Launcher](https://github.com/BugTraceAI/BugTraceAI-Launcher)
 
@@ -21,16 +21,15 @@ cd BugTraceAI-Launcher
 ```
 
 The interactive wizard guides you through:
-1. Selecting standard or AI-assisted installer mode
-2. Selecting a deployment mode
-3. Checking system requirements
-4. Pulling and building Docker images
-5. Configuring environment variables
-6. Starting all services
-7. Running health checks
-8. Displaying access URLs
+1. Selecting a deployment mode
+2. Checking system requirements
+3. Pulling and building Docker images
+4. Configuring environment variables
+5. Starting all services
+6. Running health checks
+7. Displaying access URLs
 
-In v2.5.3, the bootstrap installer and `./launcher.sh` can offer an experimental AI-assisted installer powered by Claude Haiku via OpenRouter.
+As of v2.8.3, the bootstrap installer can also offer the experimental **AI Setup & Repair Assistant**, powered by Claude Haiku 4.5 via OpenRouter.
 
 ---
 
@@ -39,13 +38,14 @@ In v2.5.3, the bootstrap installer and `./launcher.sh` can offer an experimental
 | Feature | Description |
 |---------|-------------|
 | **Interactive Wizard** | Step-by-step guided setup |
-| **Auto-Dependency Detection** | Checks for Docker, Git, and system requirements |
-| **Port Management** | Detects port conflicts and suggests alternatives |
-| **Three Deployment Modes** | Full Platform, Standalone WEB, Standalone CLI |
+| **Auto-Dependency Detection** | Checks for Docker, Git, and system requirements; installs Git/curl via apt, dnf, yum, pacman, or zypper, and Docker Compose if missing |
+| **Port Management** | Detects port conflicts and suggests alternatives (including the PostgreSQL host port) |
+| **Three Deployment Modes** | Full Platform, Standalone WEB, Standalone CLI (plus optional MCP add-ons) |
 | **Service Lifecycle** | Start, stop, restart, update, uninstall |
 | **Health Checks** | Verifies all services are running correctly |
 | **Log Access** | View logs from any service |
-| **AI-Assisted Installer** | Optional Claude Haiku-powered troubleshooting assistant for failed or complex deployments |
+| **Hardened secrets** | Generated `.env` / `.env.docker` are written with `600` permissions |
+| **AI Setup & Repair Assistant** | Optional Claude Haiku 4.5 agent that can install from scratch or diagnose and repair an existing deployment |
 
 ---
 
@@ -69,27 +69,17 @@ cd BugTraceAI-Launcher
 
 The Launcher installs to `~/bugtraceai/` by default. No `sudo` required -- only Docker group permissions are needed.
 
-### AI-Assisted Installer
+### AI Setup & Repair Assistant
 
-BugTraceAI-Launcher includes an optional AI installer (`ai_installer.py`) for troubleshooting deployment failures. It can inspect logs, explain likely causes, and propose fixes for Docker, port, dependency, and configuration issues.
+BugTraceAI-Launcher includes an optional AI Setup & Repair Assistant (`ai_installer.py`), powered by Claude Haiku 4.5 via OpenRouter. It is no longer troubleshooting-only: a first menu lets you choose between **installing** BugTraceAI from scratch and **repairing or diagnosing** an existing deployment (failed services, database connectivity, Docker, ports, broken configuration). You then pick the scope — Full Platform, CLI only, or WEB only. In repair mode the agent diagnoses first and never reinstalls or deletes anything without asking.
 
 The one-liner prompts before entering AI mode:
 
 ```text
-Try the new AI-assisted installer (Experimental)? [y/N]
+Try the AI Setup & Repair Assistant (Experimental — installs & troubleshoots)? [y/N]
 ```
 
-When running from a local clone, `./launcher.sh` shows an initial installer-mode menu when Python 3 and `ai_installer.py` are available:
-
-```text
-Choose installer mode:
-  1) Standard guided installer (manual choices)
-  2) AI-assisted installer (Experimental)
-```
-
-Choose option `2` to start the AI-assisted installer, or option `1` for the standard guided installer.
-
-If you choose AI mode, `ai_installer.py` shows a risk warning and asks for confirmation with a classic `[y/N]` prompt. If you answer `y`, it asks for your OpenRouter API key and validates it before starting Haiku; invalid keys stop the installer with an error. After validation it can run shell commands through its internal `run_command` tool while diagnosing and completing the install, so use this mode mainly on clean VMs, VPS instances, or disposable test environments.
+If you choose AI mode, the assistant shows a risk warning and asks for a `[y/N]` confirmation before it starts. The OpenRouter API key is entered with hidden input (it never appears on screen) and only a masked form is shown back. It then runs shell commands through its `run_command` tool — commands that look destructive require an explicit confirmation, and each command runs under a kernel-enforced timeout so a hung command can't stall the install. The conversation runs in Spanish. Use this mode mainly on clean VMs, VPS instances, or disposable test environments.
 
 ---
 
@@ -111,7 +101,7 @@ If you choose AI mode, `ai_installer.py` shows a risk warning and asks for confi
 
 ## Deployment Modes
 
-The Launcher supports three deployment modes. See [Deployment Modes](/deployment-modes) for detailed descriptions.
+The Launcher supports three deployment modes. See [[Deployment Modes]] for detailed descriptions.
 
 | Mode | Components | Best For |
 |------|-----------|----------|
@@ -190,15 +180,16 @@ In Full Platform mode, the Launcher automatically configures:
 
 ### Environment Variables
 
-The Launcher generates a `.env` file during setup:
+The Launcher generates the configuration files during setup (created with `600` permissions, since they hold secrets). The CLI `.env`:
 
 ```bash
 # Generated by BugTraceAI-Launcher
+PROVIDER=openrouter            # or zai (Z.ai / GLM)
 OPENROUTER_API_KEY=sk-or-v1-...
-DB_PASSWORD=<generated>
-CLI_API_URL=http://btai-cli:8000
-VITE_CLI_API_URL=http://localhost:8000
+BUGTRACE_CORS_ORIGINS=*
 ```
+
+and the WEB `.env.docker` (PostgreSQL credentials, `FRONTEND_PORT`, conflict-checked `POSTGRES_PORT`, `VITE_CLI_API_URL`).
 
 ### Custom Configuration
 
@@ -274,8 +265,8 @@ It does **not** remove Docker itself or other unrelated containers.
 
 | Page | Description |
 |------|-------------|
-| [Deployment Modes](/deployment-modes) | Detailed comparison of Full Platform, Standalone WEB, and Standalone CLI modes |
+| [[Deployment Modes]] | Detailed comparison of Full Platform, Standalone WEB, and Standalone CLI modes |
 
 ---
 
-**See also**: [Getting Started](/getting-started) | [Architecture](/architecture) | [Deployment Modes](/deployment-modes)
+**See also**: [[Getting Started]] | [[Architecture]] | [[Deployment Modes]]

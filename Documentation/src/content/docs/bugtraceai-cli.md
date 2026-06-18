@@ -107,7 +107,7 @@ python3 -m uvicorn bugtrace.api.main:app --host 0.0.0.0 --port 8000
 The server exposes:
 - REST API at `http://localhost:8000/api/`
 - Swagger docs at `http://localhost:8000/docs`
-- WebSocket at `ws://localhost:8000/ws/`
+- WebSocket at `ws://localhost:8000/api/ws/`
 
 ### As an Interactive CLI
 
@@ -135,12 +135,12 @@ The CLI documentation is organized into the following sub-pages:
 
 | Page | Description |
 |------|-------------|
-| [Scanning Pipeline](/scanning-pipeline) | The six-phase scanning pipeline from discovery to reporting |
-| [Specialist Agents](/specialist-agents) | Individual exploitation agents for each vulnerability class |
-| [Queue and Event System](/queue-and-event-system) | Per-specialist task queues, deduplication, and the event bus |
-| [Validation System](/validation-system) | CDP browser validation and Vision AI screenshot analysis |
-| [Report Generation](/report-generation) | HTML, JSON, and Markdown report generation with PoC enrichment |
-| [Configuration](/configuration) | Runtime settings, model selection, safe mode, and API keys |
+| [[Scanning Pipeline]] | The six-phase scanning pipeline from discovery to reporting |
+| [[Specialist Agents]] | Individual exploitation agents for each vulnerability class |
+| [[Queue and Event System]] | Per-specialist task queues, deduplication, and the event bus |
+| [[Validation System]] | CDP browser validation and Vision AI screenshot analysis |
+| [[Report Generation]] | HTML, JSON, and Markdown report generation with PoC enrichment |
+| [[Configuration]] | Runtime settings, model selection, safe mode, and API keys |
 
 ---
 
@@ -156,7 +156,7 @@ The CLI uses multiple AI agent personas that work together:
 | **Validation Agent** | Confirms findings using headless Chromium and Vision AI |
 | **Reporting Agent** | Generates structured reports from validated findings |
 
-AI models are configured via OpenRouter in `provider/model` format. See [Configuration](/configuration) for model selection.
+AI models are configured via OpenRouter in `provider/model` format. See [[Configuration]] for model selection.
 
 ---
 
@@ -183,8 +183,8 @@ Key points:
 - SQLite is the **source of truth** for all scan data
 - LanceDB provides vector search capabilities over findings
 - Data is accessible via the REST API or direct SQLite access
-- See [Dual Database System](/dual-database-system) for the full data architecture
+- See [[Dual Database System]] for the full data architecture
 
 ---
 
-**See also**: [Architecture](/architecture) | [API Reference](/api-reference) | [Getting Started](/getting-started)
+**See also**: [[Architecture]] | [[API Reference]] | [[Getting Started]]

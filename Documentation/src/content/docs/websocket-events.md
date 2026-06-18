@@ -80,7 +80,7 @@ Emitted when a new vulnerability finding is discovered.
     "confidence": 0.88,
     "url": "https://example.com/search?q=test",
     "parameter": "q",
-    "agent": "xss_specialist",
+    "agent": "XSS",
     "validation_status": "PENDING_VALIDATION"
   }
 }
@@ -97,7 +97,7 @@ General log messages from the scanning engine.
   "scan_id": "scan_abc123",
   "level": "info",
   "message": "XSS specialist processing 5 queued targets",
-  "agent": "xss_specialist"
+  "agent": "XSS"
 }
 ```
 
@@ -130,7 +130,7 @@ Emitted when an error occurs during scanning.
   "scan_id": "scan_abc123",
   "error": "Connection timeout to target",
   "recoverable": true,
-  "agent": "ssrf_specialist"
+  "agent": "SSRF"
 }
 ```
 
@@ -241,6 +241,6 @@ This endpoint is useful for:
 
 ---
 
-**Parent**: [Architecture](/architecture)
+**Parent**: [[Architecture]]
 
-**See also**: [API Reference](/api-reference) | [Real-time Scan Monitoring](/real-time-scan-monitoring) | [Scanning Pipeline](/scanning-pipeline)
+**See also**: [[API Reference]] | [[Real-time Scan Monitoring]] | [[Scanning Pipeline]]

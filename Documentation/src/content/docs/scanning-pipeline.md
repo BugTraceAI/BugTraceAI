@@ -88,24 +88,25 @@ The analysis phase uses multiple AI "personas" that evaluate findings from diffe
 
 ### Queue Assignment
 
-| Vulnerability Type | Specialist Queue |
+| Vulnerability Type | Specialist Key |
 |-------------------|------------------|
-| XSS (Reflected, Stored, DOM) | `xss_specialist` |
-| SQL Injection | `sqli_specialist` |
-| SSRF | `ssrf_specialist` |
-| IDOR | `idor_specialist` |
-| LFI / Path Traversal | `lfi_specialist` |
-| RCE | `rce_specialist` |
-| XXE | `xxe_specialist` |
-| JWT Attacks | `jwt_specialist` |
-| Open Redirect | `redirect_specialist` |
-| Prototype Pollution | `prototype_specialist` |
-| CSTI (Client-Side Template Injection) | `csti_specialist` |
-| Mass Assignment | `mass_assignment_specialist` |
-| Header Injection | `header_injection_specialist` |
-| Broken Access Control | `bac_specialist` |
+| XSS (Reflected, Stored, DOM) | `xss` |
+| SQL Injection | `sqli` |
+| SSRF | `ssrf` |
+| IDOR | `idor` |
+| LFI / Path Traversal | `lfi` |
+| RCE | `rce` |
+| XXE | `xxe` |
+| JWT Attacks | `jwt` |
+| Open Redirect | `openredirect` |
+| Prototype Pollution | `prototype_pollution` |
+| CSTI (Client-Side Template Injection) | `csti` |
+| Mass Assignment | `mass_assignment` |
+| Header Injection | `header_injection` |
+| API Security | `api_security` |
+| File Upload | `file_upload` |
 
-See [Queue and Event System](/queue-and-event-system) for details on queue management.
+See [[Queue and Event System]] for details on queue management.
 
 ---
 
@@ -131,7 +132,7 @@ Each specialist agent is purpose-built for its vulnerability class:
 - **Evidence-collecting**: Captures proof of exploitation (responses, screenshots)
 - **Self-limiting**: Respects safe mode and depth limits
 
-See [Specialist Agents](/specialist-agents) for detailed per-agent documentation.
+See [[Specialist Agents]] for detailed per-agent documentation.
 
 ### Go Fuzzer Integration
 
@@ -171,7 +172,7 @@ AI Agent (Python)                    Go Fuzzer
 | `SKIPPED` | Validation not applicable |
 | `ERROR` | Validation encountered an error |
 
-See [Validation System](/validation-system) for the full validation architecture.
+See [[Validation System]] for the full validation architecture.
 
 ---
 
@@ -336,10 +337,10 @@ The scanning pipeline is controlled by several configuration settings:
 | `REPORT_ONLY_VALIDATED` | Only includes validated findings in reports |
 | `HEADLESS_BROWSER` | Enables/disables browser validation in Phase 5 |
 
-See [Configuration](/configuration) for all available settings.
+See [[Configuration]] for all available settings.
 
 ---
 
-**Parent**: [BugTraceAI-CLI](/bugtraceai-cli)
+**Parent**: [[BugTraceAI-CLI]]
 
-**See also**: [Specialist Agents](/specialist-agents) | [Queue and Event System](/queue-and-event-system) | [Validation System](/validation-system)
+**See also**: [[Specialist Agents]] | [[Queue and Event System]] | [[Validation System]]

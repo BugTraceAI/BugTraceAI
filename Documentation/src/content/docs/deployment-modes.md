@@ -4,24 +4,26 @@ title: Deployment Modes
 
 # Deployment Modes
 
-The [BugTraceAI-Launcher](/bugtraceai-launcher) supports three deployment modes, each targeting different use cases. This page describes each mode in detail, including what services are deployed, how they communicate, and when to use each one.
+The [[BugTraceAI-Launcher]] supports three deployment modes, each targeting different use cases. This page describes each mode in detail, including what services are deployed, how they communicate, and when to use each one.
 
 ---
 
 ## Mode Comparison
 
-| Feature | Full Platform | Standalone WEB | Standalone CLI | CLI + AI Assistant |
-|---------|:------------:|:--------------:|:--------------:|:------------------:|
-| WEB Dashboard | Yes | Yes | No | No |
-| CLI Scanner | Yes | No | Yes | Yes |
-| MCP for AI Assistants | No | No | No | Yes |
-| Real-time Monitoring | Yes | No | N/A | Via AI chat |
-| Security Toolkit (20+ tools) | Yes | Yes | No | No |
-| Active Scanning | Yes | No | Yes | Yes |
-| REST API | Yes | No | Yes | Yes |
-| PostgreSQL | Yes | Yes | No | No |
-| CI/CD Integration | Yes | No | Yes | Yes |
-| Auto-connected | Yes | N/A | N/A | N/A |
+| Feature | Full Platform | Standalone WEB | Standalone CLI |
+|---------|:------------:|:--------------:|:--------------:|
+| WEB Dashboard | Yes | Yes | No |
+| CLI Scanner | Yes | No | Yes |
+| MCP for AI Assistants | Yes | No | Yes |
+| Real-time Monitoring | Yes | No | N/A |
+| Security Toolkit (20+ tools) | Yes | Yes | No |
+| Active Scanning | Yes | No | Yes |
+| REST API | Yes | No | Yes |
+| PostgreSQL | Yes | Yes | No |
+| CI/CD Integration | Yes | No | Yes |
+| Auto-connected | Yes | N/A | N/A |
+
+> The MCP server (`bugtrace_mcp`, port 8001) ships with the CLI container, so it is available in both **Full Platform** and **Standalone CLI** — there is no separate "CLI + AI Assistant" deployment mode.
 
 ---
 
@@ -168,13 +170,13 @@ curl http://localhost:8000/api/scans/{id}/report/json > report.json
 
 ---
 
-## CLI + AI Assistant
+## AI Assistant Control (built into the CLI)
 
-**Command**: `./launcher.sh` then select "CLI + AI Assistant"
+**Command**: `./launcher.sh` then select **Standalone CLI** (or **Full Platform**) — no separate selection is needed.
 
 ### Description
 
-Deploys the CLI scanning engine together with an MCP (Model Context Protocol) server. This mode is designed for users who want to control BugTraceAI from an AI assistant like [OpenClaw](https://openclaw.com), Claude Code, Cursor, or any MCP-compatible client.
+The CLI container always starts an MCP (Model Context Protocol) server alongside the scanning engine, so every CLI deployment can be controlled from an AI assistant like [OpenClaw](https://openclaw.com), Claude Code, Cursor, or any MCP-compatible client. This is not a distinct deployment mode — it is a capability included with the CLI.
 
 ### Services
 
@@ -221,7 +223,7 @@ After deployment, add BugTraceAI to your AI assistant's MCP configuration:
 - Automated scanning controlled by AI agents
 - Integration with AI workflows and assistants
 
-See [AI Assistant Integration](/ai-assistant-integration) for full setup instructions and available MCP tools.
+See [[AI Assistant Integration]] for full setup instructions and available MCP tools.
 
 ---
 
@@ -230,13 +232,10 @@ See [AI Assistant Integration](/ai-assistant-integration) for full setup instruc
 ```
 Do you need a graphical dashboard?
   |
-  +-- No --> Do you want AI assistant control?
+  +-- No --> Do you need active scanning?
   |            |
-  |            +-- Yes --> CLI + AI Assistant
-  |            +-- No  --> Do you need active scanning?
-  |                          |
-  |                          +-- Yes --> Standalone CLI
-  |                          +-- No  --> (You may not need BugTraceAI)
+  |            +-- Yes --> Standalone CLI   (includes the MCP server for AI-assistant control)
+  |            +-- No  --> (You may not need BugTraceAI)
   |
   +-- Yes --> Do you need active scanning?
                |
@@ -285,7 +284,7 @@ docker run -d -p 6869:6869 --name btai-web bugtrace-web
 
 ### Manual Full Stack
 
-See the Docker Compose configuration examples in the [Architecture](/architecture) page.
+See the Docker Compose configuration examples in the [[Architecture]] page.
 
 ---
 
@@ -304,6 +303,6 @@ For production deployments:
 
 ---
 
-**Parent**: [BugTraceAI-Launcher](/bugtraceai-launcher)
+**Parent**: [[BugTraceAI-Launcher]]
 
-**See also**: [Architecture](/architecture) | [Getting Started](/getting-started) | [BugTraceAI-CLI](/bugtraceai-cli) | [BugTraceAI-WEB](/bugtraceai-web)
+**See also**: [[Architecture]] | [[Getting Started]] | [[BugTraceAI-CLI]] | [[BugTraceAI-WEB]]
