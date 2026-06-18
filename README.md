@@ -16,7 +16,7 @@
   <a href="https://github.com/BugTraceAI/BugTraceAI/releases/download/demo-report/BugTraceAI-Demo-Report.zip"><img src="https://img.shields.io/badge/Demo_Report-Download-red?logo=files&logoColor=white" alt="Demo Report"/></a>
   <img src="https://img.shields.io/badge/License-AGPL--3.0-blue.svg" alt="License"/>
   <img src="https://img.shields.io/badge/CLI-v3.5.7--beta-orange" alt="CLI Version"/>
-  <img src="https://img.shields.io/badge/WEB-v0.8.6.1--beta-orange" alt="WEB Version"/>
+  <img src="https://img.shields.io/badge/WEB-v1.0.0--beta-orange" alt="WEB Version"/>
 </p>
 
 <p align="center">
@@ -86,7 +86,7 @@ BugTraceAI is composed of **3 independent but interconnected components**, plus 
   </tr>
   <tr>
     <td><strong>BugTraceAI-Launcher</strong></td>
-    <td>One-command Docker deployment wizard with interactive setup, service management, and optional <strong>AI-assisted installation</strong> (Claude Haiku)</td>
+    <td>One-command Docker deployment wizard with interactive setup, service management, and an optional <strong>AI Setup & Repair Assistant</strong> (Claude Haiku 4.5) that can install or repair a deployment</td>
     <td>Bash + Python + Docker Compose</td>
     <td><a href="https://github.com/BugTraceAI/BugTraceAI-Launcher">BugTraceAI-Launcher</a></td>
   </tr>
@@ -99,7 +99,7 @@ BugTraceAI is composed of **3 independent but interconnected components**, plus 
   <tr>
     <td><strong>BugStore</strong></td>
     <td>Deliberately vulnerable practice target used in demos and walkthroughs. Full-featured shop riddled with 32 planted OWASP vulnerabilities</td>
-    <td>Python + FastAPI + PostgreSQL</td>
+    <td>Python + FastAPI + SQLite</td>
     <td><a href="https://github.com/BugTraceAI/BugStore">BugTraceAI/BugStore</a></td>
   </tr>
 </table>
@@ -158,7 +158,7 @@ For the full pipeline documentation, see the [Wiki](https://github.com/BugTraceA
 
 ## What's New
 
-### BugTraceAI-WEB v0.8.6.1-beta
+### BugTraceAI-WEB v1.0.0-beta
 - **API Discovery** — Kiterunner-powered active endpoint discovery with multi-filter, sort, speed control, and persistence
 - **Authenticated Scanning (YAML + TOTP/2FA)** — YAML-based login config with automatic 2FA token generation
 - **Web Browsing Toggle** — Real-time web access in WebSec Agent
@@ -171,10 +171,10 @@ For the full pipeline documentation, see the [Wiki](https://github.com/BugTraceA
 - **Scan Lifecycle Improvements** — Origin tracking, orphan cleanup, smart delete
 - **Scan Resumption** — `--resume` support and recoverable scan state tracking
 
-### BugTraceAI-Launcher v2.5.3
-- **AI-Assisted Installer Menu** — Choose standard guided setup or Claude Haiku-powered deployment assistance from the installer flow
+### BugTraceAI-Launcher v2.8.3
+- **AI Setup & Repair Assistant** — Choose standard guided setup, or let the Claude Haiku 4.5 agent install from scratch **or** diagnose/repair an existing deployment
+- **Hardened & robust** — Native Docker build output (no fragile spinner), multi-distro dependency install (apt/dnf/yum/pacman/zypper), `600`-permission config files, hidden/masked API-key entry, kernel-enforced command timeouts
 - **macOS Apple Silicon** — Full Colima/Docker Desktop support with ARM patches for reconFTW and Kali MCPs
-- **Robust prompts** — Universal terminal compatibility for all prompt types
 
 ---
 
@@ -223,7 +223,7 @@ git clone https://github.com/BugTraceAI/BugTraceAI-Launcher.git ~/bugtraceai-lau
 ~/bugtraceai-launcher/launcher.sh
 ```
 
-The interactive wizard handles deployment mode selection, API key configuration, and port assignment. If anything goes wrong, the optional **AI-assisted installer** (powered by Claude Haiku) can diagnose and fix issues automatically.
+The interactive wizard handles deployment mode selection, API key configuration, and port assignment. If anything goes wrong, the optional **AI Setup & Repair Assistant** (powered by Claude Haiku 4.5) can install from scratch or diagnose and repair an existing deployment.
 
 ### Deployment Modes
 
