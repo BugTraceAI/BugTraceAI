@@ -1,50 +1,35 @@
-# Public submodules (tracked as git submodules)
-# BugTraceAI-WEB, BugTraceAI-CLI, BugTraceAI-Launcher, BugTraceAI (monorepo) are submodules
+# Submodules are tracked separately (see .gitmodules)
 
-# ─── Internal / private projects (never push to public) ───────────────────────
-REDACTED/
-REDACTED/
-REDACTED/
-REDACTED/
-REDACTED/
-ReactHunter/
-mini-swe-agent/
-REDACTED/
-hf_space/
-
-# ─── Internal research & planning docs ────────────────────────────────────────
-API_HACKING_CONTEXT.md
-REDACTED.md
-REDACTED.md
-REDACTED.md
-TESTING_PLAN_*.md
-bridge.py
-bugstore_*.md
-scan1_*.md
-wakam_*.md
-opera_*.md
-react_targets_no_waf.csv
-bugtraceai-vm-autostart.service
-
-# ─── Real scan reports (private findings, never public) ───────────────────────
+# ─── Scan output & runtime data ───────────────────────────────────────────────
 reports/
-
-# ─── reconsitepublic — runtime data (not for git) ─────────────────────────────
-reconsitepublic/recon_records.db
-reconsitepublic/*.db
-reconsitepublic/records_data.json
-reconsitepublic/bounty_data.json
-
-# ─── Common artifacts ──────────────────────────────────────────────────────────
+data/
+bugtrace/data/
 test-data/
-*.zip
-*.tar.gz
+*.db
+*.sqlite
+reconsitepublic/*.db
+reconsitepublic/*_data.json
+
+# ─── Secrets / local env ──────────────────────────────────────────────────────
+.env
+.claude/
+
+# ─── Python ───────────────────────────────────────────────────────────────────
 __pycache__/
 *.pyc
 *.pyo
 .venv/
 *.egg-info/
+
+# ─── Node ─────────────────────────────────────────────────────────────────────
+node_modules/
+
+# ─── Common artifacts ─────────────────────────────────────────────────────────
 logs/
 *.log
-data/
-bugtrace/data/
+*.zip
+*.tar.gz
+
+# ─── OS ───────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
