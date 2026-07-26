@@ -15,8 +15,9 @@
   <a href="https://demo.bugtraceai.com/bugtraceai"><img src="https://img.shields.io/badge/Live_Demo-Try_It-2EAD33?logo=google-chrome&logoColor=white" alt="Live Demo"/></a>
   <a href="https://github.com/BugTraceAI/BugTraceAI/releases/download/demo-report/BugTraceAI-Demo-Report.zip"><img src="https://img.shields.io/badge/Demo_Report-Download-red?logo=files&logoColor=white" alt="Demo Report"/></a>
   <img src="https://img.shields.io/badge/License-AGPL--3.0-blue.svg" alt="License"/>
-  <img src="https://img.shields.io/badge/CLI-v3.5.7--beta-orange" alt="CLI Version"/>
-  <img src="https://img.shields.io/badge/WEB-v1.0.0--beta-orange" alt="WEB Version"/>
+  <img src="https://img.shields.io/badge/CLI-v3.7.12--beta-orange" alt="CLI Version"/>
+  <img src="https://img.shields.io/badge/WEB-v1.5.40--beta-orange" alt="WEB Version"/>
+  <img src="https://img.shields.io/badge/Launcher-v2.8.7-orange" alt="Launcher Version"/>
 </p>
 
 <p align="center">
@@ -63,7 +64,7 @@ This is **NOT** a wrapper around existing tools. It is an autonomous multi-agent
 
 ## The Ecosystem
 
-BugTraceAI is composed of **3 independent but interconnected components**, plus a dedicated practice target:
+BugTraceAI is composed of **4 independent but interconnected components**, plus a dedicated practice target:
 
 <table>
   <tr>
@@ -86,7 +87,7 @@ BugTraceAI is composed of **3 independent but interconnected components**, plus 
   </tr>
   <tr>
     <td><strong>BugTraceAI-Launcher</strong></td>
-    <td>One-command Docker deployment wizard with interactive setup, service management, and an optional <strong>AI Setup & Repair Assistant</strong> (Claude Haiku 4.5) that can install or repair a deployment</td>
+    <td>One-command Docker deployment wizard with interactive setup, service management, and an optional <strong>AI Setup & Repair Assistant</strong> (DeepSeek V3 with automatic Claude Haiku 4.5 fallback) that can install or repair a deployment</td>
     <td>Bash + Python + Docker Compose</td>
     <td><a href="https://github.com/BugTraceAI/BugTraceAI-Launcher">BugTraceAI-Launcher</a></td>
   </tr>
@@ -146,7 +147,7 @@ The CLI runs a **6-phase autonomous pipeline**:
 | 1     | **Discovery**     | Crawl and spider the target to map the attack surface                                                                                                                                                |
 | 2     | **Analysis**      | Multi-persona AI analysis with consensus voting                                                                                                                                                      |
 | 3     | **Consolidation** | Deduplicate findings and distribute to specialist queues                                                                                                                                             |
-| 4     | **Exploitation**  | 14 specialist agents (XSS, SQLi, SSRF, IDOR, LFI, RCE, XXE, JWT, Open Redirect, Prototype Pollution, CSTI, Mass Assignment, Header Injection, BAC Detection) with Go fuzzers and AI-mutated payloads |
+| 4     | **Exploitation**  | 15 specialist agents (XSS, SQLi, SSRF, IDOR, LFI, RCE, XXE, JWT, Open Redirect, Prototype Pollution, CSTI, Mass Assignment, Header Injection, API Security, File Upload) with Go fuzzers and AI-mutated payloads |
 | 5     | **Validation**    | Chrome DevTools Protocol + Vision AI screenshot analysis confirms findings                                                                                                                           |
 | 6     | **Reporting**     | PoC enrichment with WET/DRY traceability, AI-generated technical and executive reports                                                                                                               |
 
@@ -158,21 +159,25 @@ For the full pipeline documentation, see the [Wiki](https://github.com/BugTraceA
 
 ## What's New
 
-### BugTraceAI-WEB v1.0.0-beta
-- **API Discovery** — Kiterunner-powered active endpoint discovery with multi-filter, sort, speed control, and persistence
-- **Authenticated Scanning (YAML + TOTP/2FA)** — YAML-based login config with automatic 2FA token generation
-- **Web Browsing Toggle** — Real-time web access in WebSec Agent
-- **Scan Resume Controls** — Resume recoverable scans from the WEB dashboard via the CLI API
-- **Improved CLI Configuration Tab** — Cleaner remote CLI settings management
+### BugTraceAI-WEB v1.5.40-beta
+- **AIrepeater** — Burp/Caido-style multi-tab HTTP workbench with manual and AI-agent-driven exploitation modes, per-vulnerability playbooks, response search, and report handoff; the exploit model is provider-guarded and a dry-run button verifies the auto-auth macro before you rely on it
+- **Live Swarm Graph** — real-time visualization of reconnaissance, strategy, specialist, validation, and reporting stages, with per-agent L1→L6 escalation ladders that climb live as each agent works
+- **Model Lab module** — standalone sidebar module at `/modellab` for benchmarking OpenRouter models with its own API key: calibrated `quick-v3` / `advanced-v2` suites, a "Best per slot" leaderboard (MUTATION / SKEPTICAL / ANALYSIS / REPORTING), an opt-in MUTATION diversity probe, live WebSocket progress, cost visibility, and local history
+- **Anthropic chat provider** — Claude (Messages API, `x-api-key`) selectable alongside OpenRouter and Z.ai for chat, analysis, and the Repeater, with tool-calling normalized to the shared shape
+- **Curated model pack + Thinking control** — a hand-picked, verified OpenRouter model list plus Thinking / High / xHigh entries that enable OpenRouter's reasoning parameter
+- **Report Enrich + AuthDiscovery visibility** — a self-heal "Enrich" button re-runs PoC/CVSS enrichment when a report comes out under-enriched, and AuthDiscovery start, per-URL progress, and JWT/cookie totals surface in the Events feed and Swarm Graph
 
-### BugTraceAI-CLI v3.5.7-beta
-- **YAML Authentication + TOTP** — `--auth-config` flag for scanning login-protected apps
-- **Model Evaluation Tool** — `tools/model_eval.py` benchmark script with OpenRouter v2 model comparisons
-- **Scan Lifecycle Improvements** — Origin tracking, orphan cleanup, smart delete
-- **Scan Resumption** — `--resume` support and recoverable scan state tracking
+### BugTraceAI-CLI v3.7.12-beta
+- **Anthropic direct-API provider** — Anthropic is a first-class LLM provider via API key (`x-api-key`, Messages API); a new `api_format` preset field decouples the wire format so generation, threaded generation, vision, and connectivity all route to the Anthropic Messages API when active
+- **Integrated Model Lab (model-eval)** — `/api/model-eval` endpoints with a per-request OpenRouter key and live WebSocket progress; quality-dominant recalibration, new `quick-v3` / `advanced-v2` suites, a per-slot leaderboard (MUTATION / SKEPTICAL / ANALYSIS / REPORTING), and an opt-in MUTATION diversity probe
+- **Reporting/enrichment failover + provenance** — PoC/CVSS enrichment falls back to a secondary provider (`REPORTING_FAILOVER_ENABLED` / `REPORTING_FAILOVER_PROVIDER`, default `anthropic`) for that call only, never changing the scan's active provider; `poc_enrichment_provenance` and `reporting_failover_count` make reporting saturation visible in the deliverable
+- **Dedup & detection fixes** — RCE-family findings canonicalize to a single type (no double-count), strong-evidence IDORs route to MANUAL_REVIEW instead of being buried, and boolean-blind SQLi diffing is capped/off-thread to prevent event-loop stalls
+- **Deliverable parity** — pending (POTENTIAL) findings appear across Markdown, engagement JSON, and `validated_findings.json`, and the "Findings by Severity" totals now match across all deliverables
 
-### BugTraceAI-Launcher v2.8.3
-- **AI Setup & Repair Assistant** — Choose standard guided setup, or let the Claude Haiku 4.5 agent install from scratch **or** diagnose/repair an existing deployment
+### BugTraceAI-Launcher v2.8.7
+- **Anthropic provider** — pick Claude direct API (`sk-ant-...`, Messages API) as the LLM provider, both in the standard provider selector (which configures the deployed CLI) and in the AI Setup & Repair Assistant
+- **AI Setup & Repair Assistant** — Choose standard guided setup, or let the AI agent install from scratch **or** diagnose/repair an existing deployment; runs on DeepSeek V3 (OpenRouter) or Claude Haiku 4.5 (Anthropic direct), selected at startup, with an automatic sticky fallback on the OpenRouter path
+- **Safer & English-only** — destructive commands (e.g. `docker compose down -v`) are classified and gated, the UI is English-only, and the installer core was hardened with added tests
 - **Hardened & robust** — Native Docker build output (no fragile spinner), multi-distro dependency install (apt/dnf/yum/pacman/zypper), `600`-permission config files, hidden/masked API-key entry, kernel-enforced command timeouts
 - **macOS Apple Silicon** — Full Colima/Docker Desktop support with ARM patches for reconFTW and Kali MCPs
 
@@ -223,7 +228,7 @@ git clone https://github.com/BugTraceAI/BugTraceAI-Launcher.git ~/bugtraceai-lau
 ~/bugtraceai-launcher/launcher.sh
 ```
 
-The interactive wizard handles deployment mode selection, API key configuration, and port assignment. If anything goes wrong, the optional **AI Setup & Repair Assistant** (powered by Claude Haiku 4.5) can install from scratch or diagnose and repair an existing deployment.
+The interactive wizard handles deployment mode selection, API key configuration, and port assignment. If anything goes wrong, the optional **AI Setup & Repair Assistant** (powered by DeepSeek V3 with automatic Claude Haiku 4.5 fallback) can install from scratch or diagnose and repair an existing deployment.
 
 ### Deployment Modes
 
