@@ -1,5 +1,5 @@
 ---
-title: Architecture
+title: "Architecture"
 ---
 
 # Architecture
@@ -96,7 +96,7 @@ WEB Frontend  ---HTTP/REST--->  CLI FastAPI (:8000)
 
 The CLI API follows the OpenAPI 3.1 specification. Interactive documentation is available at `/docs` (Swagger UI).
 
-See [[API Reference]] for the complete endpoint listing.
+See [API Reference](/api-reference) for the complete endpoint listing.
 
 ### WebSocket
 
@@ -111,7 +111,7 @@ WEB Frontend  ---WebSocket--->  CLI FastAPI (:8000)
 
 WebSocket connections support reconnection via `last_seq` parameter for event replay.
 
-See [[WebSocket Events]] for the complete event protocol.
+See [WebSocket Events](/websocket-events) for the complete event protocol.
 
 ### Full Mode Data Flow
 
@@ -153,7 +153,7 @@ Key design decisions:
 - Multiple WEB instances can connect to a single CLI API server over the network
 - The `origin` field tracks where each scan was launched (`"cli"`, `"web"`, or `"unknown"`). The system defaults to `"unknown"` rather than guessing -- it is better to not know than to lie about data provenance.
 
-See [[Dual Database System]] for full details.
+See [Dual Database System](/dual-database-system) for full details.
 
 ---
 
@@ -165,7 +165,7 @@ The CLI API can generate complete report archives server-side via `GET /api/scan
 
 ### Circuit Breaker
 
-The scanning pipeline includes a circuit breaker that automatically pauses all agents when the target becomes unresponsive (consecutive timeouts or high timeout percentage). This prevents wasted API calls and protects the target from being overwhelmed. See [[Configuration]] for threshold settings.
+The scanning pipeline includes a circuit breaker that automatically pauses all agents when the target becomes unresponsive (consecutive timeouts or high timeout percentage). This prevents wasted API calls and protects the target from being overwhelmed. See [Configuration](/configuration) for threshold settings.
 
 ---
 
@@ -222,7 +222,7 @@ Dashboard-only, with AI-powered security toolkit. No active scanning.
 
 Full integration. WEB sends scan requests to CLI API, receives real-time updates.
 
-See [[Deployment Modes]] for detailed deployment options.
+See [Deployment Modes](/deployment-modes) for detailed deployment options.
 
 ---
 
@@ -251,6 +251,6 @@ In production deployments, internal services should not be exposed:
 
 ---
 
-**Sub-pages**: [[Dual Database System]] | [[API Reference]] | [[WebSocket Events]]
+**Sub-pages**: [Dual Database System](/dual-database-system) | [API Reference](/api-reference) | [WebSocket Events](/websocket-events)
 
-**See also**: [[Deployment Modes]] | [[BugTraceAI-CLI]] | [[BugTraceAI-WEB]]
+**See also**: [Deployment Modes](/deployment-modes) | [BugTraceAI-CLI](/bugtraceai-cli) | [BugTraceAI-WEB](/bugtraceai-web)

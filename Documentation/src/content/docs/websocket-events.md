@@ -1,5 +1,5 @@
 ---
-title: Websocket Events
+title: "WebSocket Events"
 ---
 
 # WebSocket Events
@@ -82,6 +82,58 @@ Emitted when a new vulnerability finding is discovered.
     "parameter": "q",
     "agent": "XSS",
     "validation_status": "PENDING_VALIDATION"
+  }
+}
+```
+
+> **Only genuine new-vulnerability announcements are emitted as `finding_discovered`.** Validation-lifecycle events such as `finding_rejected` and `finding_verified` are **not** new findings -- they are routed to `log` lines instead (CLI 3.7.7). Previously any event name merely containing the substring `"finding"` was mapped to `finding_discovered`, which could render a rejected or already-validated finding as a fresh confirmed critical.
+
+### exploit.&lt;type&gt;.level.started / exploit.&lt;type&gt;.level.completed
+
+Per-agent escalation events. Each specialist works a target through progressive escalation levels (L1 -> L6); it emits a `started` event when it begins a level and a `completed` event when that level finishes. These drive the per-agent escalation ladders in the WEB [Swarm Graph](/swarm-graph) (surfaced live as of WEB 1.5.39). The `<type>` segment is the vulnerability class, so concrete names include `exploit.xss.level.started` and `exploit.sqli.level.completed`.
+
+```json
+{
+  "type": "exploit.xss.level.started",
+  "seq": 47,
+  "scan_id": "scan_abc123",
+  "data": {
+    "level": "L2",
+    "param": "q",
+    "context": "script_block"
+  }
+}
+```
+
+The matching `completed` event reports whether that level confirmed the vulnerability:
+
+```json
+{
+  "type": "exploit.xss.level.completed",
+  "seq": 48,
+  "scan_id": "scan_abc123",
+  "data": {
+    "level": "L2",
+    "param": "q",
+    "confirmed": false
+  }
+}
+```
+
+### auth.phase.started
+
+Emitted at the start of the pre-scan authentication / auth-discovery phase when authenticated scanning is configured (CLI 3.7.7). Additional `auth.*` lifecycle events -- `auth.step`, `auth.success`, `auth.failed` -- report per-step login progress and the final result. The WEB [Swarm Graph](/swarm-graph) uses these to drive its AuthDiscovery status node.
+
+```json
+{
+  "type": "auth.phase.started",
+  "seq": 3,
+  "scan_id": "scan_abc123",
+  "data": {
+    "target": "https://example.com/api/auth/login",
+    "user": "testuser",
+    "totp_enabled": false,
+    "total_steps": 2
   }
 }
 ```
@@ -241,6 +293,6 @@ This endpoint is useful for:
 
 ---
 
-**Parent**: [[Architecture]]
+**Parent**: [Architecture](/architecture)
 
-**See also**: [[API Reference]] | [[Real-time Scan Monitoring]] | [[Scanning Pipeline]]
+**See also**: [API Reference](/api-reference) | [Real-time Scan Monitoring](/real-time-scan-monitoring) | [Swarm Graph](/swarm-graph) | [Scanning Pipeline](/scanning-pipeline)

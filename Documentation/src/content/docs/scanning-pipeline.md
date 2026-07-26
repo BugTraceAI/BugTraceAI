@@ -1,5 +1,5 @@
 ---
-title: Scanning Pipeline
+title: "Scanning Pipeline"
 ---
 
 # Scanning Pipeline
@@ -106,7 +106,7 @@ The analysis phase uses multiple AI "personas" that evaluate findings from diffe
 | API Security | `api_security` |
 | File Upload | `file_upload` |
 
-See [[Queue and Event System]] for details on queue management.
+See [Queue and Event System](/queue-and-event-system) for details on queue management.
 
 ---
 
@@ -132,7 +132,7 @@ Each specialist agent is purpose-built for its vulnerability class:
 - **Evidence-collecting**: Captures proof of exploitation (responses, screenshots)
 - **Self-limiting**: Respects safe mode and depth limits
 
-See [[Specialist Agents]] for detailed per-agent documentation.
+See [Specialist Agents](/specialist-agents) for detailed per-agent documentation.
 
 ### Go Fuzzer Integration
 
@@ -172,7 +172,7 @@ AI Agent (Python)                    Go Fuzzer
 | `SKIPPED` | Validation not applicable |
 | `ERROR` | Validation encountered an error |
 
-See [[Validation System]] for the full validation architecture.
+See [Validation System](/validation-system) for the full validation architecture.
 
 ---
 
@@ -337,10 +337,10 @@ The scanning pipeline is controlled by several configuration settings:
 | `REPORT_ONLY_VALIDATED` | Only includes validated findings in reports |
 | `HEADLESS_BROWSER` | Enables/disables browser validation in Phase 5 |
 
-See [[Configuration]] for all available settings.
+See [Configuration](/configuration) for all available settings.
 
 ---
 
-**Parent**: [[BugTraceAI-CLI]]
+**Parent**: [BugTraceAI-CLI](/bugtraceai-cli)
 
-**See also**: [[Specialist Agents]] | [[Queue and Event System]] | [[Validation System]]
+**See also**: [Specialist Agents](/specialist-agents) | [Queue and Event System](/queue-and-event-system) | [Validation System](/validation-system)

@@ -1,5 +1,5 @@
 ---
-title: Bugstore
+title: "BugStore"
 ---
 
 # BugStore
@@ -61,6 +61,8 @@ Best BugTraceAI scan results against BugStore:
 | **Total findings** | 145 (43 validated) |
 | **Vulnerability types found** | SQLi, XSS, IDOR, BAC, LFI, RCE, CSTI, JWT, Open Redirect, Prototype Pollution, GraphQL, Misconfig |
 
+> **Note:** These figures come from an earlier scanner build and have **not** yet been re-verified against a current **CLI 3.7.12** scan. Treat them as indicative and re-run a full BugStore scan to confirm the current detection rate before citing these numbers.
+
 ### Remaining Detection Gaps
 
 | V-ID | Vulnerability | Why It's Hard |
@@ -69,6 +71,8 @@ Best BugTraceAI scan results against BugStore:
 | V-026 | Header Injection | Non-standard injection point |
 | V-023 | Mass Assignment | Requires specific field knowledge |
 | V-024 | Information Disclosure | Subtle data leakage patterns |
+
+> **Re-verification needed:** This gap list predates the current scanner. Interim detection work has since landed for **V-023 (Mass Assignment)** and **V-026 (Header Injection)** -- both now have dedicated specialist agents (see [Specialist Agents](/specialist-agents)). Their status here has not been re-confirmed against a CLI 3.7.12 scan and should be re-tested rather than assumed still-missing.
 
 ---
 
@@ -97,4 +101,4 @@ A complete scan report from BugStore is available:
 
 ---
 
-**See also**: [[Scanning Pipeline]] | [[Specialist Agents]] | [[Getting Started]]
+**See also**: [Scanning Pipeline](/scanning-pipeline) | [Specialist Agents](/specialist-agents) | [Getting Started](/getting-started)

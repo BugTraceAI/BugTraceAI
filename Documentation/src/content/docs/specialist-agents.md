@@ -1,10 +1,10 @@
 ---
-title: Specialist Agents
+title: "Specialist Agents"
 ---
 
 # Specialist Agents
 
-During the exploitation phase of the [[Scanning Pipeline]], specialized agents handle each vulnerability class. Each agent consumes from its own task queue, applies AI-driven payload mutation, and reports findings with severity, confidence scores, and validation status.
+During the exploitation phase of the [Scanning Pipeline](/scanning-pipeline), specialized agents handle each vulnerability class. Each agent consumes from its own task queue, applies AI-driven payload mutation, and reports findings with severity, confidence scores, and validation status.
 
 ---
 
@@ -316,6 +316,6 @@ For vulnerability classes with Go fuzzers, the typical flow is:
 
 ---
 
-**Parent**: [[BugTraceAI-CLI]]
+**Parent**: [BugTraceAI-CLI](/bugtraceai-cli)
 
-**See also**: [[Scanning Pipeline]] | [[Queue and Event System]] | [[Validation System]]
+**See also**: [Scanning Pipeline](/scanning-pipeline) | [Queue and Event System](/queue-and-event-system) | [Validation System](/validation-system)

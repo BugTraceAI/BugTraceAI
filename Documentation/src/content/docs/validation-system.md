@@ -1,10 +1,10 @@
 ---
-title: Validation System
+title: "Validation System"
 ---
 
 # Validation System
 
-The validation system is the final phase of the [Scanning Pipeline](/scanning-pipeline). It uses headless Chromium via Playwright and Vision AI screenshot analysis to confirm or reject findings produced by the [Specialist Agents](/specialist-agents).
+Validation in BugTraceAI is layered rather than a single gate. [Specialist Agents](/specialist-agents) self-validate each candidate as they climb a per-agent L0-L6 escalation ladder, and a decoupled CDP AgenticValidator stage (headless Chromium via Playwright, plus best-effort Vision AI screenshot analysis) runs later in the [Scanning Pipeline](/scanning-pipeline) to add browser-grade confirmation for findings that request it.
 
 ---
 
@@ -16,6 +16,22 @@ Validation addresses a core problem in automated scanning: **false positives**. 
 2. Capturing screenshots of the result
 3. Analyzing screenshots with Vision AI to confirm visual evidence
 4. Assigning a definitive validation status
+
+---
+
+## Specialist Self-Validation (L0-L6 Ladder)
+
+Most confirmations happen inside the specialist that found the candidate, not in a separate pass. Each [specialist](/specialist-agents) runs a progressive **L0-L6 escalation ladder** -- cheap checks first, more expensive ones only if the finding is still unconfirmed:
+
+| Level | What runs | Confirms via |
+|-------|-----------|--------------|
+| L0-L1 | Probe / polyglot request | HTTP reflection, arithmetic eval, OOB callback |
+| L2-L3 | Static + LLM payload bombing | HTTP response evidence, out-of-band |
+| L4 | HTTP manipulator (context-aware mutation) | HTTP response evidence |
+| L5 | Browser testing (Playwright) | Real DOM execution |
+| L6 | Flag for the CDP AgenticValidator | Delegated to the Phase-5 stage below |
+
+A finding stops at the first level that confirms it, so a specialist typically produces its own ground-truth evidence. Only findings that reflect but cannot be self-confirmed are flagged `NEEDS_CDP_VALIDATION` at L6 and handed to the decoupled validator stage.
 
 ---
 
@@ -33,6 +49,8 @@ Validation addresses a core problem in automated scanning: **false positives**. 
 ---
 
 ## CDP Browser Validation
+
+The CDP validator runs as a decoupled **AgenticValidator Phase-5 stage** on the pipeline's hard queue. Since **CLI 3.6.46-48** this is a real, wired-in pipeline stage (it locates the Playwright-bundled Chromium at runtime and fails safe if the browser is unavailable) rather than dead code, and it can independently confirm reflected XSS, CSTI and SSTI findings that were flagged for CDP validation at L6.
 
 ### What is CDP?
 
@@ -98,11 +116,11 @@ After the browser captures a screenshot, Vision AI provides a second layer of va
 
 ### Vision AI + CDP Combined
 
-The combination of CDP browser execution and Vision AI analysis provides high-confidence validation:
+CDP browser execution and Vision AI analysis are complementary evidence sources, not a strict dual gate:
 
-- **CDP**: Provides programmatic, deterministic evidence (DOM state, JS execution)
-- **Vision AI**: Provides visual, semantic evidence (what the page looks like)
-- **Combined**: Both must agree for `VALIDATED_CONFIRMED`, either can trigger `MANUAL_REVIEW_RECOMMENDED`
+- **CDP**: Provides programmatic, deterministic evidence (DOM state, JS execution, dialogs)
+- **Vision AI**: Provides visual, semantic evidence (what the page looks like) when a screenshot is available
+- **How they combine**: Deterministic CDP evidence -- for example a fired dialog or a confirmed DOM mutation -- is sufficient on its own to reach `VALIDATED_CONFIRMED`. Vision AI corroborates or adds context to the screenshot; it is not required to agree before a finding can be confirmed. When the signals are weak or conflicting, the result is `MANUAL_REVIEW_RECOMMENDED` rather than a forced pass/fail. Vision AI is a best-effort layer -- if it is unavailable, validation falls back to CDP-only (see Error Handling).
 
 ---
 
@@ -143,6 +161,8 @@ Finding from Exploitation Phase
          (or MANUAL_REVIEW
           if uncertain)
 ```
+
+> The validator confirms on deterministic CDP evidence; the Vision AI pass corroborates the screenshot but is not a mandatory second gate. Findings a specialist already self-confirmed through the L0-L5 ladder arrive pre-validated and are not re-litigated here.
 
 ---
 

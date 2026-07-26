@@ -1,5 +1,5 @@
 ---
-title: Terms Of Service
+title: "Terms of Service"
 ---
 
 # Terms of Service

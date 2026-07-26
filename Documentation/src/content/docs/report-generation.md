@@ -1,5 +1,5 @@
 ---
-title: Report Generation
+title: "Report Generation"
 ---
 
 # Report Generation
@@ -199,6 +199,35 @@ After validation, the reporting phase enriches confirmed findings with detailed 
 | `poc_enrichment/wet/{type}_wet.json` | Raw LLM response | Debug LLM quality issues |
 | `poc_enrichment/dry/{type}_dry.json` | Parsed PoC data | Debug parser issues |
 
+### Enrichment Provenance
+
+Every enriched finding records how its PoC was produced in a `poc_enrichment_provenance` field, so a reader can tell real LLM enrichment apart from a fallback:
+
+| Value | Meaning |
+|-------|---------|
+| `llm` | Enriched by the scan's active LLM provider |
+| `llm_<provider>_failover` | The active provider failed or saturated, and the PoC was recovered via the reporting failover provider (e.g. `llm_anthropic_failover`) |
+| `deterministic_evidence` | LLM enrichment was unavailable; the PoC was assembled from the finding's own captured evidence only |
+
+### Reporting Failover
+
+Introduced in **CLI 3.7.11**. When a PoC or CVSS enrichment call on the scan's active provider fails or degrades (circuit-breaker fallback, timeout, or an OpenRouter saturation), the reporting layer retries that single enrichment call on a secondary provider. This is scoped strictly to the reporting/enrichment step -- it never changes the scan's active provider and never mixes providers mid-scan. The fallback call is self-contained, using the failover provider's own preset (base URL, key, `api_format`, and `REPORTING_MODEL`); Anthropic (API key) is supported natively.
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `REPORTING_FAILOVER_ENABLED` | boolean | `true` | Enable failover for reporting/enrichment calls |
+| `REPORTING_FAILOVER_PROVIDER` | string | `anthropic` | Provider preset id used only for reporting failover |
+
+The number of enrichment calls recovered this way is recorded in the `validated_findings.json` meta as `reporting_failover_count`, so reporting-time saturation is visible in the deliverable instead of silently degrading the report.
+
+---
+
+## Pending (POTENTIAL) Findings
+
+Some findings carry strong evidence but cannot be auto-confirmed -- for example a blind vector with no OOB egress, or a re-test that could not reproduce a differential. These are reported as **pending** with a `PENDING_VALIDATION` / `PENDING` status and surfaced with a **POTENTIAL** badge so a human can confirm them.
+
+Since **CLI 3.7.8**, pending findings are written to a dedicated `pending` array (with a count) in `validated_findings.json`, bringing all three deliverables into parity: the Markdown report, the engagement JSON, and the rich HTML/JSON viewer all surface pending findings. The "Findings by Severity" totals and the manual-review ordering are computed consistently across deliverables (validated + manual-review + pending).
+
 ---
 
 ## Configuration
@@ -210,7 +239,7 @@ The `REPORT_ONLY_VALIDATED` setting controls whether unvalidated findings are in
 | `true` (default) | Only findings with `VALIDATED_CONFIRMED` or `MANUAL_REVIEW_RECOMMENDED` appear in reports |
 | `false` | All findings appear, including `PENDING_VALIDATION` and `VALIDATED_FALSE_POSITIVE` |
 
-See [[Configuration]] for all available settings.
+See [Configuration](/configuration) for all available settings.
 
 ---
 
@@ -255,6 +284,6 @@ fi
 
 ---
 
-**Parent**: [[BugTraceAI-CLI]]
+**Parent**: [BugTraceAI-CLI](/bugtraceai-cli)
 
-**See also**: [[API Reference]] | [[Validation System]] | [[Configuration]]
+**See also**: [API Reference](/api-reference) | [Validation System](/validation-system) | [Configuration](/configuration)

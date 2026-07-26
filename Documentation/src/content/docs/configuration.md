@@ -1,5 +1,5 @@
 ---
-title: Configuration
+title: "Configuration"
 ---
 
 # Configuration
@@ -115,23 +115,26 @@ Increasing these values extends scan coverage but increases scan duration.
 
 ## AI Model Selection
 
-AI models are specified in `provider/model` format, compatible with the OpenRouter API.
+AI models are specified in `provider/model` format, compatible with the OpenRouter API. Beyond the general-purpose model, BugTraceAI uses a **per-slot taxonomy** so each task can run on the model best suited to it. The example values below reflect the curated OpenRouter pack; the exact per-slot defaults come from the active provider preset (see **Providers and Presets** below).
 
-| Setting | Default | Purpose |
+| Setting | Example | Purpose |
 |---------|---------|---------|
-| `DEFAULT_MODEL` | `google/gemini-2.5-flash` | General-purpose tasks, discovery, consolidation |
-| `CODE_MODEL` | `anthropic/claude-sonnet-4` | Code analysis, payload generation, technical reasoning |
-| `ANALYSIS_MODEL` | `google/gemini-2.5-pro` | Vulnerability analysis, multi-persona consensus |
+| `DEFAULT_MODEL` | `google/gemini-3-flash-preview` | General-purpose tasks, discovery, consolidation |
+| `CODE_MODEL` | `deepseek/deepseek-chat-v3-0324` | Code analysis, payload generation, technical reasoning |
+| `ANALYSIS_MODEL` | `anthropic/claude-haiku-4.5` | Vulnerability analysis, multi-persona consensus |
+| `MUTATION_MODEL` | `deepseek/deepseek-chat-v3-0324` | Payload mutation and diversity (needs a non-refusing model) |
+| `SKEPTICAL_MODEL` | `anthropic/claude-haiku-4.5` | Skeptical review inside the DASTySAST agent |
+| `REPORTING_MODEL` | `anthropic/claude-haiku-4.5` | PoC enrichment and CVSS scoring |
 
 ### Model Format
 
 Models follow the `provider/model` format used by OpenRouter:
 
 ```
-google/gemini-2.5-flash
-anthropic/claude-sonnet-4
+google/gemini-3-flash-preview
+anthropic/claude-haiku-4.5
+deepseek/deepseek-chat-v3-0324
 openai/gpt-4o
-meta-llama/llama-3.1-70b-instruct
 ```
 
 ### Changing Models
@@ -141,13 +144,27 @@ PATCH /api/config
 Content-Type: application/json
 
 {
-  "DEFAULT_MODEL": "openai/gpt-4o",
-  "CODE_MODEL": "anthropic/claude-sonnet-4",
-  "ANALYSIS_MODEL": "google/gemini-2.5-pro"
+  "DEFAULT_MODEL": "google/gemini-3-flash-preview",
+  "ANALYSIS_MODEL": "anthropic/claude-haiku-4.5",
+  "MUTATION_MODEL": "deepseek/deepseek-chat-v3-0324"
 }
 ```
 
-Model selection affects cost, speed, and analysis quality. Faster models (Gemini Flash) are good for high-volume tasks. Larger models (Gemini Pro, Claude Sonnet) provide better analysis quality.
+Model selection affects cost, speed, and analysis quality. Faster models (Gemini Flash) are good for high-volume tasks; models with stronger anti-hallucination behaviour (Claude Haiku) are preferred for the ANALYSIS, SKEPTICAL and REPORTING slots where honesty matters most.
+
+---
+
+## Providers and Presets
+
+BugTraceAI ships provider presets that bundle a base URL, wire format, key, and a full per-slot model map. Switch the active provider at runtime from the WEB Provider tab or the CLI provider API (see [API Reference](/api-reference)); switching re-applies the whole preset atomically, so the wire format and every provider-scoped model move together.
+
+| Preset | Wire format (`api_format`) | Key env | Notes |
+|--------|---------------------------|---------|-------|
+| `openrouter` / `openrouter-v2` | OpenAI-compatible | `OPENROUTER_API_KEY` (`sk-or-v1-...`) | Default; `openrouter-v2` is the recommended curated pack |
+| `anthropic` | `anthropic` (Messages API, `x-api-key`) | `ANTHROPIC_API_KEY` (`sk-ant-...`) | Single-provider Claude option, no OpenRouter dependency |
+| `zai` | OpenAI-compatible | `GLM_API_KEY` | Z.ai / GLM models |
+
+The `api_format` preset field decouples the wire format from the provider. Selecting the `anthropic` preset routes generation, threaded generation, vision and connectivity checks to the Anthropic Messages API (`x-api-key`) instead of the OpenAI-style chat-completions format. Existing OpenRouter/Z.ai behaviour is unchanged.
 
 ---
 
@@ -169,8 +186,34 @@ When `HEADLESS_BROWSER` is `false`:
 | Setting | Type | Default | Description |
 |---------|------|---------|-------------|
 | `REPORT_ONLY_VALIDATED` | boolean | `true` | Only include validated findings in reports |
+| `REPORTING_FAILOVER_ENABLED` | boolean | `true` | Fall back to a secondary provider for a failed reporting/enrichment call (scoped to reporting only, never the scan) |
+| `REPORTING_FAILOVER_PROVIDER` | string | `anthropic` | Provider preset id used only for reporting failover |
 
 When `true`, reports only contain findings with status `VALIDATED_CONFIRMED` or `MANUAL_REVIEW_RECOMMENDED`. When `false`, all findings are included regardless of validation status.
+
+Reporting failover (CLI 3.7.11) retries only the individual PoC/CVSS enrichment call that failed on the active provider; it never changes the scan's provider. See [Report Generation](/report-generation) for the resulting `poc_enrichment_provenance` values and the `reporting_failover_count` meta field.
+
+---
+
+## Model Lab Scoring
+
+The integrated Model Lab (model-eval) benchmark ranks candidate models with a quality-dominant composite. All scoring knobs are externalized (prefixed `MODELLAB_`) so a run stays self-describing; every run records its scoring version and effective weights. Recalibrated in **CLI 3.7.12** from real-scan ground truth.
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `MODELLAB_SCORING_VERSION` | string | `v2-quality` | Scoring version stamped onto each run |
+| `MODELLAB_W_CORRECTNESS` | float | `0.40` | Composite weight: correctness |
+| `MODELLAB_W_SKEPTICISM` | float | `0.30` | Composite weight: skepticism |
+| `MODELLAB_W_COMPLIANCE` | float | `0.15` | Composite weight: compliance |
+| `MODELLAB_W_PERFORMANCE` | float | `0.15` | Composite weight: performance (latency) |
+| `MODELLAB_GATE_MIN_CORRECTNESS` | float | `6.0` | Minimum correctness to pass the quality gate |
+| `MODELLAB_GATE_MIN_SKEPTICISM` | float | `7.0` | Minimum skepticism to pass the quality gate |
+| `MODELLAB_GATE_MIN_COMPLIANCE` | float | `6.0` | Minimum compliance to pass the quality gate |
+| `MODELLAB_FAILURE_PENALTY` | float | `3.0` | Composite penalty scaled by the failure rate |
+| `MODELLAB_LATENCY_STAT` | string | `median` | Latency statistic for performance scoring (`median` or `p95`) |
+| `MODELLAB_MUTATION_DIVERSITY_WEIGHT` | float | `0.6` | Weight of payload diversity in the MUTATION-slot pick (quality = 1 - this) |
+
+Weights are normalized to sum to 1.0 at read time, so a partial or misconfigured set stays safe. See [API Reference](/api-reference) for the Model Lab endpoints.
 
 ---
 
@@ -229,9 +272,9 @@ The CLI also supports a YAML configuration file at `~/.bugtrace/config.yaml`:
 ```yaml
 openrouter:
   api_key: "sk-or-v1-..."
-  default_model: "google/gemini-2.5-flash"
-  code_model: "anthropic/claude-sonnet-4"
-  analysis_model: "google/gemini-2.5-pro"
+  default_model: "google/gemini-3-flash-preview"
+  code_model: "deepseek/deepseek-chat-v3-0324"
+  analysis_model: "anthropic/claude-haiku-4.5"
 
 scanning:
   max_depth: 3

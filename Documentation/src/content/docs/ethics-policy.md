@@ -1,5 +1,5 @@
 ---
-title: Ethics Policy
+title: "Ethics Policy"
 ---
 
 # Ethics Policy

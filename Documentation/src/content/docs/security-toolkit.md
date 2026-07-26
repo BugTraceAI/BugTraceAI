@@ -1,5 +1,5 @@
 ---
-title: Security Toolkit
+title: "Security Toolkit"
 ---
 
 # Security Toolkit
@@ -147,11 +147,35 @@ Privilege escalation path discovery:
 - Misconfiguration detection
 
 #### WebSec Agent
-General-purpose AI security Q&A:
+General-purpose AI security Q&A that also acts as a unified control hub for the MCP tool agents:
 - Security concepts explained
 - Methodology guidance
 - Tool recommendations
 - Best practices advice
+- **Unified Kali MCP and ReconFTW control** -- drive the Kali Linux toolset (Nmap, SQLMap, ffuf, nuclei, and more) and ReconFTW reconnaissance pipelines from the same chat
+- **Web-browsing toggle** -- optionally allow the agent to fetch live URLs for real-time research during analysis
+
+### Workbench and Evaluation Modules
+
+Beyond the chat-based tools above, BugTraceAI-WEB ships two larger standalone modules. These are full workbenches rather than single-prompt chat tools, and each is documented on its own page.
+
+#### AIrepeater
+A Burp/Caido-style HTTP request workbench (added in WEB 1.5.23):
+- Multi-tab request editing with manual and agent-driven modes
+- Response search and per-vulnerability exploitation playbooks
+- Provider-aware exploit-model selection (offers the active provider's own models)
+- Handoff of results into a report
+
+See [AIrepeater](/airepeater) for full documentation.
+
+#### Model Lab
+An OpenRouter model-comparison and benchmarking module served at `/modellab` (added in WEB 1.5.23):
+- Quick and advanced benchmark suites with live WebSocket progress, cancellation, and cost visibility
+- Its own OpenRouter API key, entered in the module and independent of the scanner provider configuration
+- Local run history
+- A per-slot leaderboard that recommends a model per scanner slot (MUTATION / SKEPTICAL / ANALYSIS / REPORTING)
+
+See [Model Lab](/model-lab) for full documentation.
 
 ---
 
@@ -230,4 +254,4 @@ AI: [Context-aware payloads using Angular template injection,
 
 **Parent**: [BugTraceAI-WEB](/bugtraceai-web)
 
-**See also**: [BugTraceAI-WEB](/bugtraceai-web) | [Real-time Scan Monitoring](/real-time-scan-monitoring) | [Configuration](/configuration)
+**See also**: [BugTraceAI-WEB](/bugtraceai-web) | [AIrepeater](/airepeater) | [Model Lab](/model-lab) | [Real-time Scan Monitoring](/real-time-scan-monitoring) | [Configuration](/configuration)

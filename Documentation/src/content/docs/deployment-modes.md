@@ -1,10 +1,10 @@
 ---
-title: Deployment Modes
+title: "Deployment Modes"
 ---
 
 # Deployment Modes
 
-The [[BugTraceAI-Launcher]] supports three deployment modes, each targeting different use cases. This page describes each mode in detail, including what services are deployed, how they communicate, and when to use each one.
+The [BugTraceAI-Launcher](/bugtraceai-launcher) supports three deployment modes, each targeting different use cases. This page describes each mode in detail, including what services are deployed, how they communicate, and when to use each one.
 
 ---
 
@@ -223,7 +223,7 @@ After deployment, add BugTraceAI to your AI assistant's MCP configuration:
 - Automated scanning controlled by AI agents
 - Integration with AI workflows and assistants
 
-See [[AI Assistant Integration]] for full setup instructions and available MCP tools.
+See [AI Assistant Integration](/ai-assistant-integration) for full setup instructions and available MCP tools.
 
 ---
 
@@ -284,7 +284,7 @@ docker run -d -p 6869:6869 --name btai-web bugtrace-web
 
 ### Manual Full Stack
 
-See the Docker Compose configuration examples in the [[Architecture]] page.
+See the Docker Compose configuration examples in the [Architecture](/architecture) page.
 
 ---
 
@@ -303,6 +303,6 @@ For production deployments:
 
 ---
 
-**Parent**: [[BugTraceAI-Launcher]]
+**Parent**: [BugTraceAI-Launcher](/bugtraceai-launcher)
 
-**See also**: [[Architecture]] | [[Getting Started]] | [[BugTraceAI-CLI]] | [[BugTraceAI-WEB]]
+**See also**: [Architecture](/architecture) | [Getting Started](/getting-started) | [BugTraceAI-CLI](/bugtraceai-cli) | [BugTraceAI-WEB](/bugtraceai-web)

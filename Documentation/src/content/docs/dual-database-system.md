@@ -1,5 +1,5 @@
 ---
-title: Dual Database System
+title: "Dual Database System"
 ---
 
 # Dual Database System
