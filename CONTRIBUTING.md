@@ -4,11 +4,13 @@ Thanks for your interest in contributing to BugTraceAI! This document provides g
 
 ## Project Structure
 
-BugTraceAI is organized as a monorepo with submodules:
+BugTraceAI is organized as a monorepo. The three primary components are the CLI, WEB, and Launcher; a dedicated practice target and an MCP agent framework round out the ecosystem:
 
 - **BugTraceAI-CLI** — Core scanning engine and API server
 - **BugTraceAI-WEB** — React web dashboard
 - **BugTraceAI-Launcher** — Docker-based installer
+- **reconftw-mcp** — MCP agent framework with integrated Kali Linux and ReconFTW agents
+- **BugStore** — Deliberately vulnerable practice target used in demos and testing
 
 ## Getting Started
 
@@ -28,7 +30,7 @@ cd BugTraceAI
 
 # Start with Docker (recommended)
 cd BugTraceAI-Launcher
-./install.sh
+./launcher.sh
 ```
 
 ## Pull Request Guidelines
