@@ -19,6 +19,7 @@ export default defineConfig({
 					items: [
 						{ label: 'Overview', link: '/overview' },
 						{ label: 'Getting Started', link: '/getting-started' },
+						{ label: 'Provider Selection', link: '/provider-selection' },
 						{ label: 'Roadmap & Voting', link: '/roadmap' },
 					],
 				},
@@ -40,6 +41,7 @@ export default defineConfig({
 						{ label: 'Queue and Event System', link: '/queue-and-event-system' },
 						{ label: 'Validation System', link: '/validation-system' },
 						{ label: 'Report Generation', link: '/report-generation' },
+						{ label: 'Reporting Failover', link: '/reporting-failover' },
 						{ label: 'Configuration', link: '/configuration' },
 					],
 				},
@@ -54,6 +56,9 @@ export default defineConfig({
 					items: [
 						{ label: 'Web Dashboard', link: '/bugtraceai-web' },
 						{ label: 'Security Toolkit', link: '/security-toolkit' },
+						{ label: 'AIrepeater', link: '/airepeater' },
+						{ label: 'Live Swarm Graph', link: '/swarm-graph' },
+						{ label: 'Model Lab', link: '/model-lab' },
 						{ label: 'Real-time Monitoring', link: '/real-time-scan-monitoring' },
 					],
 				},

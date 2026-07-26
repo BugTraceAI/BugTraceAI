@@ -1,5 +1,5 @@
 ---
-title: Bugtraceai Launcher
+title: "BugTraceAI-Launcher"
 ---
 
 # BugTraceAI-Launcher
@@ -29,7 +29,7 @@ The interactive wizard guides you through:
 6. Running health checks
 7. Displaying access URLs
 
-As of v2.8.3, the bootstrap installer can also offer the experimental **AI Setup & Repair Assistant**, powered by Claude Haiku 4.5 via OpenRouter.
+As of v2.8.7, the provider selector and the **AI Setup & Repair Assistant** can both use **Anthropic** (Claude direct API, x-api-key / Messages API) in addition to OpenRouter and Z.ai. The assistant runs on DeepSeek V3 (via OpenRouter) or Claude Haiku 4.5 (Anthropic direct), selected at startup.
 
 ---
 
@@ -45,7 +45,7 @@ As of v2.8.3, the bootstrap installer can also offer the experimental **AI Setup
 | **Health Checks** | Verifies all services are running correctly |
 | **Log Access** | View logs from any service |
 | **Hardened secrets** | Generated `.env` / `.env.docker` are written with `600` permissions |
-| **AI Setup & Repair Assistant** | Optional Claude Haiku 4.5 agent that can install from scratch or diagnose and repair an existing deployment |
+| **AI Setup & Repair Assistant** | Optional agent (DeepSeek V3 with automatic Claude Haiku 4.5 fallback) that can install from scratch or diagnose and repair an existing deployment |
 
 ---
 
@@ -71,7 +71,7 @@ The Launcher installs to `~/bugtraceai/` by default. No `sudo` required -- only 
 
 ### AI Setup & Repair Assistant
 
-BugTraceAI-Launcher includes an optional AI Setup & Repair Assistant (`ai_installer.py`), powered by Claude Haiku 4.5 via OpenRouter. It is no longer troubleshooting-only: a first menu lets you choose between **installing** BugTraceAI from scratch and **repairing or diagnosing** an existing deployment (failed services, database connectivity, Docker, ports, broken configuration). You then pick the scope — Full Platform, CLI only, or WEB only. In repair mode the agent diagnoses first and never reinstalls or deletes anything without asking.
+BugTraceAI-Launcher includes an optional AI Setup & Repair Assistant (`ai_installer.py`), which runs on DeepSeek V3 by default with an automatic, sticky fallback to Claude Haiku 4.5 (both via OpenRouter; override either model with the `BTAI_INSTALLER_MODEL` / `BTAI_INSTALLER_FALLBACK_MODEL` environment variables). It is no longer troubleshooting-only: a first menu lets you choose between **installing** BugTraceAI from scratch and **repairing or diagnosing** an existing deployment (failed services, database connectivity, Docker, ports, broken configuration). You then pick the scope — Full Platform, CLI only, or WEB only. In repair mode the agent diagnoses first and never reinstalls or deletes anything without asking.
 
 The one-liner prompts before entering AI mode:
 
@@ -79,7 +79,7 @@ The one-liner prompts before entering AI mode:
 Try the AI Setup & Repair Assistant (Experimental — installs & troubleshoots)? [y/N]
 ```
 
-If you choose AI mode, the assistant shows a risk warning and asks for a `[y/N]` confirmation before it starts. The OpenRouter API key is entered with hidden input (it never appears on screen) and only a masked form is shown back. It then runs shell commands through its `run_command` tool — commands that look destructive require an explicit confirmation, and each command runs under a kernel-enforced timeout so a hung command can't stall the install. The conversation runs in Spanish. Use this mode mainly on clean VMs, VPS instances, or disposable test environments.
+If you choose AI mode, the assistant shows a risk warning and asks for a `[y/N]` confirmation before it starts. The OpenRouter API key is entered with hidden input (it never appears on screen) and only a masked form is shown back. It then runs shell commands through its `run_command` tool in a stateful, persistent Bash shell — commands that look destructive (including `docker compose down -v`, which would wipe the named database volumes) require an explicit confirmation, and each command runs under a kernel-enforced timeout so a hung command can't stall the install. The conversation runs in English. Use this mode mainly on clean VMs, VPS instances, or disposable test environments.
 
 ---
 
@@ -101,7 +101,7 @@ If you choose AI mode, the assistant shows a risk warning and asks for a `[y/N]`
 
 ## Deployment Modes
 
-The Launcher supports three deployment modes. See [[Deployment Modes]] for detailed descriptions.
+The Launcher supports three deployment modes. See [Deployment Modes](/deployment-modes) for detailed descriptions.
 
 | Mode | Components | Best For |
 |------|-----------|----------|
@@ -265,8 +265,8 @@ It does **not** remove Docker itself or other unrelated containers.
 
 | Page | Description |
 |------|-------------|
-| [[Deployment Modes]] | Detailed comparison of Full Platform, Standalone WEB, and Standalone CLI modes |
+| [Deployment Modes](/deployment-modes) | Detailed comparison of Full Platform, Standalone WEB, and Standalone CLI modes |
 
 ---
 
-**See also**: [[Getting Started]] | [[Architecture]] | [[Deployment Modes]]
+**See also**: [Getting Started](/getting-started) | [Architecture](/architecture) | [Deployment Modes](/deployment-modes)

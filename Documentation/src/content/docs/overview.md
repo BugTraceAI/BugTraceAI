@@ -1,5 +1,5 @@
 ---
-title: Overview
+title: "Overview"
 ---
 
 # Overview
@@ -12,7 +12,7 @@ BugTraceAI is the first opensource, self-hosted framework designed specifically 
 
 BugTraceAI is a modular security platform composed of three operational components:
 
-- **BugTraceAI-CLI**: The autonomous scanning engine. Python-based with Go high-speed fuzzers (XSS, SSRF, IDOR, LFI), Playwright Chromium for browser-based validation, and AI agents orchestrated via OpenRouter API. Runs as a headless server (FastAPI on port 8000) or as an interactive CLI.
+- **BugTraceAI-CLI**: The autonomous scanning engine. Python-based with Go high-speed fuzzers (XSS, SSRF, IDOR, LFI), Playwright Chromium for browser-based validation, and AI agents orchestrated via OpenRouter (default), Anthropic, or Z.ai providers. Runs as a headless server (FastAPI on port 8000) or as an interactive CLI.
 
 - **BugTraceAI-WEB**: A React dashboard with 20+ specialized AI-powered security tools. Connects to the CLI API for scan management and real-time monitoring. Features an Express + Prisma + PostgreSQL backend for persistence.
 
@@ -95,7 +95,7 @@ BugTraceAI-WEB (React + Express)         BugTraceAI-CLI (Python + Go + Playwrigh
 - **PostgreSQL** in the WEB stores local data (chats, settings, analysis reports)
 - Multiple WEB instances can connect to a single CLI server
 
-For full architectural details, see [[Architecture]].
+For full architectural details, see [Architecture](/architecture).
 
 ---
 
@@ -103,7 +103,7 @@ For full architectural details, see [[Architecture]].
 
 BugTraceAI is built on five non-negotiable principles:
 
-1. **Privacy First**: No telemetry, no tracking, no data collection. Everything runs locally. The only external call is to OpenRouter API for AI (and you control what gets sent).
+1. **Privacy First**: No telemetry, no tracking, no data collection. Everything runs locally. The only external call is to your configured AI provider — OpenRouter (default), Anthropic, or Z.ai (and you control what gets sent).
 
 2. **Opensource Always**: AGPL-3.0 licensed. All code, all AI prompts, all algorithms are public. Closed-source security tools are unacceptable.
 
@@ -122,7 +122,7 @@ BugTraceAI is built on five non-negotiable principles:
 | Component | Technologies |
 |-----------|-------------|
 | **CLI Scanner** | Python 3.10+, FastAPI, SQLite, LanceDB, Go fuzzers, Playwright |
-| **CLI AI** | OpenRouter API (multi-model: Gemini, Claude, GPT) |
+| **CLI AI** | OpenRouter API, Anthropic direct API (`x-api-key`, Messages API), and Z.ai providers (multi-model: Gemini, Claude, GPT) |
 | **WEB Frontend** | React 18, TypeScript, Vite, TailwindCSS |
 | **WEB Backend** | Express, Prisma, PostgreSQL |
 | **Deployment** | Docker, Docker Compose, Nginx, Bash |
@@ -138,7 +138,7 @@ cd BugTraceAI-Launcher
 ./launcher.sh
 ```
 
-For detailed installation instructions, see [[Getting Started]].
+For detailed installation instructions, see [Getting Started](/getting-started).
 
 ---
 
@@ -147,10 +147,10 @@ For detailed installation instructions, see [[Getting Started]].
 | Repository | Description | Status |
 |------------|-------------|--------|
 | [BugTraceAI](https://github.com/BugTraceAI/BugTraceAI) | Main hub and documentation | Active |
-| [BugTraceAI-CLI](https://github.com/BugTraceAI/BugTraceAI-CLI) | Autonomous scanning engine | v3.5.7-beta |
-| [BugTraceAI-WEB](https://github.com/BugTraceAI/BugTraceAI-WEB) | Dashboard and security toolkit | v1.0.0-beta |
-| [BugTraceAI-Launcher](https://github.com/BugTraceAI/BugTraceAI-Launcher) | Deployment automation | v2.8.3 |
+| [BugTraceAI-CLI](https://github.com/BugTraceAI/BugTraceAI-CLI) | Autonomous scanning engine | v3.7.12-beta |
+| [BugTraceAI-WEB](https://github.com/BugTraceAI/BugTraceAI-WEB) | Dashboard and security toolkit | v1.5.40-beta |
+| [BugTraceAI-Launcher](https://github.com/BugTraceAI/BugTraceAI-Launcher) | Deployment automation | v2.8.7 |
 
 ---
 
-**Next**: [[Architecture]] | [[Getting Started]] | [[BugTraceAI-CLI]]
+**Next**: [Architecture](/architecture) | [Getting Started](/getting-started) | [BugTraceAI-CLI](/bugtraceai-cli)

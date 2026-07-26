@@ -1,5 +1,5 @@
 ---
-title: Responsible Disclosure
+title: "Responsible Disclosure Policy"
 ---
 
 # Responsible Disclosure Policy

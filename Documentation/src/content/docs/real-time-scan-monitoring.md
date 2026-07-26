@@ -1,5 +1,5 @@
 ---
-title: Real Time Scan Monitoring
+title: "Real-time Scan Monitoring"
 ---
 
 # Real-time Scan Monitoring
@@ -114,6 +114,28 @@ On wider screens the bottom row displays all elements in a single line. On narro
 
 ---
 
+## Swarm Graph
+
+The scan console can render live scan activity as a **Swarm Graph** -- a node-based visualization of the whole pipeline (added in WEB 1.5.23). A view toggle offers three modes -- **Split** (the default: the cinematic graph with the live event feed superimposed), **Graph** (graph only), and **Events** (the raw feed) -- so the graph is shown by default as part of the Split "director" view.
+
+The graph animates the pipeline stages in real time -- reconnaissance, strategy, specialists, validation, and reporting -- making the multi-agent flow legible at a glance.
+
+### Per-Agent Escalation Ladders
+
+Each specialist appears as its own node with a live **L1 -> L6 escalation ladder**. As an agent works a target it climbs progressively deeper escalation levels, and the graph lights the ladder rungs up to the level the agent is currently on. This is driven by the CLI's `exploit.<type>.level.started` / `exploit.<type>.level.completed` events, surfaced live in the graph as of WEB 1.5.39, so an in-progress agent -- for example the XSS specialist grinding through many browser validations -- visibly advances instead of appearing frozen on a static label.
+
+### Recon Handoff
+
+The reconnaissance node feeds the discovered attack surface to the specialist nodes as the scan moves from discovery into exploitation, visually representing the handoff from crawling to targeted testing.
+
+### AuthDiscovery Status Node
+
+When authenticated scanning is configured, the graph shows a dedicated **AuthDiscovery** status node (WEB 1.5.27). It reflects live auth-discovery progress and, on completion, its result totals -- for example, the number of discovered JWT and cookie credentials.
+
+See [Swarm Graph](/swarm-graph) for the full visualization reference.
+
+---
+
 ## WebSocket Connection
 
 ### Connection Lifecycle
@@ -207,4 +229,4 @@ See [Report Generation](/report-generation) for report format details.
 
 **Parent**: [BugTraceAI-WEB](/bugtraceai-web)
 
-**See also**: [WebSocket Events](/websocket-events) | [Scanning Pipeline](/scanning-pipeline) | [BugTraceAI-CLI](/bugtraceai-cli)
+**See also**: [Swarm Graph](/swarm-graph) | [WebSocket Events](/websocket-events) | [Scanning Pipeline](/scanning-pipeline) | [BugTraceAI-CLI](/bugtraceai-cli)

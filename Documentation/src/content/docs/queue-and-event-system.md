@@ -1,5 +1,5 @@
 ---
-title: Queue And Event System
+title: "Queue and Event System"
 ---
 
 # Queue and Event System
@@ -36,7 +36,7 @@ The BugTraceAI-CLI uses per-specialist task queues and an internal event bus to 
 
 ## Per-Specialist Queues
 
-Each [[Specialist Agents|specialist agent]] has its own dedicated task queue. Findings from the consolidation phase are distributed to the appropriate queue based on vulnerability type.
+Each [specialist agent](/specialist-agents) has its own dedicated task queue. Findings from the consolidation phase are distributed to the appropriate queue based on vulnerability type.
 
 ### Queue Properties
 
@@ -61,6 +61,13 @@ Each [[Specialist Agents|specialist agent]] has its own dedicated task queue. Fi
 | `jwt` | JWT Agent | Python AI |
 | `openredirect` | Redirect Agent | Python AI |
 | `prototype_pollution` | Prototype Agent | Python AI |
+| `csti` | CSTI Agent | Python AI |
+| `mass_assignment` | Mass Assignment Agent | Python AI |
+| `header_injection` | Header Injection Agent | Python AI |
+| `api_security` | API Security Agent | Python AI |
+| `file_upload` | File Upload Agent | Python AI |
+
+The full set of 15 specialist queues matches the queue assignment in [Scanning Pipeline](/scanning-pipeline) and the agent roster in [Specialist Agents](/specialist-agents).
 
 ---
 
@@ -143,6 +150,18 @@ Scanning Engine --> Event Bus --> WebSocket Endpoints
 | `scan_complete` | Pipeline | Scan execution finished |
 | `error` | Any | Error occurred in any component |
 
+### Verbose (Dotted) Events
+
+In addition to the canonical events above, the pipeline emits fine-grained **verbose events** using a dotted namespace (for example `exploit.*` and `auth.*`). These pass through the event bus under their own event type and drive the live [Swarm Graph](/swarm-graph) and scan console in the WEB dashboard.
+
+| Event | Source | Description |
+|-------|--------|-------------|
+| `exploit.<type>.level.started` | Specialist | An agent began an escalation level (e.g. `exploit.xss.level.started`, levels L1-L6) for a target |
+| `exploit.<type>.level.completed` | Specialist | An escalation level finished, carrying its per-level confirmation status |
+| `auth.phase.started` | Auth | Pre-scan authentication / auth-discovery phase began |
+| `auth.step` | Auth | An individual login step ran during automatic authentication |
+| `auth.success` / `auth.failed` | Auth | Authentication completed successfully or failed |
+
 ### Event Structure
 
 ```json
@@ -162,7 +181,7 @@ Scanning Engine --> Event Bus --> WebSocket Endpoints
 
 ### WebSocket Consumption
 
-The event bus feeds directly into the WebSocket endpoints (`/ws/scans/{id}` and `/ws/global`). Events are transformed into the WebSocket event format documented in [[WebSocket Events]].
+The event bus feeds directly into the WebSocket endpoints (`/ws/scans/{id}` and `/ws/global`). Events are transformed into the WebSocket event format documented in [WebSocket Events](/websocket-events).
 
 ---
 
@@ -188,6 +207,6 @@ The event bus feeds directly into the WebSocket endpoints (`/ws/scans/{id}` and 
 
 ---
 
-**Parent**: [[BugTraceAI-CLI]]
+**Parent**: [BugTraceAI-CLI](/bugtraceai-cli)
 
-**See also**: [[Scanning Pipeline]] | [[Specialist Agents]] | [[WebSocket Events]]
+**See also**: [Scanning Pipeline](/scanning-pipeline) | [Specialist Agents](/specialist-agents) | [WebSocket Events](/websocket-events)

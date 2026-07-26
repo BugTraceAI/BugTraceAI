@@ -1,5 +1,5 @@
 ---
-title: Bugtraceai Cli
+title: "BugTraceAI-CLI"
 ---
 
 # BugTraceAI-CLI
@@ -22,23 +22,29 @@ The CLI operates in two modes:
 ### Key Capabilities
 
 - **Autonomous scanning**: AI agents make independent decisions about targets, tools, and payloads
-- **Multi-vulnerability coverage**: XSS, SQLi, SSRF, IDOR, LFI, RCE, XXE, JWT attacks, Open Redirect, Prototype Pollution
+- **Multi-vulnerability coverage**: 15 specialist exploitation agents spanning XSS, SQLi, SSRF, IDOR, LFI, RCE, XXE, JWT attacks, Open Redirect, Prototype Pollution, CSTI/SSTI, HTTP Header Injection, Mass Assignment, File Upload, and API security
 - **High-speed fuzzing**: Go binaries for XSS, SSRF, IDOR, and LFI fuzzing
 - **Browser-based validation**: Playwright Chromium with CDP for DOM analysis and visual confirmation
-- **AI-powered analysis**: Multi-persona consensus voting with OpenRouter API
+- **AI-powered analysis**: Multi-persona consensus voting across OpenRouter, Anthropic (direct `x-api-key` Messages API), and Z.ai (GLM) providers
 - **Real-time streaming**: WebSocket events for live scan monitoring
 - **Persistent storage**: SQLite as the source of truth for all scan data
 - **Authenticated scanning**: YAML auth configs with credentials, login flow steps, environment-variable substitution, and optional TOTP/2FA generation
 - **Resumable scans**: `--resume` and recoverable state tracking continue interrupted scans without losing context
-- **Model evaluation**: `tools/model_eval.py` benchmarks configured OpenRouter models and writes `tools/model_eval_results.json`
+- **Integrated Model Lab**: benchmark and compare models through the CLI API (`/api/model-eval`), with per-slot leaderboards, calibrated suites, live WebSocket progress, and persisted history
 
-### What's New in v3.5.7-beta
+### What's New in v3.7.12-beta
 
-- `--auth-config` accepts YAML authentication files for login-protected targets.
-- TOTP secrets can be supplied for 2FA-protected applications and injected into browser/login flows as `$totp`.
-- Interrupted scans can be resumed with `--resume` or through the WEB dashboard resume API.
-- `tools/model_eval.py` compares model behavior and latency for model-selection tuning.
-- Lifecycle handling now tracks scan origin, recoverability, orphan cleanup, and safer delete/resume behavior.
+Highlights across the v3.6.5x -> v3.7.12 line:
+
+- **Anthropic direct-API provider** (3.7.5) - Anthropic is now a first-class LLM provider using an API key (`x-api-key`, native Messages API). A new `api_format` preset field decouples the wire format from the provider path, so text generation, threaded generation, vision, and connectivity checks all route to the Messages API when Anthropic is active. OpenRouter and Z.ai (GLM) remain fully supported and unchanged.
+- **Integrated Model Lab (model-eval)** (3.6.90 / 3.7.6 / 3.7.7 / 3.7.12) - model benchmarking is now a built-in CLI API feature (`GET /api/model-eval/models`, `POST /api/model-eval`, `GET /api/model-eval/test-key`) rather than a standalone script. It accepts a per-request OpenRouter key (`X-OpenRouter-Key`), streams live progress over WebSocket, and persists benchmark history. The 3.7.12 recalibration adds a quality-dominant composite, a **per-slot leaderboard** (MUTATION / SKEPTICAL / ANALYSIS / REPORTING), the discrimination-focused **quick-v3 / advanced-v2** suites, and an opt-in **MUTATION diversity probe**.
+- **Reporting / enrichment failover** (3.7.11) - when a PoC or CVSS enrichment call on the active scan provider fails or degrades, that single enrichment call falls back to a secondary provider (`REPORTING_FAILOVER_PROVIDER`, default `anthropic`) without changing the scan's active provider. Provenance telemetry (`poc_enrichment_provenance`, `reporting_failover_count`) records when failover happened.
+- **CDP AgenticValidator wired into the pipeline** (3.6.46-3.6.48) - a fail-safe Phase-5 CDP validation stage now runs on the hard queue, confirming XSS / CSTI / SSTI in a real Chromium via the Chrome DevTools Protocol instead of sitting as dead code.
+- **Deliverable parity for pending findings** (3.7.8 / 3.7.9) - pending / POTENTIAL findings now appear in `validated_findings.json`, and the "Findings by Severity" totals plus manual-review ordering match across the Markdown, HTML, and JSON deliverables.
+- **Dedup & detection fixes** (3.7.7 / 3.7.10) - the RCE / command-injection family canonicalizes to a single type (no double-counting), genuine IDORs with strong evidence route to `MANUAL_REVIEW` instead of being hidden as pending, and boolean-blind SQLi diffing is capped and offloaded to avoid an event-loop stall (ReDoS-class hardening).
+- **Bounded JavaScript endpoint mining** (3.6.92) - GoSpider mines same-origin scripts for API endpoints with configurable script-count, response-size, and timeout limits, while keeping JavaScript assets out of DAST.
+- **AuthDiscovery visibility** (3.6.93) - verbose events now include the target, bounded URL count, per-URL progress, and final JWT / cookie totals.
+- **DOM-scan and browser-XSS coverage** (3.6.49 / 3.6.50) - DOM-scan recon URLs are deduped by endpoint surface so pure DOM-sink pages survive the URL cap, and browser-only XSS candidates auto-escalate to the Playwright / CDP levels even at standard analysis depth.
 
 ---
 
@@ -91,7 +97,7 @@ The CLI operates in two modes:
 | **LanceDB** | Vector database for semantic search over findings |
 | **Go** | High-speed fuzzer binaries (XSS, SSRF, IDOR, LFI) |
 | **Playwright** | Headless Chromium for browser-based validation |
-| **OpenRouter API** | AI model access (Gemini, Claude, GPT) |
+| **OpenRouter / Anthropic / Z.ai** | AI model access via OpenRouter (Gemini, Claude, GPT), Anthropic direct API (`x-api-key`), or Z.ai (GLM) |
 
 ---
 
@@ -117,8 +123,9 @@ python -m bugtrace --help
 python -m bugtrace scan url https://example.com
 python -m bugtrace scan url https://example.com --auth-config auth-config.yaml
 python -m bugtrace scan url https://example.com --resume
-python tools/model_eval.py
 ```
+
+Model Lab (model-eval) runs as an integrated CLI API feature (`/api/model-eval`) driven from the WEB dashboard, not as a standalone script.
 
 ### Docker
 
@@ -135,12 +142,12 @@ The CLI documentation is organized into the following sub-pages:
 
 | Page | Description |
 |------|-------------|
-| [[Scanning Pipeline]] | The six-phase scanning pipeline from discovery to reporting |
-| [[Specialist Agents]] | Individual exploitation agents for each vulnerability class |
-| [[Queue and Event System]] | Per-specialist task queues, deduplication, and the event bus |
-| [[Validation System]] | CDP browser validation and Vision AI screenshot analysis |
-| [[Report Generation]] | HTML, JSON, and Markdown report generation with PoC enrichment |
-| [[Configuration]] | Runtime settings, model selection, safe mode, and API keys |
+| [Scanning Pipeline](/scanning-pipeline) | The six-phase scanning pipeline from discovery to reporting |
+| [Specialist Agents](/specialist-agents) | Individual exploitation agents for each vulnerability class |
+| [Queue and Event System](/queue-and-event-system) | Per-specialist task queues, deduplication, and the event bus |
+| [Validation System](/validation-system) | CDP browser validation and Vision AI screenshot analysis |
+| [Report Generation](/report-generation) | HTML, JSON, and Markdown report generation with PoC enrichment |
+| [Configuration](/configuration) | Runtime settings, model selection, safe mode, and API keys |
 
 ---
 
@@ -156,7 +163,7 @@ The CLI uses multiple AI agent personas that work together:
 | **Validation Agent** | Confirms findings using headless Chromium and Vision AI |
 | **Reporting Agent** | Generates structured reports from validated findings |
 
-AI models are configured via OpenRouter in `provider/model` format. See [[Configuration]] for model selection.
+AI models are configured per provider - OpenRouter (`provider/model` slugs), Anthropic (direct `x-api-key` Messages API), or Z.ai (GLM). See [Configuration](/configuration) for model selection.
 
 ---
 
@@ -183,8 +190,8 @@ Key points:
 - SQLite is the **source of truth** for all scan data
 - LanceDB provides vector search capabilities over findings
 - Data is accessible via the REST API or direct SQLite access
-- See [[Dual Database System]] for the full data architecture
+- See [Dual Database System](/dual-database-system) for the full data architecture
 
 ---
 
-**See also**: [[Architecture]] | [[API Reference]] | [[Getting Started]]
+**See also**: [Architecture](/architecture) | [API Reference](/api-reference) | [Getting Started](/getting-started)
