@@ -43,6 +43,20 @@
   </a>
 </p>
 
+## Jump To
+
+- [Proven in the Security Community](#proven-in-the-security-community)
+- [What is BugTraceAI?](#what-is-bugtraceai)
+- [The Ecosystem](#the-ecosystem)
+- [Architecture](#architecture)
+- [Scanning Pipeline](#scanning-pipeline)
+- [What's New](#whats-new)
+- [Demo Report](#demo-report)
+- [CI/CD Integration Proposal](#cicd-integration-proposal)
+- [Quick Start](#quick-start)
+- [Documentation](#documentation)
+- [Community & Support](#community--support)
+
 ---
 
 ## Proven in the Security Community
