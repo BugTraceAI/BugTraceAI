@@ -39,7 +39,7 @@
 
 <p align="center">
   <a href="https://www.youtube.com/watch?v=FCoQNgO8hmM">
-    <img src="https://img.youtube.com/vi/FCoQNgO8hmM/maxresdefault.jpg" alt="Watch the BugTraceAI product demo" width="720"/>
+    <img src="video_dc34.png" alt="Watch the BugTraceAI DEF CON 34 product demo on YouTube" width="720"/>
   </a>
 </p>
 
