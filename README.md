@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="logo.png" alt="BugTraceAI" width="200"/>
+  <img src="BTAI_Logo_GitHub.png" alt="BugTraceAI" width="180"/>
 </p>
 
 <h1 align="center">BugTraceAI</h1>
 
 <p align="center">
-  Autonomous AI-powered security scanning platform
+  Autonomous, self-hosted security testing for authorized bug bounty and pentesting
 </p>
 
 <p align="center">
@@ -13,6 +13,7 @@
   <a href="https://github.com/BugTraceAI/BugTraceAI/wiki"><img src="https://img.shields.io/badge/Wiki-Documentation-000?logo=wikipedia&logoColor=white" alt="Wiki"/></a>
   <a href="https://deepwiki.com/BugTraceAI/BugTraceAI"><img src="https://img.shields.io/badge/DeepWiki-AI_Docs-5A5AFF?logo=bookstack&logoColor=white" alt="DeepWiki"/></a>
   <a href="https://demo.bugtraceai.com/bugtraceai"><img src="https://img.shields.io/badge/Live_Demo-Try_It-2EAD33?logo=google-chrome&logoColor=white" alt="Live Demo"/></a>
+  <a href="https://discord.gg/5HjujkScC"><img src="https://img.shields.io/discord/5HjujkScC?label=Discord&logo=discord&logoColor=white&color=5865F2" alt="Discord"/></a>
   <a href="https://github.com/BugTraceAI/BugTraceAI/releases/download/demo-report/BugTraceAI-Demo-Report.zip"><img src="https://img.shields.io/badge/Demo_Report-Download-red?logo=files&logoColor=white" alt="Demo Report"/></a>
   <img src="https://img.shields.io/badge/License-AGPL--3.0-blue.svg" alt="License"/>
   <img src="https://img.shields.io/badge/CLI-v3.7.12--beta-orange" alt="CLI Version"/>
@@ -29,7 +30,45 @@
   <img src="https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white" alt="Docker"/>
 </p>
 
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=FCoQNgO8hmM"><img src="https://img.shields.io/badge/Watch_the_demo-YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Watch the BugTraceAI demo on YouTube"/></a>
+  <a href="https://demo.bugtraceai.com/bugtraceai"><img src="https://img.shields.io/badge/Explore_a_real_scan-Live_Demo-2EAD33?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Explore the live demo"/></a>
+  <a href="https://github.com/BugTraceAI/BugTraceAI/stargazers"><img src="https://img.shields.io/badge/Support_the_project-Star_on_GitHub-181717?style=for-the-badge&logo=github" alt="Star BugTraceAI on GitHub"/></a>
+  <a href="https://discord.gg/5HjujkScC"><img src="https://img.shields.io/badge/Join_the_community-Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Join the BugTraceAI Discord"/></a>
+</p>
+
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=FCoQNgO8hmM">
+    <img src="https://img.youtube.com/vi/FCoQNgO8hmM/maxresdefault.jpg" alt="Watch the BugTraceAI product demo" width="720"/>
+  </a>
+</p>
+
 ---
+
+## Proven in the Security Community
+
+### CVEs Disclosed
+
+| Product | CVE | CVSS |
+| ------- | --- | ---- |
+| Wallos | [CVE-2026-27479](https://www.cve.org/CVERecord?id=CVE-2026-27479) | 7.7 High |
+| ZoneMinder | [CVE-2026-27470](https://www.cve.org/CVERecord?id=CVE-2026-27470) | 8.8 High |
+| Piwigo | [CVE-2026-27834](https://www.cve.org/CVERecord?id=CVE-2026-27834) | 7.2 High |
+
+### Presented On Stage
+
+- [RootedCON 2026](https://reg.rootedcon.com/cfp/speaker/795), Madrid, Spain
+- [HKOSCon 2026](https://hkoscon.org/2026/topic/bugtraceai-open-source-agentic-ai-for-autonomous-multi-agent-bug-bounty-pentesting/), Hong Kong
+- [DEF CON 34](https://defcon.org/html/defcon-34/dc-34-speakers.html#content_66648), Las Vegas, USA
+
+### See It Working
+
+<p align="center">
+  <img src="assets/api-discovery.webp" alt="BugTraceAI API Discovery finding and prioritizing API routes" width="49%"/>
+  <img src="assets/swarm-graph.webp" alt="BugTraceAI live swarm graph during an authorized scan" width="49%"/>
+</p>
+
+BugTraceAI combines AI-guided investigation with deterministic security tools. The AI prioritizes and reasons about hypotheses; tools and evidence validate what is real.
 
 ## Disclaimer
 
@@ -199,7 +238,21 @@ Want to see what BugTraceAI produces? Try the **live demo** or download a real s
 
 **Scan highlights**: 145 findings (43 validated) -- SQL Injection, XSS, LFI, CSTI, IDOR, JWT, RCE, Broken Access Control, Open Redirect, Prototype Pollution, GraphQL, SSRF, and more.
 
+> **Benchmark note:** This demo report was produced with an earlier scanner build. Results are useful for exploring the workflow, but should not be treated as a current performance claim for the latest CLI release until re-run under a versioned benchmark protocol.
+
 The zip includes the full markdown report, validated findings JSON, specialist agent results with WET/DRY traceability, reconnaissance data, and PoC enrichment output.
+
+---
+
+## CI/CD Integration Proposal
+
+BugTraceAI can operate as a security testing service in a CI/CD workflow: receive authorized jobs through its API or MCP layer, scan approved targets, publish evidence-rich reports, and pass validated findings into analysis and ticketing workflows.
+
+<p align="center">
+  <img src="BUGTRACEAI-CI-CD_Proposal.png" alt="BugTraceAI CI/CD integration proposal" width="720"/>
+</p>
+
+The WEB workspace supports manual analysis alongside autonomous scans, while the CLI exposes the control and reporting surface needed for automation.
 
 ---
 
@@ -277,6 +330,7 @@ Full documentation is available in the **[Project Wiki](https://github.com/BugTr
 | Wiki     | [GitHub Wiki](https://github.com/BugTraceAI/BugTraceAI/wiki)     |
 | DeepWiki | [AI-powered docs](https://deepwiki.com/BugTraceAI/BugTraceAI)    |
 | Issues   | [GitHub Issues](https://github.com/BugTraceAI/BugTraceAI/issues) |
+| Discord  | [Join the BugTraceAI community](https://discord.gg/5HjujkScC)    |
 | Twitter  | [@yz9yt](https://x.com/yz9yt)                                    |
 
 ### Contributing
@@ -295,5 +349,6 @@ See LICENSE file in each repository.
 
 <p align="center">
   <strong>BugTraceAI</strong> -- Build your own self-hosted pentesting platform.<br/>
+  If BugTraceAI helps your authorized security research, consider <a href="https://github.com/BugTraceAI/BugTraceAI/stargazers">giving the project a star</a> or <a href="https://discord.gg/5HjujkScC">joining the community on Discord</a>.<br/>
   <a href="https://github.com/yz9yt">Albert C (@yz9yt)</a>
 </p>
