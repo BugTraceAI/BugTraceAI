@@ -33,6 +33,7 @@
 <p align="center">
   <a href="https://www.youtube.com/watch?v=FCoQNgO8hmM"><img src="https://img.shields.io/badge/Watch_the_demo-YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Watch the BugTraceAI demo on YouTube"/></a>
   <a href="https://demo.bugtraceai.com/bugtraceai"><img src="https://img.shields.io/badge/Explore_a_real_scan-Live_Demo-2EAD33?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Explore the live demo"/></a>
+  <a href="https://github.com/BugTraceAI/BugStore"><img src="https://img.shields.io/badge/Practice_on-BugStore-FF7F50?style=for-the-badge&logo=fastapi&logoColor=white" alt="Explore the BugStore practice target"/></a>
   <a href="https://github.com/BugTraceAI/BugTraceAI/stargazers"><img src="https://img.shields.io/badge/Support_the_project-Star_on_GitHub-181717?style=for-the-badge&logo=github" alt="Star BugTraceAI on GitHub"/></a>
   <a href="https://discord.gg/5HjujkScC"><img src="https://img.shields.io/badge/Join_the_community-Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Join the BugTraceAI Discord"/></a>
 </p>
