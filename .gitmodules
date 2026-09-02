@@ -5,10 +5,12 @@
 [submodule "BugTraceAI-CLI"]
 	path = BugTraceAI-CLI
 	url = https://github.com/BugTraceAI/BugTraceAI-CLI
+	branch = e6331822ef84a5e84848d0ad54fd091f0611ee5a
 
 [submodule "BugTraceAI-WEB"]
 	path = BugTraceAI-WEB
 	url = https://github.com/BugTraceAI/BugTraceAI-WEB
+	branch = c86d0611f65ad5b9d85e12c420b81234d0225c7d
 
 [submodule "reconftw-mcp"]
 	path = reconftw-mcp
