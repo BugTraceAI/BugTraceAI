@@ -18,7 +18,7 @@
   <img src="https://img.shields.io/badge/License-AGPL--3.0-blue.svg" alt="License"/>
   <img src="https://img.shields.io/badge/CLI-v3.7.12--beta-orange" alt="CLI Version"/>
   <img src="https://img.shields.io/badge/WEB-v1.5.40--beta-orange" alt="WEB Version"/>
-  <img src="https://img.shields.io/badge/Launcher-v2.9.0-orange" alt="Launcher Version"/>
+  <img src="https://img.shields.io/badge/Launcher-v2.9.1-orange" alt="Launcher Version"/>
 </p>
 
 <p align="center">
@@ -227,11 +227,11 @@ For the full pipeline documentation, see the [Wiki](https://github.com/BugTraceA
 - **Dedup & detection fixes** — RCE-family findings canonicalize to a single type (no double-count), strong-evidence IDORs route to MANUAL_REVIEW instead of being buried, and boolean-blind SQLi diffing is capped/off-thread to prevent event-loop stalls
 - **Deliverable parity** — pending (POTENTIAL) findings appear across Markdown, engagement JSON, and `validated_findings.json`, and the "Findings by Severity" totals now match across all deliverables
 
-### BugTraceAI-Launcher v2.9.0
-- **AI Setup & Repair Assistant** — DeepSeek V4.1 Flash via OpenRouter, with sticky Qwen 3.8 Max (0902) failover; sudo is a one-time native ticket (never stored); the agent keeps going until install/repair is verified
-- **Docker Engine on Linux** — if Docker is missing when you install, the launcher can install it (official `get.docker.com`, distro fallback), start the daemon, and add your user to the `docker` group
-- **reconFTW MCP** — builds from the cloned local source instead of pulling `reconftw-mcp:local` from Docker Hub; Kali starts in a separate Compose step so a recon failure does not cancel it
-- **Install event log** — `install.log` next to `launcher.sh` (override with `BUGTRACEAI_INSTALL_LOG`); secrets are redacted
+### BugTraceAI-Launcher v2.9.1
+- **Interactive AI installer** — asks provider, install vs repair, Full/CLI/WEB, and optional reconFTW/Kali again (the guided wizard is unchanged)
+- **Ubuntu sudo ticket** — privileged commands stay on the installer TTY and the session re-enters the `docker` group, so it no longer loops on `sudo: a password is required`
+- **AI chat line editing** — cooked TTY + GNU readline so Backspace and arrows edit the line instead of printing control characters
+- **v2.9.0** — DeepSeek V4.1 Flash via OpenRouter with sticky Qwen 3.8 Max failover; Docker Engine bootstrap on Linux; reconFTW from local source; Kali in a separate Compose step; `install.log`
 - **macOS Apple Silicon** — Colima/Docker Desktop support with ARM patches for reconFTW and Kali
 
 ---

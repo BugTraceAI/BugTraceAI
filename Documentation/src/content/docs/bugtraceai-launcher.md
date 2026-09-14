@@ -29,7 +29,7 @@ The interactive wizard guides you through:
 6. Running health checks
 7. Displaying access URLs
 
-As of v2.9.0, the **AI Setup & Repair Assistant** defaults to DeepSeek V4.1 Flash via OpenRouter, with sticky Qwen 3.8 Max (0902) failover. On Linux, a missing Docker Engine can be installed by the launcher. Optional reconFTW is built from the cloned local source (not pulled as `reconftw-mcp:local`), and installer events go to `install.log` next to `launcher.sh`.
+As of v2.9.1, the **AI Setup & Repair Assistant** is interactive again (provider, install/repair, Full/CLI/WEB, optional MCPs). Ubuntu sudo uses the same TTY as the cached ticket and re-enters the `docker` group. The AI chat restores line editing so Backspace is not echoed as a control character. On Linux, a missing Docker Engine can be installed by the launcher. Optional reconFTW is built from the cloned local source (not pulled as `reconftw-mcp:local`), and installer events go to `install.log` next to `launcher.sh`.
 
 ---
 
