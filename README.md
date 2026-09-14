@@ -74,7 +74,6 @@
 
 - [RootedCON 2026](https://reg.rootedcon.com/cfp/speaker/795), Madrid, Spain
 - [HKOSCon 2026](https://hkoscon.org/2026/topic/bugtraceai-open-source-agentic-ai-for-autonomous-multi-agent-bug-bounty-pentesting/), Hong Kong
-- [DEF CON 34](https://defcon.org/html/defcon-34/dc-34-speakers.html#content_66648), Las Vegas, USA
 
 ### See It Working
 
