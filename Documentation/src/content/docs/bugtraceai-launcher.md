@@ -29,7 +29,7 @@ The interactive wizard guides you through:
 6. Running health checks
 7. Displaying access URLs
 
-As of v2.8.8, the **AI Setup & Repair Assistant** defaults to DeepSeek V4.1 Flash via OpenRouter, with sticky Qwen 3.8 Max (0902) failover. On Linux, a missing Docker Engine can be installed by the launcher. Optional reconFTW is built from the cloned local source (not pulled as `reconftw-mcp:local`), and installer events go to `install.log` next to `launcher.sh`.
+As of v2.9.0, the **AI Setup & Repair Assistant** defaults to DeepSeek V4.1 Flash via OpenRouter, with sticky Qwen 3.8 Max (0902) failover. On Linux, a missing Docker Engine can be installed by the launcher. Optional reconFTW is built from the cloned local source (not pulled as `reconftw-mcp:local`), and installer events go to `install.log` next to `launcher.sh`.
 
 ---
 

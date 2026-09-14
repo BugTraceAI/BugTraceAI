@@ -18,7 +18,7 @@
   <img src="https://img.shields.io/badge/License-AGPL--3.0-blue.svg" alt="License"/>
   <img src="https://img.shields.io/badge/CLI-v3.7.12--beta-orange" alt="CLI Version"/>
   <img src="https://img.shields.io/badge/WEB-v1.5.40--beta-orange" alt="WEB Version"/>
-  <img src="https://img.shields.io/badge/Launcher-v2.8.8-orange" alt="Launcher Version"/>
+  <img src="https://img.shields.io/badge/Launcher-v2.9.0-orange" alt="Launcher Version"/>
 </p>
 
 <p align="center">
@@ -227,7 +227,7 @@ For the full pipeline documentation, see the [Wiki](https://github.com/BugTraceA
 - **Dedup & detection fixes** — RCE-family findings canonicalize to a single type (no double-count), strong-evidence IDORs route to MANUAL_REVIEW instead of being buried, and boolean-blind SQLi diffing is capped/off-thread to prevent event-loop stalls
 - **Deliverable parity** — pending (POTENTIAL) findings appear across Markdown, engagement JSON, and `validated_findings.json`, and the "Findings by Severity" totals now match across all deliverables
 
-### BugTraceAI-Launcher v2.8.8
+### BugTraceAI-Launcher v2.9.0
 - **AI Setup & Repair Assistant** — DeepSeek V4.1 Flash via OpenRouter, with sticky Qwen 3.8 Max (0902) failover; sudo is a one-time native ticket (never stored); the agent keeps going until install/repair is verified
 - **Docker Engine on Linux** — if Docker is missing when you install, the launcher can install it (official `get.docker.com`, distro fallback), start the daemon, and add your user to the `docker` group
 - **reconFTW MCP** — builds from the cloned local source instead of pulling `reconftw-mcp:local` from Docker Hub; Kali starts in a separate Compose step so a recon failure does not cancel it
