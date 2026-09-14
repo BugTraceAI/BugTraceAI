@@ -149,7 +149,7 @@ For detailed installation instructions, see [Getting Started](/getting-started).
 | [BugTraceAI](https://github.com/BugTraceAI/BugTraceAI) | Main hub and documentation | Active |
 | [BugTraceAI-CLI](https://github.com/BugTraceAI/BugTraceAI-CLI) | Autonomous scanning engine | v3.7.12-beta |
 | [BugTraceAI-WEB](https://github.com/BugTraceAI/BugTraceAI-WEB) | Dashboard and security toolkit | v1.5.40-beta |
-| [BugTraceAI-Launcher](https://github.com/BugTraceAI/BugTraceAI-Launcher) | Deployment automation | v2.8.7 |
+| [BugTraceAI-Launcher](https://github.com/BugTraceAI/BugTraceAI-Launcher) | Deployment automation | v2.8.8 |
 
 ---
 
