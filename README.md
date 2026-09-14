@@ -18,7 +18,7 @@
   <img src="https://img.shields.io/badge/License-AGPL--3.0-blue.svg" alt="License"/>
   <img src="https://img.shields.io/badge/CLI-v3.7.12--beta-orange" alt="CLI Version"/>
   <img src="https://img.shields.io/badge/WEB-v1.5.40--beta-orange" alt="WEB Version"/>
-  <img src="https://img.shields.io/badge/Launcher-v2.8.7-orange" alt="Launcher Version"/>
+  <img src="https://img.shields.io/badge/Launcher-v2.8.8-orange" alt="Launcher Version"/>
 </p>
 
 <p align="center">
@@ -228,12 +228,12 @@ For the full pipeline documentation, see the [Wiki](https://github.com/BugTraceA
 - **Dedup & detection fixes** — RCE-family findings canonicalize to a single type (no double-count), strong-evidence IDORs route to MANUAL_REVIEW instead of being buried, and boolean-blind SQLi diffing is capped/off-thread to prevent event-loop stalls
 - **Deliverable parity** — pending (POTENTIAL) findings appear across Markdown, engagement JSON, and `validated_findings.json`, and the "Findings by Severity" totals now match across all deliverables
 
-### BugTraceAI-Launcher v2.8.7
-- **Anthropic provider** — pick Claude direct API (`sk-ant-...`, Messages API) as the LLM provider, both in the standard provider selector (which configures the deployed CLI) and in the AI Setup & Repair Assistant
-- **AI Setup & Repair Assistant** — Choose standard guided setup, or let the AI agent install from scratch **or** diagnose/repair an existing deployment; runs on DeepSeek V3 (OpenRouter) or Claude Haiku 4.5 (Anthropic direct), selected at startup, with an automatic sticky fallback on the OpenRouter path
-- **Safer & English-only** — destructive commands (e.g. `docker compose down -v`) are classified and gated, the UI is English-only, and the installer core was hardened with added tests
-- **Hardened & robust** — Native Docker build output (no fragile spinner), multi-distro dependency install (apt/dnf/yum/pacman/zypper), `600`-permission config files, hidden/masked API-key entry, kernel-enforced command timeouts
-- **macOS Apple Silicon** — Full Colima/Docker Desktop support with ARM patches for reconFTW and Kali MCPs
+### BugTraceAI-Launcher v2.8.8
+- **AI Setup & Repair Assistant** — DeepSeek V4.1 Flash via OpenRouter, with sticky Qwen 3.8 Max (0902) failover; sudo is a one-time native ticket (never stored); the agent keeps going until install/repair is verified
+- **Docker Engine on Linux** — if Docker is missing when you install, the launcher can install it (official `get.docker.com`, distro fallback), start the daemon, and add your user to the `docker` group
+- **reconFTW MCP** — builds from the cloned local source instead of pulling `reconftw-mcp:local` from Docker Hub; Kali starts in a separate Compose step so a recon failure does not cancel it
+- **Install event log** — `install.log` next to `launcher.sh` (override with `BUGTRACEAI_INSTALL_LOG`); secrets are redacted
+- **macOS Apple Silicon** — Colima/Docker Desktop support with ARM patches for reconFTW and Kali
 
 ---
 

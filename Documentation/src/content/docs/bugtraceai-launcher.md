@@ -29,7 +29,7 @@ The interactive wizard guides you through:
 6. Running health checks
 7. Displaying access URLs
 
-As of v2.8.7, the provider selector and the **AI Setup & Repair Assistant** can both use **Anthropic** (Claude direct API, x-api-key / Messages API) in addition to OpenRouter and Z.ai. The assistant runs on DeepSeek V3 (via OpenRouter) or Claude Haiku 4.5 (Anthropic direct), selected at startup.
+As of v2.8.8, the **AI Setup & Repair Assistant** defaults to DeepSeek V4.1 Flash via OpenRouter, with sticky Qwen 3.8 Max (0902) failover. On Linux, a missing Docker Engine can be installed by the launcher. Optional reconFTW is built from the cloned local source (not pulled as `reconftw-mcp:local`), and installer events go to `install.log` next to `launcher.sh`.
 
 ---
 
@@ -38,7 +38,7 @@ As of v2.8.7, the provider selector and the **AI Setup & Repair Assistant** can 
 | Feature | Description |
 |---------|-------------|
 | **Interactive Wizard** | Step-by-step guided setup |
-| **Auto-Dependency Detection** | Checks for Docker, Git, and system requirements; installs Git/curl via apt, dnf, yum, pacman, or zypper, and Docker Compose if missing |
+| **Auto-Dependency Detection** | Checks for Docker, Git, and system requirements; installs Git/curl via apt, dnf, yum, pacman, or zypper, Docker Engine on Linux if missing, and Docker Compose if missing |
 | **Port Management** | Detects port conflicts and suggests alternatives (including the PostgreSQL host port) |
 | **Three Deployment Modes** | Full Platform, Standalone WEB, Standalone CLI (plus optional MCP add-ons) |
 | **Service Lifecycle** | Start, stop, restart, update, uninstall |
