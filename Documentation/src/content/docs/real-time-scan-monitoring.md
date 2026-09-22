@@ -161,7 +161,8 @@ ws.onmessage = (event) => {
 };
 
 // On reconnect, resume from last known sequence
-ws = new WebSocket(`ws://cli:8000/ws/scans/${scanId}?last_seq=${lastSeq}`);
+const cliWsBaseUrl = "<configured-cli-websocket-base-url>";
+ws = new WebSocket(`${cliWsBaseUrl}/ws/scans/${scanId}?last_seq=${lastSeq}`);
 ```
 
 This ensures no events are lost during brief network interruptions. See [WebSocket Events](/websocket-events) for the full protocol specification.

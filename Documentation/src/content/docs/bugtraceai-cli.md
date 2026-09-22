@@ -16,7 +16,7 @@ The CLI operates in two modes:
 
 | Mode | Description | Use Case |
 |------|-------------|----------|
-| **Headless Server** | FastAPI on port 8000, REST API + WebSocket | Integration with WEB dashboard, CI/CD pipelines |
+| **Headless Server** | FastAPI behind the selected REST/WebSocket port | Integration with WEB dashboard, CI/CD pipelines |
 | **Interactive CLI** | Terminal-based interface | Direct pentesting, manual control |
 
 ### Key Capabilities
@@ -32,9 +32,9 @@ The CLI operates in two modes:
 - **Resumable scans**: `--resume` and recoverable state tracking continue interrupted scans without losing context
 - **Integrated Model Lab**: benchmark and compare models through the CLI API (`/api/model-eval`), with per-slot leaderboards, calibrated suites, live WebSocket progress, and persisted history
 
-### What's New in v3.7.12-beta
+### What's New in v3.7.28-beta
 
-Highlights across the v3.6.5x -> v3.7.12 line:
+Highlights across the current v3.7 line:
 
 - **Anthropic direct-API provider** (3.7.5) - Anthropic is now a first-class LLM provider using an API key (`x-api-key`, native Messages API). A new `api_format` preset field decouples the wire format from the provider path, so text generation, threaded generation, vision, and connectivity checks all route to the Messages API when Anthropic is active. OpenRouter and Z.ai (GLM) remain fully supported and unchanged.
 - **Integrated Model Lab (model-eval)** (3.6.90 / 3.7.6 / 3.7.7 / 3.7.12) - model benchmarking is now a built-in CLI API feature (`GET /api/model-eval/models`, `POST /api/model-eval`, `GET /api/model-eval/test-key`) rather than a standalone script. It accepts a per-request OpenRouter key (`X-OpenRouter-Key`), streams live progress over WebSocket, and persists benchmark history. The 3.7.12 recalibration adds a quality-dominant composite, a **per-slot leaderboard** (MUTATION / SKEPTICAL / ANALYSIS / REPORTING), the discrimination-focused **quick-v3 / advanced-v2** suites, and an opt-in **MUTATION diversity probe**.
@@ -56,7 +56,7 @@ Highlights across the v3.6.5x -> v3.7.12 line:
 |                                                                |
 |  +------------------+    +------------------+                  |
 |  | FastAPI Server   |    | CLI Interface    |                  |
-|  | Port 8000        |    | (Interactive)    |                  |
+|  | selected endpoint|    | (Interactive)    |                  |
 |  +--------+---------+    +--------+---------+                  |
 |           |                       |                            |
 |           +-----------+-----------+                            |
@@ -107,13 +107,15 @@ Highlights across the v3.6.5x -> v3.7.12 line:
 
 ```bash
 cd BugTraceAI-CLI
-python3 -m uvicorn bugtrace.api.main:app --host 0.0.0.0 --port 8000
+python3 -m uvicorn bugtrace.api.main:app --host 0.0.0.0 --port "${CLI_PORT}"
 ```
 
 The server exposes:
-- REST API at `http://localhost:8000/api/`
-- Swagger docs at `http://localhost:8000/docs`
-- WebSocket at `ws://localhost:8000/api/ws/`
+- REST API at `${CLI_BASE_URL}/api/`
+- Swagger docs at `${CLI_BASE_URL}/docs`
+- WebSocket at the corresponding `${CLI_BASE_URL}` WebSocket origin
+
+Set `CLI_PORT` and `CLI_BASE_URL` from the Launcher output or your deployment configuration. The Launcher owns its chosen port mapping.
 
 ### As an Interactive CLI
 
@@ -131,7 +133,7 @@ Model Lab (model-eval) runs as an integrated CLI API feature (`/api/model-eval`)
 
 ```bash
 docker build -t bugtrace-cli .
-docker run -p 8000:8000 bugtrace-cli
+docker run -p "${CLI_PORT}:${CLI_PORT}" bugtrace-cli serve --host 0.0.0.0 --port "${CLI_PORT}"
 ```
 
 ---

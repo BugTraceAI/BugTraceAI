@@ -4,7 +4,7 @@ title: "Dual Database System"
 
 # Dual Database System
 
-BugTraceAI uses two independent databases that serve different purposes. Understanding this architecture is essential for deployment, data management, and troubleshooting.
+BugTraceAI uses independent component-owned stores. Understanding these boundaries is essential for deployment, data management, and troubleshooting.
 
 ---
 
@@ -14,6 +14,7 @@ BugTraceAI uses two independent databases that serve different purposes. Underst
 |----------|-----------|------|--------|
 | **SQLite** | BugTraceAI-CLI | Source of truth for all scans | Scans, findings, targets, reports, metrics |
 | **PostgreSQL** | BugTraceAI-WEB | Local to each WEB instance | Chat history, settings, analysis reports |
+| **Mounted report storage** | BugTraceAI-API | Durable API-security evidence | Scan configuration, phase artifacts, findings, OpenAPI, handoff, report archives |
 
 ---
 
@@ -44,14 +45,16 @@ SQLite is the **single source of truth** for all scan-related data. Every scan, 
 Via the CLI REST API:
 
 ```bash
+export CLI_BASE_URL="http://localhost:${CLI_PORT}"
+
 # List all scans
-curl http://localhost:8000/api/scans
+curl "$CLI_BASE_URL/api/scans"
 
 # Get scan findings
-curl http://localhost:8000/api/scans/{id}/findings
+curl "$CLI_BASE_URL/api/scans/{id}/findings"
 
 # Get scan report
-curl http://localhost:8000/api/scans/{id}/report/json
+curl "$CLI_BASE_URL/api/scans/{id}/report/json"
 ```
 
 Direct access (for debugging):
@@ -89,7 +92,7 @@ PostgreSQL stores data that is local to each WEB instance. It does **not** store
 Via the WEB backend API:
 
 ```bash
-# WEB backend endpoints (port 3001)
+# WEB backend endpoints (internal to the deployment unless deliberately exposed)
 GET  /api/chats
 GET  /api/settings
 GET  /api/analysis-reports
@@ -100,6 +103,16 @@ Direct access (for debugging):
 ```bash
 docker exec -it <postgres-container> psql -U bugtrace bugtrace_db
 ```
+
+---
+
+## BugTraceAI-API report storage
+
+BugTraceAI-API is not a third shared database. It writes an isolated report directory per API-security scan under its mounted `reports/` path. The directory includes the original configuration, tool and phase artifacts, normalized findings, investigation state, OpenAPI output, a redacted handoff pack, and final report files.
+
+The API Connector reads these resources over the API service. WEB PostgreSQL does not duplicate them, and the CLI does not need to be running for the API service to retain or export them.
+
+For deployment, access the service through the selected `BTAI_PORT` or the WEB same-origin `/btai-api/` route. Do not build integrations around a fixed port.
 
 ---
 
@@ -200,4 +213,4 @@ No proprietary formats are used. You can always access and migrate your data.
 
 **Parent**: [Architecture](/architecture)
 
-**See also**: [API Reference](/api-reference) | [Configuration](/configuration)
+**See also**: [CLI API Reference](/api-reference) | [BugTraceAI-API](/bugtraceai-api) | [Configuration](/configuration)

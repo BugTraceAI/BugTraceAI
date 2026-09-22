@@ -248,31 +248,35 @@ See [Configuration](/configuration) for all available settings.
 ### Generate and Download
 
 ```bash
+export CLI_BASE_URL="http://localhost:${CLI_PORT}"
+
 # HTML report
-curl -o report.html http://localhost:8000/api/scans/scan_abc123/report/html
+curl -o report.html "$CLI_BASE_URL/api/scans/scan_abc123/report/html"
 
 # JSON report
-curl -o report.json http://localhost:8000/api/scans/scan_abc123/report/json
+curl -o report.json "$CLI_BASE_URL/api/scans/scan_abc123/report/json"
 
 # Markdown report
-curl -o report.md http://localhost:8000/api/scans/scan_abc123/report/markdown
+curl -o report.md "$CLI_BASE_URL/api/scans/scan_abc123/report/markdown"
 ```
 
 ### CI/CD Integration Example
 
 ```bash
 # Start scan, wait for completion, download JSON report
-SCAN_ID=$(curl -s -X POST http://localhost:8000/api/scans \
+export CLI_BASE_URL="http://localhost:${CLI_PORT}"
+
+SCAN_ID=$(curl -s -X POST "$CLI_BASE_URL/api/scans" \
   -H "Content-Type: application/json" \
   -d '{"target_url": "https://staging.example.com"}' | jq -r '.id')
 
 # Poll until complete
-while [ "$(curl -s http://localhost:8000/api/scans/$SCAN_ID/status | jq -r '.status')" != "COMPLETED" ]; do
+while [ "$(curl -s "$CLI_BASE_URL/api/scans/$SCAN_ID/status" | jq -r '.status')" != "COMPLETED" ]; do
   sleep 10
 done
 
 # Download report
-curl -s http://localhost:8000/api/scans/$SCAN_ID/report/json > security-report.json
+curl -s "$CLI_BASE_URL/api/scans/$SCAN_ID/report/json" > security-report.json
 
 # Fail CI if critical findings
 CRITICAL=$(jq '.report.summary.by_severity.CRITICAL // 0' security-report.json)

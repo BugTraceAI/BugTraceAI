@@ -259,7 +259,7 @@ Configuration can also be set via environment variables. Environment variables t
 |----------|-------------|
 | `OPENROUTER_API_KEY` | OpenRouter API key for AI models |
 | `BUGTRACE_HOST` | FastAPI bind address (default: `0.0.0.0`) |
-| `BUGTRACE_PORT` | FastAPI port (default: `8000`) |
+| `BUGTRACE_PORT` | FastAPI listener for direct CLI deployments; Launcher Compose deployments use the selected `CLI_PORT` |
 | `BUGTRACE_DB_PATH` | Path to SQLite database file |
 | `BUGTRACE_LOG_LEVEL` | Logging level (DEBUG, INFO, WARNING, ERROR) |
 

@@ -340,8 +340,9 @@ Full documentation is available in the **[Project Wiki](https://github.com/BugTr
 - [Architecture](https://github.com/BugTraceAI/BugTraceAI/wiki/Architecture) -- System design and communication protocols
 - [BugTraceAI-CLI](https://github.com/BugTraceAI/BugTraceAI/wiki/BugTraceAI-CLI) -- Autonomous scanner documentation
 - [BugTraceAI-WEB](https://github.com/BugTraceAI/BugTraceAI/wiki/BugTraceAI-WEB) -- Web dashboard documentation
+- [BugTraceAI-API](https://github.com/BugTraceAI/BugTraceAI-API#readme) -- REST/MCP API-security service, evidence artifacts, and deployment guidance
 - [BugTraceAI-Launcher](https://github.com/BugTraceAI/BugTraceAI/wiki/BugTraceAI-Launcher) -- Deployment guide
-- [API Reference](https://github.com/BugTraceAI/BugTraceAI/wiki/API-Reference) -- REST API and WebSocket endpoints
+- [CLI API Reference](https://github.com/BugTraceAI/BugTraceAI/wiki/API-Reference) -- CLI REST API and WebSocket endpoints
 - [Getting Started](https://github.com/BugTraceAI/BugTraceAI/wiki/Getting-Started) -- Installation and first scan
 
 ---

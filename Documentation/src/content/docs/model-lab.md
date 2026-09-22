@@ -30,6 +30,19 @@ Open it from the WEB sidebar. It is no longer a sub-tab of the main scanner UI -
 
 ---
 
+## How Model Lab fits the integration
+
+Model Lab is a **WEB workspace backed by the CLI API**. It does not start a CLI scan and it does not use the BugTraceAI-API security-testing service as its benchmark backend. The two integrations are intentionally separate:
+
+| WEB feature | Connected service | Purpose |
+|---|---|---|
+| **Model Lab** | BugTraceAI-CLI | Benchmark and choose models for CLI scanner slots |
+| **API Connector** | BugTraceAI-API | Start API-security scans, inspect evidence, and download API artifacts |
+
+Both are available in the visual workspace when their corresponding service is configured. This separation prevents a model benchmark from changing an API scan or its provider configuration.
+
+---
+
 ## Its Own OpenRouter Key
 
 Model Lab uses its **own OpenRouter API key**, entered directly in the module and stored locally in the browser. This key is independent of the scanner's active provider:
@@ -134,4 +147,4 @@ Starting a job returns a WebSocket URL (`/api/ws/model-eval/{job_id}`). Connect 
 
 **Parent**: [BugTraceAI-WEB](/bugtraceai-web)
 
-**See also**: [Provider Selection](/provider-selection) | [Configuration](/configuration) | [API Reference](/api-reference)
+**See also**: [Provider Selection](/provider-selection) | [Configuration](/configuration) | [CLI API Reference](/api-reference) | [BugTraceAI-API](/bugtraceai-api)

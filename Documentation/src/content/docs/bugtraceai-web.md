@@ -4,203 +4,117 @@ title: "BugTraceAI-WEB"
 
 # BugTraceAI-WEB
 
-BugTraceAI-WEB is the browser-based dashboard for the BugTraceAI platform. It provides 20+ AI-powered security analysis tools, real-time scan monitoring, and a complete interface for managing scans run by the [BugTraceAI-CLI](/bugtraceai-cli) engine.
+BugTraceAI-WEB is the visual security workspace for the BugTraceAI ecosystem. It combines the security toolkit, live scan console, report review, AIrepeater, Model Lab, and the BugTraceAI-API Connector in one browser interface.
 
 **Repository**: [github.com/BugTraceAI/BugTraceAI-WEB](https://github.com/BugTraceAI/BugTraceAI-WEB)
+**Current release**: `v2.0.24-beta`
 
 ---
 
-## Overview
+## What changed in the 2.0 release
 
-The WEB component has two layers:
+### API Connector
 
-| Layer | Technology | Port | Purpose |
-|-------|-----------|------|---------|
-| **Frontend** | React 18 + TypeScript + Vite + TailwindCSS | 6869 (Nginx) | Dashboard UI, security toolkit, scan monitoring |
-| **Backend** | Express + TypeScript + Prisma | 3001 | API for chats, settings, analysis reports |
+The API Connector is a typed client for [BugTraceAI-API](/bugtraceai-api). From WEB, an authorized user can start API scans, follow their status, inspect results and findings, retrieve OpenAPI and handoff artifacts, download reports, check health, and manage providers.
 
-The frontend connects to:
-- Its own Express backend (port 3001) for local WEB data
-- The CLI FastAPI server (port 8000) for scan management and real-time monitoring
+In a Launcher deployment the connector uses the same-origin `/btai-api` path. Nginx receives the Launcher-selected API REST port at startup and proxies over the shared Docker network. For a separately deployed service, the connector URL is editable in WEB settings. No browser bundle assumes a fixed API host port.
 
----
+### Refined visual language
+
+The public visual system is now inspectable at `/design-system` (and under the base path as `/bugtraceai/design-system`). It is a state-free reference for the interface's colors, typography, interactive states, panels, and reusable component patterns.
+
+The scan experience is more legible during long-running work:
+
+- The **Live Swarm Graph** shows reconnaissance, strategy, specialists, validation, and reporting as one live flow.
+- Specialist **L1–L6 escalation ladders** advance while an agent is still working rather than only after confirmation.
+- **AuthDiscovery** progress and totals appear in the event stream and graph.
+- API report rows separate the review state from the meaningful category, avoiding repeated review prefixes in finding names.
+
+### AIrepeater workbench
+
+AIrepeater is a three-pane Request / Response / AI Agent workbench for controlled HTTP testing. It has tabs, response search, per-vulnerability playbooks, report handoff, manual and agent-assisted modes, provider-aware model selection, and a dry-run test for the auto-auth macro.
+
+### Model Lab as a workspace
+
+Model Lab is now a top-level `/modellab` sidebar module rather than a sub-tab. It keeps an independent OpenRouter key, offers calibrated quick and advanced suites, provides live progress, cost visibility, cancellation and recovery, local history, a per-slot leaderboard, and an opt-in MUTATION diversity probe. See [Model Lab](/model-lab).
 
 ## Architecture
 
 ```
-+-------------------------------------------------------+
-|                    BugTraceAI-WEB                      |
-|                                                        |
-|  +-------------------+    +------------------------+  |
-|  | React Frontend    |    | Express Backend        |  |
-|  | Port 6869 (Nginx) |    | Port 3001              |  |
-|  |                   |    |                        |  |
-|  | - Dashboard       |    | - REST API             |  |
-|  | - Security Tools  |    | - Prisma ORM           |  |
-|  | - Scan Monitor    |    | - Authentication       |  |
-|  | - Reports Viewer  |    |                        |  |
-|  +--------+----------+    +----------+-------------+  |
-|           |                          |                 |
-|           |  HTTP                    |  SQL             |
-|           v                          v                 |
-|  +-------------------+    +------------------------+  |
-|  | CLI API (:8000)   |    | PostgreSQL             |  |
-|  | (External)        |    | (Local)                |  |
-|  +-------------------+    +------------------------+  |
-+-------------------------------------------------------+
+Browser
+  |
+  v
+BugTraceAI-WEB frontend (Nginx)
+  |-- /api/       --> WEB backend --> PostgreSQL (WEB-local data)
+  |-- /cli-api/   --> BugTraceAI-CLI (when installed)
+  '-- /btai-api/  --> BugTraceAI-API (when installed)
 ```
 
----
+The Launcher selects the browser-facing `WEB_PORT` and injects the selected `CLI_PORT` and `BTAI_PORT` into the Compose/Nginx configuration. The browser uses same-origin paths, so deployment-specific service ports are never hard-coded into the frontend.
 
-## Technology Stack
+| Data | System of record |
+|---|---|
+| Chat history, settings, WEB-native analysis reports | WEB PostgreSQL |
+| Autonomous scans, CLI findings, CLI reports | CLI SQLite and LanceDB |
+| API scan artifacts, evidence, report archives | API mounted report storage |
 
-| Technology | Version | Purpose |
-|-----------|---------|---------|
-| **React** | 18 | Component-based UI framework |
-| **TypeScript** | -- | Type safety |
-| **Vite** | 5 | Build tool and dev server |
-| **TailwindCSS** | -- | Utility-first CSS styling |
-| **Express** | -- | Backend HTTP server |
-| **Prisma** | -- | Type-safe ORM for PostgreSQL |
-| **PostgreSQL** | 16 | Persistent storage for WEB data |
-| **Nginx** | -- | Production static file serving and reverse proxy |
-| **Docker** | -- | Containerized deployment |
+WEB presents these sources but does not silently merge their databases.
 
----
+## Security toolkit and scan management
 
-## Features
+WEB includes 20+ AI-powered security analysis tools that work even when a CLI scanner is not installed. When the CLI is present, the dashboard adds scan creation, authenticated scan configuration, resume controls, live progress, findings, and report downloads.
 
-### What's New in v1.5.40-beta
-
-Highlights across the v1.5.x line:
-
-- **AIrepeater** (1.5.23) - a Burp/Caido-style HTTP request workbench with multiple tabs, manual and agent-driven exploit modes, response search, per-vulnerability playbooks, and one-click report handoff. The exploit-model picker is provider-aware and the auto-auth macro has a dry-run "test" button.
-- **Live Swarm Graph** (1.5.23) - a real-time visualization of the scan pipeline across reconnaissance, strategy, specialist, validation, and reporting stages. Per-specialist **L1->L6 escalation ladders** climb live as each agent escalates (1.5.39), and the AuthDiscovery node shows its live status.
-- **Model Lab** (1.5.23 -> 1.5.40) - an integrated model-comparison module at `/modellab` with its **own** OpenRouter API key. It runs quick and advanced benchmark suites (now the recalibrated **quick-v3 / advanced-v2**), streams live WebSocket progress, supports cancellation and cost visibility, keeps local run history, and recommends the best model **per scanner slot** (MUTATION / SKEPTICAL / ANALYSIS / REPORTING) with an opt-in MUTATION diversity probe. A "Test key" button validates the key before a run.
-- **Anthropic chat provider** (1.5.33) - Anthropic (Claude Messages API) is selectable alongside OpenRouter and Z.ai. Enter an `sk-ant-...` key, pick a Claude model, and Test/Save from Settings; chat, analysis, and the Repeater all work on Claude with tool-calling normalized to the shared shape.
-- **Curated model pack + Thinking control** (1.5.34) - the OpenRouter model picker loads a hand-picked, verified set instead of the full live catalog, and **Thinking / High / xHigh** entries send the same model with OpenRouter's reasoning parameter enabled.
-- **AuthDiscovery visibility** (1.5.27) - scan events now show AuthDiscovery start, per-URL progress, and result totals, with live status on the Swarm Graph.
-
-### Security Toolkit
-
-20+ specialized AI-powered security analysis tools, each with its own system prompt for targeted analysis. Tools include DAST, SAST, JWT analysis, payload generation, and more.
-
-See [Security Toolkit](/security-toolkit) for the full tool listing.
-
-### Scan Management
-
-When connected to a CLI API server:
-- **Create scans**: Launch new scans against target URLs
-- **Authenticated scans**: Launch scans with YAML auth configs and optional TOTP/2FA support
-- **Resume scans**: Continue recoverable scans without restarting the full workflow
-- **Monitor progress**: Real-time progress bars, phase indicators, and active agent display
-- **View findings**: Browse discovered vulnerabilities with severity and evidence
-- **Download reports**: HTML, JSON, and Markdown reports
-- **Real-time scan dashboard**: Pipeline bar showing current phase with progress, agent activity pills with finding count badges, and collapsible findings accordion
-- **Responsive layout**: The scan dashboard adapts to screen width with a two-row layout that wraps agent pills on narrow screens
-- **API Discovery**: Persist Kiterunner results to PostgreSQL with filters, speed controls, tags, and session history
-
-See [Real-time Scan Monitoring](/real-time-scan-monitoring) for details.
-
-### Reports Dashboard
-
-- Browse all scans and their statuses
-- Filter and sort findings by severity, type, and validation status
-- View detailed finding evidence including payloads and screenshots
-- Export reports in multiple formats
-- **Sortable columns**: Both Findings and Detections tabs have clickable column headers for sorting
-- **Tiebreaker sorting**: When values are identical, sorts by name/type as secondary key
-- **Finding Name display**: Shows vulnerability type when no title is available
-
----
-
-## Data Storage
-
-The WEB uses PostgreSQL for its own local data:
-
-| Data Type | Storage | Description |
-|-----------|---------|-------------|
-| Chat history | PostgreSQL | Conversations with security toolkit tools |
-| Settings | PostgreSQL | User preferences, API key references |
-| Analysis reports | PostgreSQL | AI-generated analysis from toolkit tools |
-| API Discovery scans | PostgreSQL | Kiterunner endpoint discovery history, filters, tags, and results |
-| Scan data | CLI SQLite (via API) | All scan data lives in the CLI, accessed via REST API |
-
-The WEB does **not** duplicate CLI scan data into PostgreSQL. It reads autonomous scan data from the CLI API in real time, while WEB-native records such as chat history, settings, analysis reports, and API Discovery history remain in PostgreSQL.
-
-See [Dual Database System](/dual-database-system) for the complete data architecture.
-
----
+The API Connector is separate from CLI scan management: it operates BugTraceAI-API's evidence-first API workflow and retains its distinct report artifacts and provenance.
 
 ## Deployment
 
-### Docker (Production)
+### Launcher deployment
+
+Use the [BugTraceAI-Launcher](/bugtraceai-launcher) for the supported Docker topology. It generates service-specific environment files, creates the shared network, chooses available ports interactively, starts API before WEB where needed, and validates health through both direct and proxied routes.
 
 ```bash
-cd BugTraceAI-WEB
-docker compose up -d
-# Frontend: http://localhost:6869
-# CLI API proxied via /cli-api/ (no CORS issues)
+git clone https://github.com/BugTraceAI/BugTraceAI-Launcher.git
+cd BugTraceAI-Launcher
+./launcher.sh
 ```
 
-The Nginx configuration includes a reverse proxy that routes `/cli-api/` requests to the CLI FastAPI server, including WebSocket upgrade for real-time scan events. This eliminates CORS issues in Docker deployments.
+Choose **Full Platform** for WEB + CLI + API or **Standalone WEB** for WEB + API without the CLI scanner.
 
-### Development Mode
+### Direct WEB deployment
 
-```bash
-cd BugTraceAI-WEB
-npm install
-npm run dev
-# Frontend: http://localhost:5173
-```
+For a direct deployment, use the WEB repository's Compose configuration and provide the selected endpoints in its environment. The relevant connector variables are:
 
-### Backend
+| Variable | Purpose |
+|---|---|
+| `VITE_CLI_API_URL` | CLI route or explicit CLI API address |
+| `CLI_API_PORT` | CLI service port supplied to the Nginx template in a Launcher deployment |
+| `VITE_BTAI_API_URL` | API Connector route or explicit API address |
+| `BTAI_API_PORT` | API REST port supplied to the Nginx template in a Launcher deployment |
+| `BTAI_SHARED_NETWORK` | Docker network shared with API and CLI services |
+| `DATABASE_URL` | WEB PostgreSQL connection string |
 
-```bash
-cd BugTraceAI-WEB/backend
-npm install
-npx prisma migrate deploy
-npm start
-# Backend: http://localhost:3001
-```
+The exact port values are operator choices. Use the values generated by the Launcher or set all related Compose variables consistently for a manual deployment.
 
-### Environment Variables
+## Connection states
 
-| Variable | Description |
-|----------|-------------|
-| `VITE_CLI_API_URL` | URL of the CLI API server (e.g., `http://localhost:8000`) |
-| `DATABASE_URL` | PostgreSQL connection string |
+The WEB workspace can remain useful when an optional connected service is unavailable:
 
-In full deployment mode via the [BugTraceAI-Launcher](/bugtraceai-launcher), these are auto-configured.
+| Service state | Available experience |
+|---|---|
+| CLI connected | Scan management, live monitoring, CLI reports, and Model Lab backend |
+| API connected | API Connector scans, artifacts, reports, health, and provider management |
+| CLI unavailable | Security toolkit and WEB-local data remain available; CLI scan controls are unavailable |
+| API unavailable | WEB and CLI features remain available; API Connector actions show the service state |
 
----
-
-## Connecting to CLI
-
-The WEB dashboard connects to the CLI API server to manage scans. The CLI URL is configured via `VITE_CLI_API_URL`.
-
-### Connection States
-
-| State | Description |
-|-------|-------------|
-| **Connected** | CLI API reachable, scan management available |
-| **Disconnected** | CLI API unreachable, toolkit tools still functional |
-| **Reconnecting** | Attempting to re-establish connection |
-
-When disconnected from the CLI, the WEB continues to function with its own security toolkit tools. Scan management features are unavailable until the connection is restored.
-
----
-
-## Sub-Pages
+## Further reading
 
 | Page | Description |
-|------|-------------|
-| [Security Toolkit](/security-toolkit) | Detailed listing of all 20+ AI-powered security tools |
-| [Real-time Scan Monitoring](/real-time-scan-monitoring) | WebSocket-based live scan progress and findings |
-| [AIrepeater](/airepeater) | Burp/Caido-style HTTP request workbench with manual and agent-driven modes |
-| [Model Lab](/model-lab) | Integrated model benchmarking with per-scanner-slot leaderboards |
-| [Swarm Graph](/swarm-graph) | Real-time visualization of the multi-agent scan pipeline |
+|---|---|
+| [Security Toolkit](/security-toolkit) | The standalone AI-powered tools |
+| [AIrepeater](/airepeater) | Controlled HTTP request workbench |
+| [Live Swarm Graph](/swarm-graph) | Real-time multi-agent visualization |
+| [Model Lab](/model-lab) | Per-slot model benchmarking |
+| [Real-time Scan Monitoring](/real-time-scan-monitoring) | CLI event stream and scan console |
+| [BugTraceAI-API](/bugtraceai-api) | API Connector service and security boundary |
 
----
-
-**See also**: [Architecture](/architecture) | [Dual Database System](/dual-database-system) | [BugTraceAI-CLI](/bugtraceai-cli) | [AIrepeater](/airepeater) | [Model Lab](/model-lab) | [Swarm Graph](/swarm-graph)
+**See also**: [Architecture](/architecture) | [Deployment Modes](/deployment-modes) | [BugTraceAI-Launcher](/bugtraceai-launcher) | [BugTraceAI-CLI](/bugtraceai-cli)
