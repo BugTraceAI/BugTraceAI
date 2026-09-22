@@ -74,6 +74,7 @@ BugTraceAI-API has no built-in user authentication or tenant isolation. Keep it 
 ## Further reading
 
 - [BugTraceAI-API README](https://github.com/BugTraceAI/BugTraceAI-API#readme) — complete request examples, authentication shapes, and report artifacts
+- [BugTraceAI-API DeepWiki](https://deepwiki.com/BugTraceAI/BugTraceAI-API) — AI-powered codebase documentation and architecture exploration
 - [Architecture](/architecture) — how WEB, API, CLI, and Launcher connect
 - [Deployment Modes](/deployment-modes) — what the Launcher installs in each mode
 - [BugTraceAI-WEB](/bugtraceai-web) — API Connector, visual workspace, and Model Lab
