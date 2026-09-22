@@ -16,9 +16,10 @@
   <a href="https://discord.gg/5HjujkScC"><img src="https://img.shields.io/discord/5HjujkScC?label=Discord&logo=discord&logoColor=white&color=5865F2" alt="Discord"/></a>
   <a href="https://github.com/BugTraceAI/BugTraceAI/releases/download/demo-report/BugTraceAI-Demo-Report.zip"><img src="https://img.shields.io/badge/Demo_Report-Download-red?logo=files&logoColor=white" alt="Demo Report"/></a>
   <img src="https://img.shields.io/badge/License-AGPL--3.0-blue.svg" alt="License"/>
-  <img src="https://img.shields.io/badge/CLI-v3.7.12--beta-orange" alt="CLI Version"/>
-  <img src="https://img.shields.io/badge/WEB-v1.5.40--beta-orange" alt="WEB Version"/>
-  <img src="https://img.shields.io/badge/Launcher-v2.9.1-orange" alt="Launcher Version"/>
+  <img src="https://img.shields.io/badge/API-v1.4.4--beta-orange" alt="API Version"/>
+  <img src="https://img.shields.io/badge/CLI-v3.7.28--beta-orange" alt="CLI Version"/>
+  <img src="https://img.shields.io/badge/WEB-v2.0.24--beta-orange" alt="WEB Version"/>
+  <img src="https://img.shields.io/badge/Launcher-v2.9.2-orange" alt="Launcher Version"/>
 </p>
 
 <p align="center">
@@ -127,6 +128,12 @@ BugTraceAI is composed of **4 independent but interconnected components**, plus 
     <th>Repository</th>
   </tr>
   <tr>
+    <td><strong>BugTraceAI-API</strong></td>
+    <td>Standalone evidence-first API security testing service over REST and MCP</td>
+    <td>Python + FastAPI + Docker</td>
+    <td><a href="https://github.com/BugTraceAI/BugTraceAI-API">BugTraceAI-API</a></td>
+  </tr>
+  <tr>
     <td><strong>BugTraceAI-CLI</strong></td>
     <td>Autonomous AI security scanner. Multi-agent pipeline with Go fuzzers, Playwright browser validation, and AI-driven analysis</td>
     <td>Python + FastAPI + Go + Playwright</td>
@@ -212,7 +219,10 @@ For the full pipeline documentation, see the [Wiki](https://github.com/BugTraceA
 
 ## What's New
 
-### BugTraceAI-WEB v1.5.40-beta
+### BugTraceAI-API v1.4.4-beta
+- **Standalone public API service** — REST and MCP interfaces, evidence-first reports, dynamic Launcher-selected ports, and shared Docker networking for WEB integration
+
+### BugTraceAI-WEB v2.0.24-beta
 - **AIrepeater** — Burp/Caido-style multi-tab HTTP workbench with manual and AI-agent-driven exploitation modes, per-vulnerability playbooks, response search, and report handoff; the exploit model is provider-guarded and a dry-run button verifies the auto-auth macro before you rely on it
 - **Live Swarm Graph** — real-time visualization of reconnaissance, strategy, specialist, validation, and reporting stages, with per-agent L1→L6 escalation ladders that climb live as each agent works
 - **Model Lab module** — standalone sidebar module at `/modellab` for benchmarking OpenRouter models with its own API key: calibrated `quick-v3` / `advanced-v2` suites, a "Best per slot" leaderboard (MUTATION / SKEPTICAL / ANALYSIS / REPORTING), an opt-in MUTATION diversity probe, live WebSocket progress, cost visibility, and local history
@@ -220,14 +230,14 @@ For the full pipeline documentation, see the [Wiki](https://github.com/BugTraceA
 - **Curated model pack + Thinking control** — a hand-picked, verified OpenRouter model list plus Thinking / High / xHigh entries that enable OpenRouter's reasoning parameter
 - **Report Enrich + AuthDiscovery visibility** — a self-heal "Enrich" button re-runs PoC/CVSS enrichment when a report comes out under-enriched, and AuthDiscovery start, per-URL progress, and JWT/cookie totals surface in the Events feed and Swarm Graph
 
-### BugTraceAI-CLI v3.7.12-beta
+### BugTraceAI-CLI v3.7.28-beta
 - **Anthropic direct-API provider** — Anthropic is a first-class LLM provider via API key (`x-api-key`, Messages API); a new `api_format` preset field decouples the wire format so generation, threaded generation, vision, and connectivity all route to the Anthropic Messages API when active
 - **Integrated Model Lab (model-eval)** — `/api/model-eval` endpoints with a per-request OpenRouter key and live WebSocket progress; quality-dominant recalibration, new `quick-v3` / `advanced-v2` suites, a per-slot leaderboard (MUTATION / SKEPTICAL / ANALYSIS / REPORTING), and an opt-in MUTATION diversity probe
 - **Reporting/enrichment failover + provenance** — PoC/CVSS enrichment falls back to a secondary provider (`REPORTING_FAILOVER_ENABLED` / `REPORTING_FAILOVER_PROVIDER`, default `anthropic`) for that call only, never changing the scan's active provider; `poc_enrichment_provenance` and `reporting_failover_count` make reporting saturation visible in the deliverable
 - **Dedup & detection fixes** — RCE-family findings canonicalize to a single type (no double-count), strong-evidence IDORs route to MANUAL_REVIEW instead of being buried, and boolean-blind SQLi diffing is capped/off-thread to prevent event-loop stalls
 - **Deliverable parity** — pending (POTENTIAL) findings appear across Markdown, engagement JSON, and `validated_findings.json`, and the "Findings by Severity" totals now match across all deliverables
 
-### BugTraceAI-Launcher v2.9.1
+### BugTraceAI-Launcher v2.9.2
 - **Interactive AI installer** — asks provider, install vs repair, Full/CLI/WEB, and optional reconFTW/Kali again (the guided wizard is unchanged)
 - **Ubuntu sudo ticket** — privileged commands stay on the installer TTY and the session re-enters the `docker` group, so it no longer loops on `sudo: a password is required`
 - **AI chat line editing** — cooked TTY + GNU readline so Backspace and arrows edit the line instead of printing control characters
