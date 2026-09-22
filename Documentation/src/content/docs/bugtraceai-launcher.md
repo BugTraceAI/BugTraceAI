@@ -4,15 +4,14 @@ title: "BugTraceAI-Launcher"
 
 # BugTraceAI-Launcher
 
-BugTraceAI-Launcher is a one-command Docker deployment wizard that handles the complete setup and lifecycle management of the BugTraceAI platform. It automates dependency detection, port management, service configuration, container orchestration, and an optional AI Setup & Repair Assistant that can install *or* diagnose and repair a deployment.
+BugTraceAI-Launcher is the supported one-command Docker deployment wizard for BugTraceAI. It installs the selected components, manages their lifecycle, generates their environment files with restrictive permissions, and keeps the integration topology consistent.
 
 **Repository**: [github.com/BugTraceAI/BugTraceAI-Launcher](https://github.com/BugTraceAI/BugTraceAI-Launcher)
+**Current release**: `v2.9.2`
 
 ---
 
-## Overview
-
-The Launcher eliminates the complexity of manually deploying and configuring BugTraceAI components. A single command handles everything:
+## Quick start
 
 ```bash
 git clone https://github.com/BugTraceAI/BugTraceAI-Launcher.git
@@ -20,253 +19,78 @@ cd BugTraceAI-Launcher
 ./launcher.sh
 ```
 
-The interactive wizard guides you through:
-1. Selecting a deployment mode
-2. Checking system requirements
-3. Pulling and building Docker images
-4. Configuring environment variables
-5. Starting all services
-6. Running health checks
-7. Displaying access URLs
+The wizard checks dependencies, asks for a deployment mode and provider, selects available ports interactively, clones or updates the required public repositories, writes service-scoped configuration, builds containers, runs health checks, and displays the resulting access addresses.
 
-As of v2.9.1, the **AI Setup & Repair Assistant** is interactive again (provider, install/repair, Full/CLI/WEB, optional MCPs). Ubuntu sudo uses the same TTY as the cached ticket and re-enters the `docker` group. The AI chat restores line editing so Backspace is not echoed as a control character. On Linux, a missing Docker Engine can be installed by the launcher. Optional reconFTW is built from the cloned local source (not pulled as `reconftw-mcp:local`), and installer events go to `install.log` next to `launcher.sh`.
+## Deployment modes
 
----
+| Mode | Installed components | Best for |
+|---|---|---|
+| **Full Platform** | WEB + CLI + API + CLI MCP | Complete visual and autonomous security workflow |
+| **Standalone WEB** | WEB + API | Security toolkit and visual API-security workflow without CLI scanning |
+| **Standalone CLI** | CLI + CLI MCP | Headless REST, WebSocket, MCP, CI/CD, and scripted scan work |
 
-## Features
+There is no separate API-only wizard option: use the [BugTraceAI-API](https://github.com/BugTraceAI/BugTraceAI-API) Compose deployment for that independent service. There is also no separate CLI-plus-MCP mode; the CLI deployment includes its MCP service.
+
+## Ports are selected, never assumed
+
+The Launcher proposes free ports and asks the operator to confirm or change every externally exposed listener. It writes the selections to deployment state and injects them into the right Compose and Nginx environments.
+
+| Variable | Service |
+|---|---|
+| `WEB_PORT` | Browser-facing WEB frontend |
+| `CLI_PORT` | CLI REST and WebSocket API |
+| `MCP_PORT` | CLI MCP endpoint |
+| `BTAI_PORT` | BugTraceAI-API REST endpoint |
+| `BTAI_MCP_PORT` | BugTraceAI-API MCP endpoint |
+
+Scripts, automation, reverse proxies, and documentation should use the displayed endpoint or these generated variables—not a numeric port constant. The Launcher preserves the values in `.launcher-state` so `status`, `start`, `stop`, `logs`, and `update` operate on the deployed topology.
+
+## API and WEB integration
+
+For Full Platform and Standalone WEB deployments, the Launcher:
+
+1. Clones and configures BugTraceAI-API.
+2. Creates the shared Docker network named by `BTAI_SHARED_NETWORK`.
+3. Starts API before WEB so the proxy target is ready during frontend startup.
+4. Writes the selected API REST port into WEB's generated environment.
+5. Lets Nginx route browser requests from `/btai-api/` to the API service by Docker service name.
+6. Checks direct API health as well as WEB-to-API and WEB-to-CLI proxy paths where those components are enabled.
+
+This keeps the browser same-origin and removes the need to hard-code API or CLI host ports in WEB.
+
+## Core features
 
 | Feature | Description |
-|---------|-------------|
-| **Interactive Wizard** | Step-by-step guided setup |
-| **Auto-Dependency Detection** | Checks for Docker, Git, and system requirements; installs Git/curl via apt, dnf, yum, pacman, or zypper, Docker Engine on Linux if missing, and Docker Compose if missing |
-| **Port Management** | Detects port conflicts and suggests alternatives (including the PostgreSQL host port) |
-| **Three Deployment Modes** | Full Platform, Standalone WEB, Standalone CLI (plus optional MCP add-ons) |
-| **Service Lifecycle** | Start, stop, restart, update, uninstall |
-| **Health Checks** | Verifies all services are running correctly |
-| **Log Access** | View logs from any service |
-| **Hardened secrets** | Generated `.env` / `.env.docker` are written with `600` permissions |
-| **AI Setup & Repair Assistant** | Optional agent (DeepSeek V3 with automatic Claude Haiku 4.5 fallback) that can install from scratch or diagnose and repair an existing deployment |
+|---|---|
+| **Interactive setup** | Dependency checks, provider selection, deployment mode, port selection, and access summary |
+| **Shared networking** | Connects enabled services with a named Docker network and service aliases |
+| **Generated configuration** | Writes scoped `.env` / `.env.docker` files with restrictive file permissions |
+| **Lifecycle commands** | Start, stop, restart, update, uninstall, status, and service logs |
+| **Health checks** | Validates the enabled services and proxy paths after startup |
+| **Release awareness** | Checks the published component releases and notifies users when an installed version is behind |
+| **AI Setup & Repair Assistant** | Optional guided install or diagnosis/repair workflow with confirmations for destructive actions |
 
----
-
-## Installation
-
-### Requirements
-
-- Docker 24.0 or higher
-- Git
-- 4 GB RAM minimum (8 GB recommended)
-- 10 GB disk space
-- OpenRouter API key (for AI functionality)
-
-### Quick Start
-
-```bash
-git clone https://github.com/BugTraceAI/BugTraceAI-Launcher.git
-cd BugTraceAI-Launcher
-./launcher.sh
-```
-
-The Launcher installs to `~/bugtraceai/` by default. No `sudo` required -- only Docker group permissions are needed.
-
-### AI Setup & Repair Assistant
-
-BugTraceAI-Launcher includes an optional AI Setup & Repair Assistant (`ai_installer.py`), which runs on DeepSeek V3 by default with an automatic, sticky fallback to Claude Haiku 4.5 (both via OpenRouter; override either model with the `BTAI_INSTALLER_MODEL` / `BTAI_INSTALLER_FALLBACK_MODEL` environment variables). It is no longer troubleshooting-only: a first menu lets you choose between **installing** BugTraceAI from scratch and **repairing or diagnosing** an existing deployment (failed services, database connectivity, Docker, ports, broken configuration). You then pick the scope — Full Platform, CLI only, or WEB only. In repair mode the agent diagnoses first and never reinstalls or deletes anything without asking.
-
-The one-liner prompts before entering AI mode:
-
-```text
-Try the AI Setup & Repair Assistant (Experimental — installs & troubleshoots)? [y/N]
-```
-
-If you choose AI mode, the assistant shows a risk warning and asks for a `[y/N]` confirmation before it starts. The OpenRouter API key is entered with hidden input (it never appears on screen) and only a masked form is shown back. It then runs shell commands through its `run_command` tool in a stateful, persistent Bash shell — commands that look destructive (including `docker compose down -v`, which would wipe the named database volumes) require an explicit confirmation, and each command runs under a kernel-enforced timeout so a hung command can't stall the install. The conversation runs in English. Use this mode mainly on clean VMs, VPS instances, or disposable test environments.
-
----
+The AI Setup & Repair Assistant can run with the supported OpenRouter or Anthropic paths configured by the wizard. It is optional; normal installation does not require it.
 
 ## Commands
 
 | Command | Description |
-|---------|-------------|
-| `./launcher.sh` | Launch the interactive setup wizard |
-| `./launcher.sh status` | Show status of all services |
-| `./launcher.sh start` | Start all services |
-| `./launcher.sh stop` | Stop all services |
-| `./launcher.sh restart` | Restart all services |
-| `./launcher.sh update` | Pull latest images and restart |
-| `./launcher.sh uninstall` | Remove all containers, images, and data |
-| `./launcher.sh logs` | View logs from all services |
-| `./launcher.sh logs <service>` | View logs from a specific service |
+|---|---|
+| `./launcher.sh` | Run the interactive setup wizard |
+| `./launcher.sh status` | Show deployed service status and configured endpoints |
+| `./launcher.sh start` | Start enabled services from saved state |
+| `./launcher.sh stop` | Stop enabled services |
+| `./launcher.sh restart` | Restart enabled services |
+| `./launcher.sh update` | Pull/rebuild enabled components and restart them |
+| `./launcher.sh logs` | Follow logs from the deployment |
+| `./launcher.sh logs api` | Follow BugTraceAI-API logs |
+| `./launcher.sh uninstall` | Remove the deployment after confirmation |
 
----
+## Security and operations
 
-## Deployment Modes
+- Treat generated environment files as secrets. Provider credentials are scoped to their service and must not be committed.
+- Keep API and MCP services on a trusted management network. Add TLS and authentication at a reverse proxy before providing remote access.
+- Use `status` and `logs` after updates; the health checks catch connectivity issues between enabled services.
+- The update notifier is advisory. Review release notes before changing a production deployment.
 
-The Launcher supports three deployment modes. See [Deployment Modes](/deployment-modes) for detailed descriptions.
-
-| Mode | Components | Best For |
-|------|-----------|----------|
-| **Full Platform** | WEB + CLI (auto-connected) | Complete scanning platform |
-| **Standalone WEB** | Dashboard only | AI analysis tools, no active scanning |
-| **Standalone CLI** | Headless API server | CI/CD, scripted scanning, API-only |
-
-### Full Platform Mode
-
-The recommended mode. Deploys both WEB and CLI, automatically configures the connection between them (CORS, `VITE_CLI_API_URL`), and starts all services.
-
-```bash
-./launcher.sh
-# Select: Full Platform
-```
-
-Services started:
-- BugTraceAI-CLI (FastAPI on port 8000)
-- BugTraceAI-WEB Frontend (Nginx on port 6869)
-- BugTraceAI-WEB Backend (Express on port 3001)
-- PostgreSQL (port 5432, internal)
-
-### Standalone Modes
-
-Each standalone mode runs its own Docker Compose project:
-
-```bash
-./launcher.sh
-# Select: Standalone WEB  (or)  Standalone CLI
-```
-
----
-
-## Architecture
-
-```
-+-------------------------------------------------------+
-|                  BugTraceAI-Launcher                   |
-|                                                        |
-|  +------------------+                                  |
-|  | launcher.sh      |  Interactive wizard              |
-|  +--------+---------+                                  |
-|           |                                            |
-|           v                                            |
-|  +------------------+                                  |
-|  | Docker Compose   |  Container orchestration         |
-|  +--------+---------+                                  |
-|           |                                            |
-|     +-----+-----+-----+-----+                         |
-|     |           |           |                          |
-|     v           v           v                          |
-|  +------+   +------+   +------+                       |
-|  | CLI  |   | WEB  |   | WEB  |                       |
-|  | :8000|   | :6869|   | :3001|                       |
-|  +------+   +------+   +------+                       |
-|                            |                           |
-|                            v                           |
-|                      +----------+                      |
-|                      | Postgres |                      |
-|                      | :5432    |                      |
-|                      +----------+                      |
-+-------------------------------------------------------+
-```
-
----
-
-## Configuration
-
-### Auto-Configuration
-
-In Full Platform mode, the Launcher automatically configures:
-- `VITE_CLI_API_URL`: Points the WEB frontend to the CLI API
-- CORS settings: Allows the WEB to communicate with the CLI
-- PostgreSQL connection: Configures the WEB backend database
-- Docker networking: Sets up inter-container communication
-
-### Environment Variables
-
-The Launcher generates the configuration files during setup (created with `600` permissions, since they hold secrets). The CLI `.env`:
-
-```bash
-# Generated by BugTraceAI-Launcher
-PROVIDER=openrouter            # or zai (Z.ai / GLM)
-OPENROUTER_API_KEY=sk-or-v1-...
-BUGTRACE_CORS_ORIGINS=*
-```
-
-and the WEB `.env.docker` (PostgreSQL credentials, `FRONTEND_PORT`, conflict-checked `POSTGRES_PORT`, `VITE_CLI_API_URL`).
-
-### Custom Configuration
-
-After initial setup, edit `~/bugtraceai/.env` to customize settings, then restart:
-
-```bash
-./launcher.sh restart
-```
-
----
-
-## Updating
-
-```bash
-./launcher.sh update
-```
-
-This pulls the latest Docker images, rebuilds if necessary, and restarts all services with zero-downtime where possible.
-
----
-
-## Troubleshooting
-
-### Check Service Status
-
-```bash
-./launcher.sh status
-```
-
-### View Logs
-
-```bash
-# All services
-./launcher.sh logs
-
-# Specific service
-./launcher.sh logs cli
-./launcher.sh logs web
-```
-
-### Port Conflicts
-
-If a required port is already in use, the Launcher will detect the conflict and suggest alternatives. You can also manually change ports in the `.env` file.
-
-### Docker Permissions
-
-If you encounter Docker permission errors, ensure your user is in the `docker` group:
-
-```bash
-sudo usermod -aG docker $USER
-# Log out and back in for the change to take effect
-```
-
----
-
-## Uninstalling
-
-```bash
-./launcher.sh uninstall
-```
-
-This removes:
-- All BugTraceAI Docker containers
-- All BugTraceAI Docker images
-- The `~/bugtraceai/` installation directory
-- Generated configuration files
-
-It does **not** remove Docker itself or other unrelated containers.
-
----
-
-## Sub-Pages
-
-| Page | Description |
-|------|-------------|
-| [Deployment Modes](/deployment-modes) | Detailed comparison of Full Platform, Standalone WEB, and Standalone CLI modes |
-
----
-
-**See also**: [Getting Started](/getting-started) | [Architecture](/architecture) | [Deployment Modes](/deployment-modes)
+**See also**: [Deployment Modes](/deployment-modes) | [Architecture](/architecture) | [BugTraceAI-API](/bugtraceai-api) | [BugTraceAI-WEB](/bugtraceai-web)

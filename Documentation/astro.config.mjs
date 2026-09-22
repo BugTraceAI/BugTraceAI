@@ -46,6 +46,12 @@ export default defineConfig({
 					],
 				},
 				{
+					label: 'BugTraceAI-API',
+					items: [
+						{ label: 'API Security Service', link: '/bugtraceai-api' },
+					],
+				},
+				{
 					label: 'BugStore',
 					items: [
 						{ label: 'About BugStore', link: '/bugstore' },

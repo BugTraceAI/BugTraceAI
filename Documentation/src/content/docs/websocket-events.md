@@ -18,11 +18,14 @@ BugTraceAI-CLI provides real-time event streaming via WebSocket connections. Thi
 ### Connection Example
 
 ```javascript
+// Read from deployment configuration or Launcher output.
+const cliWsBaseUrl = "<cli-websocket-base-url>";
+
 // Per-scan WebSocket
-const ws = new WebSocket("ws://localhost:8000/ws/scans/scan_abc123");
+const ws = new WebSocket(`${cliWsBaseUrl}/ws/scans/scan_abc123`);
 
 // Global WebSocket
-const ws = new WebSocket("ws://localhost:8000/ws/global");
+const ws = new WebSocket(`${cliWsBaseUrl}/ws/global`);
 ```
 
 ---
@@ -204,7 +207,7 @@ If a WebSocket connection drops, the client can reconnect and request event repl
 
 ```javascript
 // Reconnect with event replay from sequence 42
-const ws = new WebSocket("ws://localhost:8000/ws/scans/scan_abc123?last_seq=42");
+const ws = new WebSocket(`${cliWsBaseUrl}/ws/scans/scan_abc123?last_seq=42`);
 ```
 
 The server will replay all events with `seq > 42` before switching to live streaming.
@@ -240,7 +243,7 @@ class ScanWebSocket {
   }
 
   connect() {
-    const url = `ws://localhost:8000/ws/scans/${this.scanId}`;
+    const url = `${cliWsBaseUrl}/ws/scans/${this.scanId}`;
     const params = this.lastSeq > 0 ? `?last_seq=${this.lastSeq}` : "";
     this.ws = new WebSocket(url + params);
 

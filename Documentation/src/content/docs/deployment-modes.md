@@ -4,305 +4,91 @@ title: "Deployment Modes"
 
 # Deployment Modes
 
-The [BugTraceAI-Launcher](/bugtraceai-launcher) supports three deployment modes, each targeting different use cases. This page describes each mode in detail, including what services are deployed, how they communicate, and when to use each one.
+The [BugTraceAI-Launcher](/bugtraceai-launcher) composes the components that fit the workflow you choose. It asks for every external listener during setup and stores those choices for subsequent lifecycle commands.
 
----
+## Comparison
 
-## Mode Comparison
-
-| Feature | Full Platform | Standalone WEB | Standalone CLI |
-|---------|:------------:|:--------------:|:--------------:|
-| WEB Dashboard | Yes | Yes | No |
-| CLI Scanner | Yes | No | Yes |
-| MCP for AI Assistants | Yes | No | Yes |
-| Real-time Monitoring | Yes | No | N/A |
-| Security Toolkit (20+ tools) | Yes | Yes | No |
-| Active Scanning | Yes | No | Yes |
-| REST API | Yes | No | Yes |
-| PostgreSQL | Yes | Yes | No |
-| CI/CD Integration | Yes | No | Yes |
-| Auto-connected | Yes | N/A | N/A |
-
-> The MCP server (`bugtrace_mcp`, port 8001) ships with the CLI container, so it is available in both **Full Platform** and **Standalone CLI** — there is no separate "CLI + AI Assistant" deployment mode.
-
----
+| Capability | Full Platform | Standalone WEB | Standalone CLI |
+|---|:---:|:---:|:---:|
+| WEB dashboard and security toolkit | Yes | Yes | No |
+| BugTraceAI-API and API Connector | Yes | Yes | No |
+| CLI autonomous scanner | Yes | No | Yes |
+| CLI MCP for AI assistants | Yes | No | Yes |
+| CLI live monitoring | Yes | No | N/A |
+| Model Lab workspace | Yes | Available when a CLI endpoint is configured | No browser workspace |
+| API report review and downloads | Yes | Yes | API service separate |
+| CI/CD / scripted CLI workflow | Yes | API-focused only | Yes |
 
 ## Full Platform
 
-**Command**: `./launcher.sh` then select "Full Platform"
+Choose **BugTraceAI Web + CLI (Full Platform)** for the complete ecosystem:
 
-### Description
-
-Deploys both WEB and CLI, automatically configures the connection between them, and starts all supporting services. This is the recommended mode for most users.
-
-### Services
-
-| Service | Port | Container | Description |
-|---------|------|-----------|-------------|
-| CLI FastAPI | 8000 | `btai-cli` | Scanning engine and REST API |
-| WEB Frontend | 6869 | `btai-web` | React dashboard (Nginx) |
-| WEB Backend | 3001 | `btai-backend` | Express API |
-| PostgreSQL | 5432 (internal) | `btai-postgres` | WEB database |
-
-### Auto-Configuration
-
-The Launcher automatically sets:
-- `VITE_CLI_API_URL=/cli-api` on the WEB frontend (proxied through Nginx)
-- CORS headers on the CLI to allow requests from the WEB origin
-- Docker networking for inter-container communication
-- PostgreSQL credentials and database initialization
-
-### Data Flow
+- WEB frontend and its backend/database
+- BugTraceAI-CLI plus its MCP service
+- BugTraceAI-API plus its MCP service
+- Shared Docker networking and same-origin WEB proxy routes
 
 ```
-User --> WEB Dashboard (:6869)
-             |
-             +-- REST API --> CLI (:8000) --> SQLite
-             |
-             +-- WebSocket --> CLI (:8000) --> Event Bus
-             |
-             +-- HTTP --> WEB Backend (:3001) --> PostgreSQL
+Browser --> WEB
+            |-- /cli-api/  --> CLI REST / WebSocket --> CLI data
+            '-- /btai-api/ --> API REST              --> API report storage
 ```
 
-In Docker deployments, the WEB frontend's Nginx reverse proxy routes `/cli-api/` to the CLI FastAPI server. This eliminates CORS issues and simplifies networking.
-
-### Best For
-
-- Complete pentesting platform
-- Bug bounty workflows
-- Security team deployments
-- Users who want everything in one setup
-
----
+Use this mode when you want the visual workspace, autonomous CLI scans, API-security scans, live monitoring, and human review together. The API and CLI keep separate evidence stores and can be used independently even though WEB makes both available in one interface.
 
 ## Standalone WEB
 
-**Command**: `./launcher.sh` then select "Standalone WEB"
+Choose **Solo BugTraceAI WEB** when you need the visual tools and API-security workflow but do not want the CLI scanner installed.
 
-### Description
+It includes:
 
-Deploys only the WEB dashboard with its backend and database. Provides access to the 20+ AI-powered security toolkit tools without active scanning capabilities.
+- WEB security toolkit, AIrepeater, report review, and design-system reference
+- BugTraceAI-API and the WEB API Connector
+- WEB-local PostgreSQL persistence
+- API evidence reports, OpenAPI artifacts, handoff packs, and downloads
 
-### Services
-
-| Service | Port | Container | Description |
-|---------|------|-----------|-------------|
-| WEB Frontend | 6869 | `btai-web` | React dashboard (Nginx) |
-| WEB Backend | 3001 | `btai-backend` | Express API |
-| PostgreSQL | 5432 (internal) | `btai-postgres` | WEB database |
-
-### What You Get
-
-- All 20+ security toolkit tools (JWT Analyzer, Payload Forge, Code Analyzer, etc.)
-- Chat-based AI interaction for security analysis
-- Persistent storage of analyses and conversations
-- No CLI scanner, no active scanning, no vulnerability exploitation
-
-### What You Do NOT Get
-
-- No active scanning capability
-- No real-time scan monitoring
-- No vulnerability exploitation or validation
-- No report generation from scans
-
-### Best For
-
-- AI-assisted security analysis only
-- Code review and vulnerability research
-- Learning security concepts
-- Environments where active scanning is not permitted
-
----
+It does not include autonomous CLI scans, CLI WebSocket monitoring, or the CLI MCP service. Model Lab remains a WEB workspace, but its benchmark backend requires a configured CLI API endpoint.
 
 ## Standalone CLI
 
-**Command**: `./launcher.sh` then select "Standalone CLI"
+Choose **Solo BugTraceAI CLI** for headless automated scanning. It includes the CLI REST/WebSocket service, specialist engine, persistence, browser validation, and the CLI MCP service.
 
-### Description
+Use it for CI/CD jobs, scripts, or an MCP-compatible assistant. The selected endpoint values are shown when setup finishes; use those values in your client configuration rather than assuming a port.
 
-Deploys only the CLI scanning engine as a headless API server. Provides full scanning capability via REST API and WebSocket without any graphical interface.
+For an independent API-security engine, deploy [BugTraceAI-API](/bugtraceai-api) separately with its own Compose configuration and selected REST/MCP ports.
 
-### Services
+## Ports and service discovery
 
-| Service | Port | Container | Description |
-|---------|------|-----------|-------------|
-| CLI FastAPI | 8000 | `btai-cli` | Scanning engine and REST API |
+The Launcher owns the deployed port mapping. It chooses and records:
 
-### What You Get
+| Variable | Endpoint |
+|---|---|
+| `WEB_PORT` | WEB browser address |
+| `CLI_PORT` | CLI REST and WebSocket API |
+| `MCP_PORT` | CLI MCP endpoint |
+| `BTAI_PORT` | API REST endpoint |
+| `BTAI_MCP_PORT` | API MCP endpoint |
 
-- Complete autonomous scanning engine
-- REST API for scan management
-- WebSocket for real-time event streaming
-- All specialist agents and Go fuzzers
-- Browser-based validation (Playwright)
-- Report generation (HTML, JSON, Markdown)
-- SQLite persistence
+In Full Platform and Standalone WEB mode, the browser accesses API through `/btai-api/`; the Nginx startup configuration substitutes `BTAI_API_PORT` and routes it internally. In Full Platform, `/cli-api/` works the same way for CLI. This avoids fixed browser-side host or port configuration.
 
-### What You Do NOT Get
+## Switching modes
 
-- No graphical dashboard
-- No security toolkit tools
-- No chat-based AI interaction
-- No PostgreSQL
-
-### API Access
-
-```bash
-# Start a scan
-curl -X POST http://localhost:8000/api/scans \
-  -H "Content-Type: application/json" \
-  -d '{"target_url": "https://example.com"}'
-
-# Check status
-curl http://localhost:8000/api/scans/{id}/status
-
-# Download report
-curl http://localhost:8000/api/scans/{id}/report/json > report.json
-```
-
-### Best For
-
-- CI/CD pipeline integration
-- Scripted and automated scanning
-- Headless server environments
-- API-only access
-- Integration with custom dashboards or tools
-
----
-
-## AI Assistant Control (built into the CLI)
-
-**Command**: `./launcher.sh` then select **Standalone CLI** (or **Full Platform**) — no separate selection is needed.
-
-### Description
-
-The CLI container always starts an MCP (Model Context Protocol) server alongside the scanning engine, so every CLI deployment can be controlled from an AI assistant like [OpenClaw](https://openclaw.com), Claude Code, Cursor, or any MCP-compatible client. This is not a distinct deployment mode — it is a capability included with the CLI.
-
-### Services
-
-| Service | Port | Container | Description |
-|---------|------|-----------|-------------|
-| CLI FastAPI | 8000 | `bugtrace_api` | Scanning engine and REST API |
-| MCP Server | 8001 | `bugtrace_mcp` | SSE transport for AI assistants |
-
-### What You Get
-
-- Complete autonomous scanning engine
-- REST API for scan management
-- **MCP tools accessible from AI assistants** (start scans, check status, get findings, export reports)
-- All specialist agents and Go fuzzers
-- Browser-based validation (Playwright)
-- Report generation (HTML, JSON, Markdown)
-- SQLite persistence
-
-### What You Do NOT Get
-
-- No graphical dashboard
-- No security toolkit tools
-- No PostgreSQL
-
-### MCP Configuration
-
-After deployment, add BugTraceAI to your AI assistant's MCP configuration:
-
-```json
-{
-  "mcpServers": {
-    "bugtraceai": {
-      "baseUrl": "http://localhost:8001/sse",
-      "description": "BugTraceAI Security Scanner"
-    }
-  }
-}
-```
-
-### Best For
-
-- **AI-driven security testing** via Telegram (OpenClaw), terminal (Claude Code), or IDE (Cursor)
-- Users who prefer chat-based interfaces over dashboards
-- Automated scanning controlled by AI agents
-- Integration with AI workflows and assistants
-
-See [AI Assistant Integration](/ai-assistant-integration) for full setup instructions and available MCP tools.
-
----
-
-## Choosing a Mode
-
-```
-Do you need a graphical dashboard?
-  |
-  +-- No --> Do you need active scanning?
-  |            |
-  |            +-- Yes --> Standalone CLI   (includes the MCP server for AI-assistant control)
-  |            +-- No  --> (You may not need BugTraceAI)
-  |
-  +-- Yes --> Do you need active scanning?
-               |
-               +-- Yes --> Full Platform
-               +-- No  --> Standalone WEB
-```
-
----
-
-## Switching Modes
-
-You can switch between modes by stopping the current deployment and running the Launcher wizard again:
+Stop the current deployment, run the wizard again, and select the new mode:
 
 ```bash
 ./launcher.sh stop
 ./launcher.sh
-# Select a different mode
 ```
 
-Data is preserved between mode switches:
-- PostgreSQL data persists in Docker volumes
-- SQLite data persists in the CLI container volume
-- Configuration is regenerated for the new mode
+Keep backups before changing a production topology. WEB database volumes, CLI state, API reports, and generated configuration have separate lifecycles; verify what a change or uninstall command will affect before confirming it.
 
----
+## Production boundary
 
-## Manual Deployment
-
-If you prefer to deploy without the Launcher, each component can be deployed independently:
-
-### Manual CLI Deployment
-
-```bash
-cd BugTraceAI-CLI
-docker build -t bugtrace-cli .
-docker run -d -p 8000:8000 --name btai-cli bugtrace-cli
-```
-
-### Manual WEB Deployment
-
-```bash
-cd BugTraceAI-WEB
-docker build -t bugtrace-web .
-docker run -d -p 6869:6869 --name btai-web bugtrace-web
-```
-
-### Manual Full Stack
-
-See the Docker Compose configuration examples in the [Architecture](/architecture) page.
-
----
-
-## Production Considerations
-
-For production deployments:
-
-| Concern | Recommendation |
-|---------|---------------|
-| **SSL/TLS** | Place Nginx reverse proxy with Let's Encrypt in front |
-| **Firewall** | Allow only ports 6869 and 8000 externally |
-| **Backups** | Schedule regular PostgreSQL and SQLite backups |
-| **Updates** | Use `./launcher.sh update` for rolling updates |
-| **Monitoring** | Use `./launcher.sh status` and `./launcher.sh logs` |
-| **Resources** | 8 GB RAM recommended for Full Platform mode |
-
----
+- Expose only the endpoints that the operator intentionally selected for remote access.
+- Keep databases and service-to-service traffic on the Docker network.
+- Add TLS and authentication at a reverse proxy for any remote REST/MCP access.
+- Apply your retention policy to CLI reports, API evidence archives, and WEB records.
 
 **Parent**: [BugTraceAI-Launcher](/bugtraceai-launcher)
 
-**See also**: [Architecture](/architecture) | [Getting Started](/getting-started) | [BugTraceAI-CLI](/bugtraceai-cli) | [BugTraceAI-WEB](/bugtraceai-web)
+**See also**: [Architecture](/architecture) | [Getting Started](/getting-started) | [BugTraceAI-API](/bugtraceai-api) | [BugTraceAI-WEB](/bugtraceai-web) | [BugTraceAI-CLI](/bugtraceai-cli)

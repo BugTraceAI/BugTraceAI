@@ -194,13 +194,13 @@ Each tool has a dedicated system prompt that:
 All conversations are stored in PostgreSQL via the Express backend:
 
 ```
-User message --> Express API (:3001) --> PostgreSQL
+User message --> Express API (internal service) --> PostgreSQL
                       |
                       v
               OpenRouter API (AI)
                       |
                       v
-AI response --> Express API (:3001) --> PostgreSQL
+AI response --> Express API (internal service) --> PostgreSQL
                       |
                       v
               Frontend display
