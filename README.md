@@ -270,13 +270,13 @@ The zip includes the full markdown report, validated findings JSON, specialist a
 
 ## CI/CD Integration Proposal
 
-BugTraceAI can operate as a security testing service in a CI/CD workflow: receive authorized jobs through its API or MCP layer, scan approved targets, publish evidence-rich reports, and pass validated findings into analysis and ticketing workflows.
+BugTraceAI can operate as a security testing service in a CI/CD workflow: authorized automation calls **BugTraceAI-API**, which forwards jobs through the API/MCP layer to the CLI for scanning approved targets. API and CLI reports remain available to the WEB workspace for manual analysis, while validated findings can flow into AI review and DevOps ticketing workflows.
 
 <p align="center">
-  <img src="BUGTRACEAI-CI-CD_Proposal.png" alt="BugTraceAI CI/CD integration proposal" width="720"/>
+  <img src="BUGTRACEAI-CI-CD_Proposalv2.png" alt="BugTraceAI CI/CD architecture with API, CLI, WEB, reporting, AI review, and ticketing" width="974"/>
 </p>
 
-The WEB workspace supports manual analysis alongside autonomous scans, while the CLI exposes the control and reporting surface needed for automation.
+This keeps external automation, autonomous scanning, evidence-rich reporting, human review, and remediation coordination connected without hard-coding deployment-specific service endpoints.
 
 ---
 
