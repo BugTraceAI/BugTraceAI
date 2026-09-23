@@ -22,7 +22,7 @@ BugTraceAI is designed exclusively for **authorized security testing**. This inc
 
 ## License
 
-BugTraceAI is released under the **GNU Affero General Public License v3.0 (AGPL-3.0)**. The full license text is available at [https://www.gnu.org/licenses/agpl-3.0.html](https://www.gnu.org/licenses/agpl-3.0.html). Your use of the software is subject to the terms of that license.
+BugTraceAI-owned material is released under the **Apache License, Version 2.0**. The full license text is available in the repository [LICENSE](https://github.com/BugTraceAI/BugTraceAI/blob/master/LICENSE) and at [https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0). Third-party components remain subject to their own license terms.
 
 ## No Warranty
 
