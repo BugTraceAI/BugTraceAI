@@ -15,7 +15,7 @@
   <a href="https://demo.bugtraceai.com/bugtraceai"><img src="https://img.shields.io/badge/Live_Demo-Try_It-2EAD33?logo=google-chrome&logoColor=white" alt="Live Demo"/></a>
   <a href="https://discord.gg/5HjujkScC"><img src="https://img.shields.io/discord/5HjujkScC?label=Discord&logo=discord&logoColor=white&color=5865F2" alt="Discord"/></a>
   <a href="https://github.com/BugTraceAI/BugTraceAI/releases/download/demo-report/BugTraceAI-Demo-Report.zip"><img src="https://img.shields.io/badge/Demo_Report-Download-red?logo=files&logoColor=white" alt="Demo Report"/></a>
-  <img src="https://img.shields.io/badge/License-AGPL--3.0-blue.svg" alt="License"/>
+  <img src="https://img.shields.io/badge/License-Apache--2.0-blue.svg" alt="License"/>
   <img src="https://img.shields.io/badge/API-v1.4.4--beta-orange" alt="API Version"/>
   <img src="https://img.shields.io/badge/CLI-v3.7.28--beta-orange" alt="CLI Version"/>
   <img src="https://img.shields.io/badge/WEB-v2.0.24--beta-orange" alt="WEB Version"/>
@@ -109,7 +109,7 @@ This is **NOT** a wrapper around existing tools. It is an autonomous multi-agent
 | Principle         | Description                                                             |
 | ----------------- | ----------------------------------------------------------------------- |
 | **Privacy-First** | Everything runs locally. No telemetry, no tracking, no cloud dependency |
-| **Opensource**    | AGPL-3.0 licensed. All code, prompts, and algorithms are public         |
+| **Opensource**    | Apache-2.0 licensed. All BugTraceAI-owned code, prompts, and algorithms are public |
 | **Self-Hosted**   | Your data stays on your infrastructure                                  |
 | **Modular**       | Use components independently or together                                |
 | **Docker-Native** | One-command deployment via Launcher                                     |
@@ -367,7 +367,7 @@ We welcome contributions: bug reports, feature requests, PRs, documentation impr
 
 ## License
 
-**AGPL-3.0 License** — Free to use, modify, and distribute. If you modify and distribute or offer as a service, you must share your changes under the same license.
+**Apache License 2.0** — BugTraceAI-owned material is free to use, modify, and distribute under the terms of the Apache License, Version 2.0.
 
 See LICENSE file in each repository.
 
