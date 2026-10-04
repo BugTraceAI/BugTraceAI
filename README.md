@@ -17,7 +17,7 @@
   <a href="https://github.com/BugTraceAI/BugTraceAI/releases/download/demo-report/BugTraceAI-Demo-Report.zip"><img src="https://img.shields.io/badge/Demo_Report-Download-red?logo=files&logoColor=white" alt="Demo Report"/></a>
   <img src="https://img.shields.io/badge/License-Apache--2.0-blue.svg" alt="License"/>
   <img src="https://img.shields.io/badge/API-v1.4.4--beta-orange" alt="API Version"/>
-  <img src="https://img.shields.io/badge/CLI-v4.0.19--beta-orange" alt="CLI Version"/>
+  <img src="https://img.shields.io/badge/CLI-v4.0.20--beta-orange" alt="CLI Version"/>
   <img src="https://img.shields.io/badge/WEB-v2.0.24--beta-orange" alt="WEB Version"/>
   <img src="https://img.shields.io/badge/Launcher-v3.0.9-orange" alt="Launcher Version"/>
 </p>
@@ -233,7 +233,7 @@ LLM provider's API key in **Provider/F7**. See the
 
 | Component | Version | Highlights |
 | --- | --- | --- |
-| [CLI](https://github.com/BugTraceAI/BugTraceAI-CLI/releases/tag/v4.0.19-beta) | **4.0.19-beta** | Textual TUI, Provider/Auth setup, automatic installer prerequisites, TUI/API profiles, optional global `btai` |
+| [CLI](https://github.com/BugTraceAI/BugTraceAI-CLI/releases/tag/v4.0.20-beta) | **4.0.20-beta** | Textual TUI, Provider/Auth setup, automatic installer prerequisites, TUI/API profiles, optional global `btai` |
 | [Launcher](https://github.com/BugTraceAI/BugTraceAI-Launcher/releases/tag/v3.0.9) | **3.0.9** | Local/Docker CLI setup, saved profiles, global command and deployment management |
 | [WEB](https://github.com/BugTraceAI/BugTraceAI-WEB) | **2.0.24-beta** | Scan dashboard, specialist graph, report explorer, AIrepeater and Model Lab |
 | [API](https://github.com/BugTraceAI/BugTraceAI-API) | **1.4.4-beta** | Standalone API security testing over REST and MCP |
