@@ -19,7 +19,7 @@
   <img src="https://img.shields.io/badge/API-v1.4.11--beta-orange" alt="API Version"/>
   <img src="https://img.shields.io/badge/CLI-v4.0.31--beta-orange" alt="CLI Version"/>
   <img src="https://img.shields.io/badge/WEB-v2.0.32--beta-orange" alt="WEB Version"/>
-  <img src="https://img.shields.io/badge/Launcher-v3.3.20-orange" alt="Launcher Version"/>
+  <img src="https://img.shields.io/badge/Launcher-v3.3.26-orange" alt="Launcher Version"/>
 </p>
 
 <p align="center">
@@ -184,7 +184,7 @@ BugTraceAI is composed of **4 independent but interconnected components**, plus 
   </tr>
 </table>
 
-Use the CLI TUI locally, its API/MCP for automation, or the Launcher for a full WEB deployment. The WEB connects to the appropriate scanning backend for each engine; API scans use BugTraceAI-API and web scans use the CLI API.
+Use the CLI TUI locally, its API/MCP for automation, or the Launcher to install independent products or a combination. The WEB connects to the appropriate scanning backend for each engine; API scans use BugTraceAI-API and web scans use the CLI API.
 
 ---
 
@@ -236,11 +236,11 @@ LLM provider's API key in **Provider/F7**. See the
 | [CLI](https://github.com/BugTraceAI/BugTraceAI-CLI/releases/tag/v4.0.31-beta) | **4.0.31-beta** | Terminal TUI, web-scanning API/MCP, provider/auth setup and optional global `btai` |
 | [WEB](https://github.com/BugTraceAI/BugTraceAI-WEB/releases/tag/v2.0.32-beta) | **2.0.32-beta** | Browser workspace for both scanning engines and reports |
 | [API](https://github.com/BugTraceAI/BugTraceAI-API/releases/tag/v1.4.11-beta) | **1.4.11-beta** | Independent API-target engine with REST and MCP |
-| [Launcher](https://github.com/BugTraceAI/BugTraceAI-Launcher/releases/tag/v3.3.20) | **3.3.20** | Universal visual installer, saved profiles and compatible updates |
+| [Launcher](https://github.com/BugTraceAI/BugTraceAI-Launcher/releases/tag/v3.3.26) | **3.3.26** | Universal TUI installer, independent module selection and Wizard or AI setup |
 
-Validated together on Ubuntu 24.04 amd64: fresh Docker/native CLI installation,
-updates preserving configuration/data, and complete BugStore scans. macOS and
-ARM runtime validation are not included in this release.
+Launcher 3.3.26 passed its focused installer tests and clean Lubuntu VM startup
+checks. Full component installation and a live scan were not completed in this
+release check. macOS and ARM runtime validation are not included.
 
 ## Demo Report
 
@@ -304,15 +304,30 @@ From this ecosystem checkout, `./install.sh` opens the same universal menu
 with `full` suggested. Component `./install.sh` entry points suggest their
 own product in that menu; they do not deploy a profile without your review.
 
-Choose the workspace and runtime once. The Launcher resolves the required
-engines, offers optional WEB toolboxes, configures ports/provider credentials
-and checks the selected services. Terminal profiles can register a global
-`btai` command. The AI Setup & Repair Assistant is available from the menu.
+Enter and verify a provider API key on the first screen, then choose
+**Install with Wizard** or **Install with AI**. Both stay in the TUI. Wizard
+supports every module combination. AI setup uses provider tokens and currently
+supports API-only or the full WEB + CLI + API selection, including the CLI TUI,
+with OpenRouter or Anthropic. Use Wizard for other combinations and for Z.ai.
+The review shows selected modules, runtime, ports and optional WEB toolboxes.
+Terminal profiles can register a global `btai` command.
+
+### Let your AI coding agent run setup
+
+If you use Codex, Claude Code, Cursor or another local terminal agent, give it
+this prompt:
+
+> Install BugTraceAI using the official universal Launcher. Read this README
+> and the Launcher README, run the official install command above in my
+> terminal, and let me interact with the TUI. I will enter and verify the
+> provider key locally, choose Wizard or AI, and select the modules and runtime.
+> Do not ask for secrets in chat or start a scan. Verify the selected
+> installation and report any checks that could not be completed.
 
 | Profile | Installed products | Runtime |
 | --- | --- | --- |
 | `terminal` | CLI terminal TUI | Local Python or Docker |
-| `web` | WEB + CLI web-scanning API/MCP + API-target engine | Docker |
+| `web` | WEB is preselected; add either or both scanning engines if needed | Docker |
 | `full` | WEB + both scanning engines + CLI terminal TUI | Docker |
 | `server` | CLI web-scanning API/MCP | Local Python or Docker |
 | `terminal-server` | CLI TUI + web-scanning API/MCP, without WEB | Local Python or Docker |
@@ -322,6 +337,9 @@ For direct component installation, use each checkout's explicit
 `scripts/install-runtime.sh` backend or the documented Python/Compose commands. Follow
 [INSTALLATION.md](INSTALLATION.md); a bare WEB `docker compose up` is not a
 complete configuration step.
+
+Component entry points suggest their own module. A suggestion only sets the
+initial checkboxes; review the exact modules before installation.
 
 ---
 
