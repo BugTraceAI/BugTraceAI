@@ -16,10 +16,10 @@
   <a href="https://discord.gg/5HjujkScC"><img src="https://img.shields.io/discord/5HjujkScC?label=Discord&logo=discord&logoColor=white&color=5865F2" alt="Discord"/></a>
   <a href="https://github.com/BugTraceAI/BugTraceAI/releases/download/demo-report/BugTraceAI-Demo-Report.zip"><img src="https://img.shields.io/badge/Demo_Report-Download-red?logo=files&logoColor=white" alt="Demo Report"/></a>
   <img src="https://img.shields.io/badge/License-Apache--2.0-blue.svg" alt="License"/>
-  <img src="https://img.shields.io/badge/API-v1.4.4--beta-orange" alt="API Version"/>
-  <img src="https://img.shields.io/badge/CLI-v4.0.21--beta-orange" alt="CLI Version"/>
-  <img src="https://img.shields.io/badge/WEB-v2.0.24--beta-orange" alt="WEB Version"/>
-  <img src="https://img.shields.io/badge/Launcher-v3.0.9-orange" alt="Launcher Version"/>
+  <img src="https://img.shields.io/badge/API-v1.4.11--beta-orange" alt="API Version"/>
+  <img src="https://img.shields.io/badge/CLI-v4.0.31--beta-orange" alt="CLI Version"/>
+  <img src="https://img.shields.io/badge/WEB-v2.0.32--beta-orange" alt="WEB Version"/>
+  <img src="https://img.shields.io/badge/Launcher-v3.3.20-orange" alt="Launcher Version"/>
 </p>
 
 <p align="center">
@@ -233,16 +233,14 @@ LLM provider's API key in **Provider/F7**. See the
 
 | Component | Version | Highlights |
 | --- | --- | --- |
-| [CLI](https://github.com/BugTraceAI/BugTraceAI-CLI/releases/tag/v4.0.21-beta) | **4.0.21-beta** | Textual TUI, Provider/Auth setup, automatic installer prerequisites, TUI/API profiles, optional global `btai` |
-| [Launcher](https://github.com/BugTraceAI/BugTraceAI-Launcher/releases/tag/v3.0.9) | **3.0.9** | Local/Docker CLI setup, saved profiles, global command and deployment management |
-| [WEB](https://github.com/BugTraceAI/BugTraceAI-WEB) | **2.0.24-beta** | Scan dashboard, specialist graph, report explorer, AIrepeater and Model Lab |
-| [API](https://github.com/BugTraceAI/BugTraceAI-API) | **1.4.4-beta** | Standalone API security testing over REST and MCP |
+| [CLI](https://github.com/BugTraceAI/BugTraceAI-CLI/releases/tag/v4.0.31-beta) | **4.0.31-beta** | Terminal TUI, web-scanning API/MCP, provider/auth setup and optional global `btai` |
+| [WEB](https://github.com/BugTraceAI/BugTraceAI-WEB/releases/tag/v2.0.32-beta) | **2.0.32-beta** | Browser workspace for both scanning engines and reports |
+| [API](https://github.com/BugTraceAI/BugTraceAI-API/releases/tag/v1.4.11-beta) | **1.4.11-beta** | Independent API-target engine with REST and MCP |
+| [Launcher](https://github.com/BugTraceAI/BugTraceAI-Launcher/releases/tag/v3.3.20) | **3.3.20** | Universal visual installer, saved profiles and compatible updates |
 
-For installation with your own coding agent, copy the
-[CLI installation prompt](https://github.com/BugTraceAI/BugTraceAI-CLI#install-with-your-ai-coding-agent).
-It defaults to local TUI with `btai` and can also select API/MCP or Docker.
-
----
+Validated together on Ubuntu 24.04 amd64: fresh Docker/native CLI installation,
+updates preserving configuration/data, and complete BugStore scans. macOS and
+ARM runtime validation are not included in this release.
 
 ## Demo Report
 
@@ -280,7 +278,7 @@ This keeps external automation, autonomous scanning, evidence-rich reporting, hu
 
 ### Choose your setup
 
-- **Terminal workspace:** Linux/macOS and Python 3.10+ for local installation;
+- **Terminal workspace:** Linux and Python 3.10+ for local installation;
   some specialist tools also use Docker when scanning.
 - **API/MCP or full WEB platform:** select the relevant profile and runtime in
   the installer. Docker deployments need Docker Engine, Compose and Git.
@@ -302,31 +300,28 @@ git clone https://github.com/BugTraceAI/BugTraceAI-Launcher.git ~/bugtraceai-lau
 ~/bugtraceai-launcher/launcher.sh
 ```
 
-The wizard selects components, runtime, provider configuration and ports. Standalone CLI setup offers TUI, API + MCP or both, followed by local Python or Docker and optional global `btai`. The optional **AI Setup & Repair Assistant** can install or repair a deployment; see the [Launcher documentation](https://github.com/BugTraceAI/BugTraceAI-Launcher) for its current provider settings.
+From this ecosystem checkout, `./install.sh` opens the same universal menu
+with `full` suggested. Component `./install.sh` entry points suggest their
+own product in that menu; they do not deploy a profile without your review.
 
-### Deployment Modes
+Choose the workspace and runtime once. The Launcher resolves the required
+engines, offers optional WEB toolboxes, configures ports/provider credentials
+and checks the selected services. Terminal profiles can register a global
+`btai` command. The AI Setup & Repair Assistant is available from the menu.
 
-| Mode               | What You Get             | Use Case                         |
-| ------------------ | ------------------------ | -------------------------------- |
-| **Full Platform**  | WEB + CLI API + BugTraceAI-API; optional TUI | Complete scanning + dashboard |
-| **Standalone CLI** | TUI, API + MCP or both; local/Docker | Terminal scans or automation |
-| **Standalone WEB** | WEB dashboard + BugTraceAI-API | API testing and report management |
+| Profile | Installed products | Runtime |
+| --- | --- | --- |
+| `terminal` | CLI terminal TUI | Local Python or Docker |
+| `web` | WEB + CLI web-scanning API/MCP + API-target engine | Docker |
+| `full` | WEB + both scanning engines + CLI terminal TUI | Docker |
+| `server` | CLI web-scanning API/MCP | Local Python or Docker |
+| `terminal-server` | CLI TUI + web-scanning API/MCP, without WEB | Local Python or Docker |
+| `api` | Independent BugTraceAI-API target engine, REST + MCP | Docker |
 
-### Alternative: Individual Components
-
-```bash
-# CLI only
-git clone https://github.com/BugTraceAI/BugTraceAI-CLI.git
-cd BugTraceAI-CLI
-./install.sh --interface tui --runtime local --global yes
-./bugtraceai-cli
-# After opening a new terminal: btai
-
-# WEB only
-git clone https://github.com/BugTraceAI/BugTraceAI-WEB.git
-cd BugTraceAI-WEB
-docker compose up
-```
+For direct component installation, use each checkout's explicit
+`scripts/install-runtime.sh` backend or the documented Python/Compose commands. Follow
+[INSTALLATION.md](INSTALLATION.md); a bare WEB `docker compose up` is not a
+complete configuration step.
 
 ---
 
