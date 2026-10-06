@@ -317,12 +317,30 @@ Terminal profiles can register a global `btai` command.
 If you use Codex, Claude Code, Cursor or another local terminal agent, give it
 this prompt:
 
-> Install BugTraceAI using the official universal Launcher. Read this README
-> and the Launcher README, run the official install command above in my
-> terminal, and let me interact with the TUI. I will enter and verify the
-> provider key locally, choose Wizard or AI, and select the modules and runtime.
-> Do not ask for secrets in chat or start a scan. Verify the selected
-> installation and report any checks that could not be completed.
+```text
+Help me install BugTraceAI using the official universal Launcher.
+
+First read:
+https://github.com/BugTraceAI/BugTraceAI#readme
+https://github.com/BugTraceAI/BugTraceAI-Launcher#readme
+
+Follow those instructions using the official installer:
+https://raw.githubusercontent.com/BugTraceAI/BugTraceAI-Launcher/main/install.sh
+
+Ask which independent modules I want: BugTraceAI-WEB, BugTraceAI-CLI,
+BugTraceAI-API, or a combination. Install only the modules I choose. Let me
+choose Wizard or the built-in AI installer when my selection is supported;
+use Wizard for other combinations.
+
+Preserve any existing installation, configuration and data. Run the
+Launcher in my local interactive terminal. I will enter and verify the
+provider API key there, choose ports and review the plan before installation.
+Keep credentials out of chat and logs. Do not start a scan.
+
+Verify the selected services on their configured ports. If I enable the
+global btai command, check it from a fresh shell. Report the installation
+location, launch commands, checks completed and any checks still pending.
+```
 
 | Profile | Installed products | Runtime |
 | --- | --- | --- |
