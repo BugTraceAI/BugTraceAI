@@ -4,7 +4,7 @@ title: "Provider Selection"
 
 # Provider Selection
 
-BugTraceAI supports three first-class LLM providers. A scan runs against **one** provider for its entire duration -- providers are never mixed mid-scan. You select the active provider up front, and each scanner slot draws its model from that provider's preset (with optional per-slot overrides).
+BugTraceAI supports four first-class LLM providers. A scan runs against **one** provider for its entire duration -- providers are never mixed mid-scan. You select the active provider up front, and each scanner slot draws its model from that provider's preset (with optional per-slot overrides).
 
 ---
 
@@ -15,6 +15,7 @@ BugTraceAI supports three first-class LLM providers. A scan runs against **one**
 | **OpenRouter** | OpenAI-compatible `/chat/completions` | `OPENROUTER_API_KEY` | Default and recommended. One key, 200+ models across many upstream providers -- pick the best model per task |
 | **Anthropic (direct)** | Anthropic Messages API | `ANTHROPIC_API_KEY` | Direct Claude API via `x-api-key`. Single-provider option (CLI 3.7.5 / WEB 1.5.33) |
 | **Z.ai** | OpenAI-compatible `/chat/completions` | `GLM_API_KEY` | Direct Z.ai API using the GLM model family. Single-provider option |
+| **AWS Bedrock** | boto3 Converse | `AWS_BEARER_TOKEN_BEDROCK` (+ optional AWS creds) | Serverless + cross-region inference profiles; CLI-side, server-tested |
 
 Each provider ships as a **preset**: selecting it auto-configures the model for every scanner slot. You can still override individual slot models afterward.
 
@@ -58,6 +59,30 @@ GLM_API_KEY="..."
 
 ---
 
+## AWS Bedrock
+
+AWS Bedrock is a first-class provider reached through **boto3** (`bedrock-runtime`) using the unified **Converse** API rather than a plain HTTP endpoint. It supports Bedrock serverless models and **cross-region inference profiles** (model IDs of the form `us.anthropic.claude-...`), which is the form the Bedrock preset ships with. Selecting the `bedrock` preset routes generation, threaded generation, and vision through `converse`, running the synchronous boto3 call in a thread so failover, circuit-breaker, telemetry, and audit-log behaviour are preserved.
+
+Because boto3 constructs the endpoint from the AWS region, Bedrock has no base URL. You set a region instead (default `us-east-1`).
+
+### Authentication
+
+Bedrock has two auth paths:
+
+- **Primary — Bedrock API key (bearer token).** Set `AWS_BEARER_TOKEN_BEDROCK`. This is the method requested for this provider and reuses the one-key-per-provider plumbing. boto3 auto-detects the bearer token with no extra client configuration.
+- **Secondary — AWS default credential chain (optional).** If no bearer token is set, boto3 falls back to its standard credential chain (environment access key/secret, `AWS_PROFILE`, shared config, or a container/IMDS IAM role). The adapter writes no credential code; it only chooses the region.
+
+AWS credentials live on the **CLI host** and are never entered in the browser. Bedrock is server-side only: the WEB Provider tab sends the bearer token (and region) once over the CLI transport to be stored CLI-side, and AWS secret access keys are never sent to or stored in the browser.
+
+```
+AWS_BEARER_TOKEN_BEDROCK="ABSKQmVk..."
+BEDROCK_REGION="us-east-1"
+```
+
+See [Configuration](/configuration) for the full environment-variable reference.
+
+---
+
 ## Selecting a Provider
 
 ### In BugTraceAI-WEB
@@ -76,11 +101,11 @@ The active provider is set in the `[PROVIDER]` section of `bugtraceaicli.conf`:
 
 ```ini
 [PROVIDER]
-# openrouter (recommended) | zai | anthropic
+# openrouter (recommended) | zai | anthropic | bedrock
 ACTIVE = openrouter
 ```
 
-Changing the provider auto-configures all slot models from that provider's preset. Provider API keys are read from the environment (`.env`): `OPENROUTER_API_KEY`, `GLM_API_KEY`, or `ANTHROPIC_API_KEY`.
+Changing the provider auto-configures all slot models from that provider's preset. Provider API keys are read from the environment (`.env`): `OPENROUTER_API_KEY`, `GLM_API_KEY`, `ANTHROPIC_API_KEY`, or `AWS_BEARER_TOKEN_BEDROCK` (with the optional `BEDROCK_REGION`).
 
 ---
 
