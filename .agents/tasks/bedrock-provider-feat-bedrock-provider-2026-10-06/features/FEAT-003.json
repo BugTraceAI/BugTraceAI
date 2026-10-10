@@ -1,0 +1,23 @@
+{
+  "id": "FEAT-003",
+  "type": "docs",
+  "description": "Documentation: document AWS Bedrock across the three doc pages in the ROOT repo (Documentation/src/content/docs). Independent of FEAT-001/FEAT-002 at the repo level; describes the user-facing contract they implement. All work is in the ROOT repo worktree on branch feat/bedrock-provider.",
+  "status": "completed",
+  "steps": [
+    "Read context.json and design.md FIRST (Documentation section). All three files are in the ROOT repo worktree at Documentation/src/content/docs (absolute paths). Preserve each file's existing frontmatter (--- title --- block).",
+    "provider-selection.md: add an 'AWS Bedrock' section and a table row 'AWS Bedrock | boto3 Converse | AWS_BEARER_TOKEN_BEDROCK (+ optional AWS creds) | Serverless + cross-region inference profiles; CLI-side, server-tested'. Before editing the 'supports three first-class providers' prose, confirm the current provider count from bugtrace/data/providers/ and update the sentence to match.",
+    "configuration.md: document AWS_BEARER_TOKEN_BEDROCK, BEDROCK_REGION, the primary (bearer token) vs secondary (AWS default credential chain) auth paths, and that AWS credentials live on the CLI host and are never entered in the browser.",
+    "api-reference.md: note that GET /api/providers now lists 'bedrock', that PUT /api/provider and POST /api/provider/test accept an optional 'region' field, and that the Bedrock test runs a boto3 converse call server-side.",
+    "Run the docs verification below; commit locally on feat/bedrock-provider in the ROOT repo worktree (conventional commit, e.g. 'docs: document AWS Bedrock provider'). Never push."
+  ],
+  "acceptance_criteria": [
+    "grep -l 'AWS Bedrock' Documentation/src/content/docs/provider-selection.md succeeds; the file keeps its frontmatter and a valid table.",
+    "grep -lE 'AWS_BEARER_TOKEN_BEDROCK|BEDROCK_REGION' Documentation/src/content/docs/configuration.md succeeds.",
+    "grep -l 'region' Documentation/src/content/docs/api-reference.md shows the new optional-region note for the provider endpoints."
+  ],
+  "verification": [
+    "cd Documentation/src/content/docs && grep -l 'AWS Bedrock' provider-selection.md && grep -lE 'AWS_BEARER_TOKEN_BEDROCK|BEDROCK_REGION' configuration.md && grep -l 'bedrock' api-reference.md"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

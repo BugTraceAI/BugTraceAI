@@ -163,8 +163,9 @@ BugTraceAI ships provider presets that bundle a base URL, wire format, key, and 
 | `openrouter` / `openrouter-v2` | OpenAI-compatible | `OPENROUTER_API_KEY` (`sk-or-v1-...`) | Default; `openrouter-v2` is the recommended curated pack |
 | `anthropic` | `anthropic` (Messages API, `x-api-key`) | `ANTHROPIC_API_KEY` (`sk-ant-...`) | Single-provider Claude option, no OpenRouter dependency |
 | `zai` | OpenAI-compatible | `GLM_API_KEY` | Z.ai / GLM models |
+| `bedrock` | `bedrock` (boto3 Converse API) | `AWS_BEARER_TOKEN_BEDROCK` (+ optional AWS creds) | AWS Bedrock serverless + cross-region inference profiles; region via `BEDROCK_REGION`, server-side only |
 
-The `api_format` preset field decouples the wire format from the provider. Selecting the `anthropic` preset routes generation, threaded generation, vision and connectivity checks to the Anthropic Messages API (`x-api-key`) instead of the OpenAI-style chat-completions format. Existing OpenRouter/Z.ai behaviour is unchanged.
+The `api_format` preset field decouples the wire format from the provider. Selecting the `anthropic` preset routes generation, threaded generation, vision and connectivity checks to the Anthropic Messages API (`x-api-key`) instead of the OpenAI-style chat-completions format. Selecting the `bedrock` preset routes those same paths through the boto3 Bedrock Converse API (see [Provider Selection](/provider-selection)). Existing OpenRouter/Z.ai behaviour is unchanged.
 
 ---
 
@@ -237,6 +238,19 @@ Content-Type: application/json
 }
 ```
 
+### AWS Bedrock Credentials
+
+AWS Bedrock has two authentication paths. The **primary** path is a Bedrock API key (bearer token) set in `AWS_BEARER_TOKEN_BEDROCK`; boto3 auto-detects it with no extra client configuration. The **secondary** path is the standard AWS default credential chain (environment access key/secret, `AWS_PROFILE`, shared config, or a container/IMDS IAM role), used automatically when no bearer token is present.
+
+```bash
+export AWS_BEARER_TOKEN_BEDROCK="ABSKQmVk..."
+export BEDROCK_REGION="us-east-1"
+```
+
+`BEDROCK_REGION` selects the AWS region used to reach Bedrock Runtime (default `us-east-1`); it is used for both serverless models and cross-region inference profiles. If `BEDROCK_REGION` is explicitly emptied, boto3 falls back to `AWS_REGION` / `AWS_DEFAULT_REGION`.
+
+AWS credentials always live on the **CLI host** and are never entered in the browser. AWS secret access keys are never sent to or stored in the browser; the secondary credential path (profile / IAM role / host environment) is CLI-host-only. See [Provider Selection](/provider-selection) for the full Bedrock auth model.
+
 ### Key Masking
 
 When retrieving configuration via `GET /api/config`, API keys are **masked** for security:
@@ -258,6 +272,8 @@ Configuration can also be set via environment variables. Environment variables t
 | Variable | Description |
 |----------|-------------|
 | `OPENROUTER_API_KEY` | OpenRouter API key for AI models |
+| `AWS_BEARER_TOKEN_BEDROCK` | AWS Bedrock API key (bearer token); primary Bedrock auth. Optional when the AWS default credential chain is used instead |
+| `BEDROCK_REGION` | AWS region for Bedrock Runtime (default `us-east-1`); used for serverless and cross-region inference profiles |
 | `BUGTRACE_HOST` | FastAPI bind address (default: `0.0.0.0`) |
 | `BUGTRACE_PORT` | FastAPI listener for direct CLI deployments; Launcher Compose deployments use the selected `CLI_PORT` |
 | `BUGTRACE_DB_PATH` | Path to SQLite database file |

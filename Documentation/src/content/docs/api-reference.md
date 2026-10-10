@@ -298,12 +298,25 @@ Manage the active LLM provider/preset used by the CLI.
 
 | Endpoint | Purpose |
 |----------|---------|
-| `GET /api/providers` | List available provider presets (e.g. `openrouter`, `openrouter-v2`, `anthropic`, `zai`) |
+| `GET /api/providers` | List available provider presets (e.g. `openrouter`, `openrouter-v2`, `anthropic`, `zai`, `bedrock`) |
 | `GET /api/provider` | Get the currently active provider |
 | `GET /api/providers/{id}` | Get a specific provider preset |
-| `PUT /api/provider` | Switch the active provider |
-| `POST /api/provider/test` | Test connectivity / key for a provider |
+| `PUT /api/provider` | Switch the active provider (accepts an optional `region` field, used by `bedrock`) |
+| `POST /api/provider/test` | Test connectivity / key for a provider (accepts an optional `region` field, used by `bedrock`) |
 | `PATCH /api/provider/models` | Update the per-task model assignment |
+
+`GET /api/providers` now lists `bedrock` alongside the other presets. For `bedrock`, both `PUT /api/provider` and `POST /api/provider/test` accept an optional `region` field (defaults to the configured `BEDROCK_REGION`). The Bedrock connectivity test runs a boto3 `converse` call **server-side** on the CLI host, so AWS credentials never leave the host.
+
+```http
+POST /api/provider/test
+Content-Type: application/json
+
+{
+  "provider": "bedrock",
+  "api_key": "ABSKQmVk...",
+  "region": "us-east-1"
+}
+```
 
 ---
 
