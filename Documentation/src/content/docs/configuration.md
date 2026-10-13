@@ -356,3 +356,22 @@ python -m bugtrace scan url https://target.example --auth-config auth-config.yam
 **Parent**: [BugTraceAI-CLI](/bugtraceai-cli)
 
 **See also**: [API Reference](/api-reference) | [Scanning Pipeline](/scanning-pipeline) | [Report Generation](/report-generation)
+
+## Amazon Bedrock runtime (beta)
+
+Select `ACTIVE = bedrock` in `[PROVIDER]` or use CLI Provider/F7. Bedrock uses
+boto3 1.40.0 or newer. The CLI runtime's AWS role/profile can authenticate without
+an API key; `AWS_BEARER_TOKEN_BEDROCK` is an optional bearer credential.
+`BEDROCK_REGION` overrides `AWS_REGION`, `AWS_DEFAULT_REGION` and the SDK profile
+region. Blank/unset uses the runtime's AWS configuration.
+
+The preset supplies model defaults. Explicit `[LLM_MODELS]` assignments override
+them, so remove old model assignments from another provider before switching
+permanently, or replace them with AWS model/profile IDs valid for your account.
+External reporting fallback is blocked unless
+`BEDROCK_ALLOW_EXTERNAL_REPORTING_FAILOVER=true` is explicitly enabled.
+
+AWS account validation remains pending. See the
+[Bedrock setup guide](https://github.com/BugTraceAI/BugTraceAI-CLI/blob/main/BEDROCK.md)
+for container credential sources and account checks. This configures the CLI,
+not the separate API-target engine or WEB's own assistant/ModelLab.
