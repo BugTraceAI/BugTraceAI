@@ -1,57 +1,41 @@
 # Contributing to BugTraceAI
 
-Thanks for your interest in contributing to BugTraceAI! This document provides guidelines for contributing to the project.
+BugTraceAI is a modular web pentesting suite with independently deployable products, published models and integrations. Contributions to code, documentation, reproducible bug reports and usability are welcome.
 
-## Project Structure
+## Choose the right repository
 
-BugTraceAI is organized as a monorepo. The three primary components are the CLI, WEB, and Launcher; a dedicated practice target and an MCP agent framework round out the ecosystem:
+| Area | Repository |
+| --- | --- |
+| Suite documentation and architecture | [BugTraceAI](https://github.com/BugTraceAI/BugTraceAI) |
+| Web-scanning engine, terminal workspace, REST and MCP | [BugTraceAI-CLI](https://github.com/BugTraceAI/BugTraceAI-CLI) |
+| Browser workspace, analyst tools, AIrepeater and ModelLab | [BugTraceAI-WEB](https://github.com/BugTraceAI/BugTraceAI-WEB) |
+| Independent API-target engine | [BugTraceAI-API](https://github.com/BugTraceAI/BugTraceAI-API) |
+| Installation, updates and service management | [BugTraceAI-Launcher](https://github.com/BugTraceAI/BugTraceAI-Launcher) |
+| Practice application and planted challenges | [BugStore](https://github.com/BugTraceAI/BugStore) |
+| ReconFTW MCP integration | [reconftw-mcp](https://github.com/BugTraceAI/reconftw-mcp) |
 
-- **BugTraceAI-CLI** — Core scanning engine and API server
-- **BugTraceAI-WEB** — React web dashboard
-- **BugTraceAI-Launcher** — Docker-based installer
-- **reconftw-mcp** — MCP agent framework with integrated Kali Linux and ReconFTW agents
-- **BugStore** — Deliberately vulnerable practice target used in demos and testing
+For feedback on a published checkpoint, use the corresponding model's Community tab in the [BugTraceAI model catalog](https://huggingface.co/BugTraceAI).
 
-## Getting Started
+## Make a contribution
 
-1. Fork the relevant repository
-2. Clone your fork locally
-3. Create a feature branch: `git checkout -b feat/your-feature`
-4. Make your changes
-5. Test thoroughly
-6. Submit a pull request
+1. Read the selected repository's README and development instructions.
+2. For a substantial feature or architecture change, discuss the proposal in an issue before implementation.
+3. Fork that repository and create a branch for a focused change.
+4. Update the relevant documentation and add or run checks appropriate to the change.
+5. Open a pull request describing the problem, the resulting behavior and the verification performed.
 
-## Development Setup
+Keep code, comments, commit messages and public documentation in English. Follow the conventions of the repository you are changing.
 
-```bash
-# Clone with submodules
-git clone --recursive https://github.com/BugTraceAI/BugTraceAI.git
-cd BugTraceAI
+## Report a bug or suggest a feature
 
-# Start with Docker (recommended)
-cd BugTraceAI-Launcher
-./launcher.sh
-```
+Use the relevant repository's issue templates. Include the affected component and version, setup method, reproduction steps, and expected and observed behavior. Use a practice target for examples and redact credentials and sensitive target data.
 
-## Pull Request Guidelines
+For installation and usage questions, see [SUPPORT.md](https://github.com/BugTraceAI/.github/blob/main/SUPPORT.md).
 
-- Keep PRs focused on a single change
-- Write clear commit messages following conventional commits (`feat:`, `fix:`, `docs:`, etc.)
-- Include tests for new functionality
-- Update documentation if needed
+## Security reports
 
-## Reporting Bugs
-
-Use [GitHub Issues](https://github.com/BugTraceAI/BugTraceAI/issues) to report bugs. Include:
-
-- Steps to reproduce
-- Expected vs actual behavior
-- Environment details (OS, Docker version, browser)
-
-## Security Vulnerabilities
-
-**Do not open public issues for security vulnerabilities.** Instead, please refer to our [Security Policy](https://github.com/BugTraceAI/BugTraceAI-CLI/security/policy).
+Report vulnerabilities in BugTraceAI privately according to the repository's security policy or the [organization reporting guide](https://github.com/BugTraceAI/.github/blob/main/SECURITY.md).
 
 ## License
 
-By contributing, you agree that your contributions will be licensed under the [Apache License, Version 2.0](LICENSE).
+Contributions follow the license of the repository receiving them. Published models have their own model cards and license terms; consult those cards before contributing or redistributing model artifacts.

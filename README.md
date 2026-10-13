@@ -5,51 +5,46 @@
 <h1 align="center">BugTraceAI</h1>
 
 <p align="center">
-  Autonomous, self-hosted security testing for authorized bug bounty and pentesting
+  <strong>Open-source, self-hosted web pentesting suite.</strong><br/>
+  Agentic scanning, analyst tools, API testing and specialized security models.
 </p>
 
-<p align="center">
-  <a href="https://bugtraceai.com"><img src="https://img.shields.io/badge/Website-bugtraceai.com-blue?logo=google-chrome&logoColor=white" alt="Website"/></a>
-  <a href="https://github.com/BugTraceAI/BugTraceAI/wiki"><img src="https://img.shields.io/badge/Wiki-Documentation-000?logo=wikipedia&logoColor=white" alt="Wiki"/></a>
-  <a href="https://deepwiki.com/BugTraceAI/BugTraceAI"><img src="https://img.shields.io/badge/DeepWiki-AI_Docs-5A5AFF?logo=bookstack&logoColor=white" alt="DeepWiki"/></a>
-  <a href="https://demo.bugtraceai.com/bugtraceai"><img src="https://img.shields.io/badge/Live_Demo-Try_It-2EAD33?logo=google-chrome&logoColor=white" alt="Live Demo"/></a>
-  <a href="https://discord.gg/5HjujkScC"><img src="https://img.shields.io/discord/5HjujkScC?label=Discord&logo=discord&logoColor=white&color=5865F2" alt="Discord"/></a>
-  <a href="https://github.com/BugTraceAI/BugTraceAI/releases/download/demo-report/BugTraceAI-Demo-Report.zip"><img src="https://img.shields.io/badge/Demo_Report-Download-red?logo=files&logoColor=white" alt="Demo Report"/></a>
-  <img src="https://img.shields.io/badge/License-Apache--2.0-blue.svg" alt="License"/>
-  <img src="https://img.shields.io/badge/API-v1.4.11--beta-orange" alt="API Version"/>
-  <img src="https://img.shields.io/badge/CLI-v4.0.34--beta-orange" alt="CLI Version"/>
-  <img src="https://img.shields.io/badge/WEB-v2.0.37--beta-orange" alt="WEB Version"/>
-  <img src="https://img.shields.io/badge/Launcher-v3.3.26-orange" alt="Launcher Version"/>
-</p>
+BugTraceAI brings web and API testing engines, an analyst workspace, published model checkpoints and MCP integrations into one modular suite. Run the components you need on your own infrastructure and inspect the evidence behind each finding.
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python_3.10+-3776AB?logo=python&logoColor=white" alt="Python"/>
-  <img src="https://img.shields.io/badge/React_18-61DAFB?logo=react&logoColor=black" alt="React"/>
-  <img src="https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white" alt="FastAPI"/>
-  <img src="https://img.shields.io/badge/Go_Fuzzers-00ADD8?logo=go&logoColor=white" alt="Go"/>
-  <img src="https://img.shields.io/badge/Playwright-2EAD33?logo=playwright&logoColor=white" alt="Playwright"/>
-  <img src="https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white" alt="Docker"/>
-</p>
-
-<p align="center">
-  <a href="https://www.youtube.com/watch?v=FCoQNgO8hmM"><img src="https://img.shields.io/badge/Watch_the_demo-YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Watch the BugTraceAI demo on YouTube"/></a>
-  <a href="https://demo.bugtraceai.com/bugtraceai"><img src="https://img.shields.io/badge/Explore_a_real_scan-Live_Demo-2EAD33?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Explore the live demo"/></a>
-  <a href="https://github.com/BugTraceAI/BugStore"><img src="https://img.shields.io/badge/Practice_on-BugStore-FF7F50?style=for-the-badge&logo=fastapi&logoColor=white" alt="Explore the BugStore practice target"/></a>
-  <a href="https://github.com/BugTraceAI/BugTraceAI/stargazers"><img src="https://img.shields.io/badge/Support_the_project-Star_on_GitHub-181717?style=for-the-badge&logo=github" alt="Star BugTraceAI on GitHub"/></a>
-  <a href="https://discord.gg/5HjujkScC"><img src="https://img.shields.io/badge/Join_the_community-Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Join the BugTraceAI Discord"/></a>
+  <a href="#quick-start">Install with Launcher</a> ·
+  <a href="#documentation">Read the docs</a> ·
+  <a href="https://demo.bugtraceai.com/bugtraceai">Explore a sample report</a> ·
+  <a href="https://huggingface.co/BugTraceAI">Browse BugTraceAI models</a> ·
+  <a href="https://discord.gg/5HjujkScC">Join the community</a>
 </p>
 
 <p align="center">
   <a href="https://www.youtube.com/watch?v=FCoQNgO8hmM">
-    <img src="video_dc34.png" alt="Watch the BugTraceAI DEF CON 34 product demo on YouTube" width="720"/>
+    <img src="video_dc34.png" alt="Watch the public BugTraceAI DEF CON 34 product demo on YouTube" width="720"/>
   </a>
 </p>
+
+## Choose Your Workflow
+
+| I want to… | Start with |
+| --- | --- |
+| Run an agentic web assessment in a terminal, or automate it through REST/MCP | [BugTraceAI-CLI](https://github.com/BugTraceAI/BugTraceAI-CLI) |
+| Investigate HTTP traffic, use analyst tools, follow scans and review reports in a browser | [BugTraceAI-WEB](https://github.com/BugTraceAI/BugTraceAI-WEB) |
+| Assess an API target with contract-aware discovery and evidence review | [BugTraceAI-API](https://github.com/BugTraceAI/BugTraceAI-API) |
+| Select modules, configure services and install the suite | [BugTraceAI-Launcher](https://github.com/BugTraceAI/BugTraceAI-Launcher) |
+| Explore the published BugTraceAI model checkpoints | [BugTraceAI Models](https://huggingface.co/BugTraceAI) |
+| Connect additional security tools through MCP | [ReconFTW MCP](https://github.com/BugTraceAI/reconftw-mcp) |
+| Practice against a deliberately vulnerable target | [BugStore](https://github.com/BugTraceAI/BugStore) |
+
+WEB can connect to the CLI engine for web scans and the API engine for API-target scans. The Launcher lets you choose WEB, CLI, API or a combination.
 
 ## Jump To
 
 - [Proven in the Security Community](#proven-in-the-security-community)
 - [What is BugTraceAI?](#what-is-bugtraceai)
 - [The Ecosystem](#the-ecosystem)
+- [Models and ModelLab](#models-and-modellab)
 - [Architecture](#architecture)
 - [Scanning Pipeline](#scanning-pipeline)
 - [Current Public Releases](#current-public-releases)
@@ -119,7 +114,7 @@ This platform is provided for **educational and authorized security testing purp
 
 ## What is BugTraceAI?
 
-**BugTraceAI** is an **opensource, self-hosted framework for bug bounty hunting and penetration testing**. It combines autonomous AI agents with real security tools to discover, analyze, exploit, and validate vulnerabilities independently.
+**BugTraceAI** is an **open-source, self-hosted web pentesting suite** for authorized security research. It combines agentic scanning, an analyst workspace, an independent API-testing engine, published model checkpoints and extensible tools. Its scanning engines connect AI investigation with security checks, validation and reporting.
 
 Its agents plan and prioritize checks, route work to specialists and collect evidence through the scanning tools and validation stages.
 
@@ -137,54 +132,95 @@ Its agents plan and prioritize checks, route work to specialists and collect evi
 
 ## The Ecosystem
 
-BugTraceAI is composed of **4 independent but interconnected components**, plus a dedicated practice target:
+The suite includes **four independently deployable product components**, published model checkpoints, MCP integrations and a dedicated practice target:
 
 <table>
   <tr>
     <th>Component</th>
     <th>Description</th>
-    <th>Tech Stack</th>
+    
     <th>Repository</th>
   </tr>
   <tr>
     <td><strong>BugTraceAI-API</strong></td>
     <td>Standalone evidence-first API security testing service over REST and MCP</td>
-    <td>Python + FastAPI + Docker</td>
+    
     <td><a href="https://github.com/BugTraceAI/BugTraceAI-API">BugTraceAI-API</a></td>
   </tr>
   <tr>
     <td><strong>BugTraceAI-CLI</strong></td>
     <td>Autonomous security scanner with a Textual terminal workspace, REST API and MCP. Multi-agent pipeline with specialist tools and browser validation</td>
-    <td>Python + Textual + FastAPI + Go + Playwright</td>
+    
     <td><a href="https://github.com/BugTraceAI/BugTraceAI-CLI">BugTraceAI-CLI</a></td>
   </tr>
   <tr>
     <td><strong>BugTraceAI-WEB</strong></td>
     <td>Web dashboard with 20+ AI security tools, real-time scan monitoring, and CLI control center</td>
-    <td>React + Express + PostgreSQL</td>
+    
     <td><a href="https://github.com/BugTraceAI/BugTraceAI-WEB">BugTraceAI-WEB</a></td>
   </tr>
   <tr>
     <td><strong>BugTraceAI-Launcher</strong></td>
     <td>Guided deployment with CLI TUI/API profiles, local or Docker runtime, optional global btai, service management and an optional <strong>AI Setup & Repair Assistant</strong></td>
-    <td>Bash + Python + Docker Compose</td>
+    
     <td><a href="https://github.com/BugTraceAI/BugTraceAI-Launcher">BugTraceAI-Launcher</a></td>
   </tr>
   <tr>
     <td><strong>MCP Ecosystem</strong></td>
     <td>Extensible agent framework using the Model Context Protocol. Includes integrated Kali Linux and ReconFTW agents</td>
-    <td>MCP + Docker + Python</td>
+    
     <td><a href="https://github.com/BugTraceAI/reconftw-mcp">reconftw-mcp</a></td>
   </tr>
   <tr>
     <td><strong>BugStore</strong></td>
     <td>Deliberately vulnerable practice target used in demos and walkthroughs. Full-featured shop riddled with 32 planted OWASP vulnerabilities</td>
-    <td>Python + FastAPI + SQLite</td>
+    
     <td><a href="https://github.com/BugTraceAI/BugStore">BugTraceAI/BugStore</a></td>
+  </tr>
+  <tr>
+    <td><strong>BugTraceAI Models</strong></td>
+    <td>Published model checkpoints for bug bounty and web pentesting workflows</td>
+    
+    <td><a href="https://huggingface.co/BugTraceAI">BugTraceAI Models</a></td>
   </tr>
 </table>
 
 Use the CLI TUI locally, its API/MCP for automation, or the Launcher to install independent products or a combination. The WEB connects to the appropriate scanning backend for each engine; API scans use BugTraceAI-API and web scans use the CLI API.
+
+---
+
+## Models and ModelLab
+
+The suite's model ecosystem has three parts:
+
+- **BugTraceAI Models:** published security-focused checkpoints for bug bounty and web pentesting workflows. See the [model catalog](https://huggingface.co/BugTraceAI) and individual model cards for requirements and usage.
+- **External providers and models:** configurable options supported by each product component. Provider support and model roles vary by module; follow its current configuration guide.
+- **ModelLab:** a benchmarking workspace in WEB for comparing selected OpenRouter models and reviewing their results and costs.
+
+Publishing a checkpoint does not imply it is the default model in every component. Check each module's documentation for supported connections and configuration.
+
+### Published model families
+
+| Family | Focus | Model cards |
+| --- | --- | --- |
+| CORE-Fast | Rapid triage and scanner-output review | [CORE-Fast](https://huggingface.co/BugTraceAI/BugTraceAI-CORE-Fast) |
+| CORE-Pro | Extended investigation, reporting and remediation support | [CORE-Pro](https://huggingface.co/BugTraceAI/BugTraceAI-CORE-Pro) |
+| CORE-Ultra | Structured PoC generation and tool-calling workflows | [Q4](https://huggingface.co/BugTraceAI/BugTraceAI-CORE-Ultra-27B-Q4) · [Q6](https://huggingface.co/BugTraceAI/BugTraceAI-CORE-Ultra-27B-Q6) |
+| Apex | Offensive security reasoning | [Q4](https://huggingface.co/BugTraceAI/BugTraceAI-Apex-G4-26B-Q4) · [F16](https://huggingface.co/BugTraceAI/BugTraceAI-Apex-G4-26B-Master-f16) |
+
+Consult each model card for serving requirements, formats, license terms and intended use.
+
+### Providers by workflow
+
+| Workflow | Provider support described by the current public product documentation |
+| --- | --- |
+| CLI web scans | OpenRouter, Anthropic and Z.ai presets; Amazon Bedrock in beta; custom/local OpenAI-compatible presets. See the [CLI configuration guide](https://github.com/BugTraceAI/BugTraceAI-CLI#configuration-and-reports) and [Bedrock guide](https://github.com/BugTraceAI/BugTraceAI-CLI/blob/main/BEDROCK.md). |
+| API-target investigation and AI review | OpenRouter, Anthropic, Z.ai and local Ollama; AI enrichment is optional. See [API providers](https://github.com/BugTraceAI/BugTraceAI-API#ai-providers). |
+| WEB analysis tools, chat and AIrepeater | OpenRouter, Anthropic and Z.ai. The provider configured for a connected CLI scan is a separate setting. See [WEB setup](https://github.com/BugTraceAI/BugTraceAI-WEB#configure-your-workspace). |
+| WEB ModelLab | OpenRouter with the module's own key. See [WEB workspace](https://github.com/BugTraceAI/BugTraceAI-WEB#workspace). |
+| Launcher AI setup and repair | OpenRouter or Anthropic. Wizard supports Z.ai setup. See the [Launcher guide](https://github.com/BugTraceAI/BugTraceAI-Launcher#readme). |
+
+Model support depends on the selected component, provider, task and configuration. Bedrock remains beta with real AWS account validation pending, as stated in its release notes.
 
 ---
 
@@ -308,9 +344,9 @@ own product in that menu; they do not deploy a profile without your review.
 
 Enter and verify a provider API key on the first screen, then choose
 **Install with Wizard** or **Install with AI**. Both stay in the TUI. Wizard
-supports every module combination. AI setup uses provider tokens and currently
-supports API-only or the full WEB + CLI + API selection, including the CLI TUI,
-with OpenRouter or Anthropic. Use Wizard for other combinations and for Z.ai.
+supports every module combination. AI setup uses OpenRouter or Anthropic provider tokens; use Wizard for Z.ai.
+See the [current Launcher guide](https://github.com/BugTraceAI/BugTraceAI-Launcher#readme)
+for supported module combinations and installation options.
 The review shows selected modules, runtime, ports and optional WEB toolboxes.
 Terminal profiles can register a global `btai` command.
 
