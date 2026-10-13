@@ -61,7 +61,7 @@ GLM_API_KEY="..."
 
 ## Amazon Bedrock (Beta)
 
-CLI 4.0.33-beta adds Bedrock Converse for text, conversation history, vision and
+CLI 4.0.34-beta adds Bedrock Converse for text, conversation history, vision and
 connectivity checks. WEB 2.0.37-beta adds the source-region control to its CLI
 Provider panel, including region-only edits and connection tests without a key.
 The CLI runtime uses its AWS role/profile credential chain, or an optional
