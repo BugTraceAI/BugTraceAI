@@ -134,56 +134,15 @@ Its agents plan and prioritize checks, route work to specialists and collect evi
 
 The suite includes **four independently deployable product components**, published model checkpoints, MCP integrations and a dedicated practice target:
 
-<table>
-  <tr>
-    <th>Component</th>
-    <th>Description</th>
-    
-    <th>Repository</th>
-  </tr>
-  <tr>
-    <td><strong>BugTraceAI-API</strong></td>
-    <td>Standalone evidence-first API security testing service over REST and MCP</td>
-    
-    <td><a href="https://github.com/BugTraceAI/BugTraceAI-API">BugTraceAI-API</a></td>
-  </tr>
-  <tr>
-    <td><strong>BugTraceAI-CLI</strong></td>
-    <td>Autonomous security scanner with a Textual terminal workspace, REST API and MCP. Multi-agent pipeline with specialist tools and browser validation</td>
-    
-    <td><a href="https://github.com/BugTraceAI/BugTraceAI-CLI">BugTraceAI-CLI</a></td>
-  </tr>
-  <tr>
-    <td><strong>BugTraceAI-WEB</strong></td>
-    <td>Web dashboard with 20+ AI security tools, real-time scan monitoring, and CLI control center</td>
-    
-    <td><a href="https://github.com/BugTraceAI/BugTraceAI-WEB">BugTraceAI-WEB</a></td>
-  </tr>
-  <tr>
-    <td><strong>BugTraceAI-Launcher</strong></td>
-    <td>Guided deployment with CLI TUI/API profiles, local or Docker runtime, optional global btai, service management and an optional <strong>AI Setup & Repair Assistant</strong></td>
-    
-    <td><a href="https://github.com/BugTraceAI/BugTraceAI-Launcher">BugTraceAI-Launcher</a></td>
-  </tr>
-  <tr>
-    <td><strong>MCP Ecosystem</strong></td>
-    <td>Extensible agent framework using the Model Context Protocol. Includes integrated Kali Linux and ReconFTW agents</td>
-    
-    <td><a href="https://github.com/BugTraceAI/reconftw-mcp">reconftw-mcp</a></td>
-  </tr>
-  <tr>
-    <td><strong>BugStore</strong></td>
-    <td>Deliberately vulnerable practice target used in demos and walkthroughs. Full-featured shop riddled with 32 planted OWASP vulnerabilities</td>
-    
-    <td><a href="https://github.com/BugTraceAI/BugStore">BugTraceAI/BugStore</a></td>
-  </tr>
-  <tr>
-    <td><strong>BugTraceAI Models</strong></td>
-    <td>Published model checkpoints for bug bounty and web pentesting workflows</td>
-    
-    <td><a href="https://huggingface.co/BugTraceAI">BugTraceAI Models</a></td>
-  </tr>
-</table>
+| Component | Description | Repository |
+| --- | --- | --- |
+| **BugTraceAI-API** | Standalone evidence-first API security testing service over REST and MCP | [BugTraceAI-API](https://github.com/BugTraceAI/BugTraceAI-API) |
+| **BugTraceAI-CLI** | Autonomous security scanner with a Textual terminal workspace, REST API and MCP. Multi-agent pipeline with specialist tools and browser validation | [BugTraceAI-CLI](https://github.com/BugTraceAI/BugTraceAI-CLI) |
+| **BugTraceAI-WEB** | Web dashboard with 20+ AI security tools, real-time scan monitoring, and CLI control center | [BugTraceAI-WEB](https://github.com/BugTraceAI/BugTraceAI-WEB) |
+| **BugTraceAI-Launcher** | Guided deployment with CLI TUI/API profiles, local or Docker runtime, optional global btai, service management and an optional AI Setup & Repair Assistant | [BugTraceAI-Launcher](https://github.com/BugTraceAI/BugTraceAI-Launcher) |
+| **MCP Ecosystem** | Extensible agent framework using the Model Context Protocol. Includes integrated Kali Linux and ReconFTW agents | [reconftw-mcp](https://github.com/BugTraceAI/reconftw-mcp) |
+| **BugStore** | Deliberately vulnerable practice target used in demos and walkthroughs. Full-featured shop riddled with 32 planted OWASP vulnerabilities | [BugTraceAI/BugStore](https://github.com/BugTraceAI/BugStore) |
+| **BugTraceAI Models** | Published model checkpoints for bug bounty and web pentesting workflows | [BugTraceAI Models](https://huggingface.co/BugTraceAI) |
 
 Use the CLI TUI locally, its API/MCP for automation, or the Launcher to install independent products or a combination. The WEB connects to the appropriate scanning backend for each engine; API scans use BugTraceAI-API and web scans use the CLI API.
 
