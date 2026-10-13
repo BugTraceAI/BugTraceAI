@@ -4,7 +4,7 @@ title: "Provider Selection"
 
 # Provider Selection
 
-BugTraceAI supports three first-class LLM providers. A scan runs against **one** provider for its entire duration -- providers are never mixed mid-scan. You select the active provider up front, and each scanner slot draws its model from that provider's preset (with optional per-slot overrides).
+Select the CLI provider before starting a scan. Each scanner slot draws its model from the selected preset, with optional per-slot overrides. Provider failover depends on the preset and reporting policy described below.
 
 ---
 
@@ -15,6 +15,7 @@ BugTraceAI supports three first-class LLM providers. A scan runs against **one**
 | **OpenRouter** | OpenAI-compatible `/chat/completions` | `OPENROUTER_API_KEY` | Default and recommended. One key, 200+ models across many upstream providers -- pick the best model per task |
 | **Anthropic (direct)** | Anthropic Messages API | `ANTHROPIC_API_KEY` | Direct Claude API via `x-api-key`. Single-provider option (CLI 3.7.5 / WEB 1.5.33) |
 | **Z.ai** | OpenAI-compatible `/chat/completions` | `GLM_API_KEY` | Direct Z.ai API using the GLM model family. Single-provider option |
+| **Amazon Bedrock (beta)** | Bedrock Converse | AWS role/profile; optional `AWS_BEARER_TOKEN_BEDROCK` | CLI and its WEB configuration panel; real AWS validation pending |
 
 Each provider ships as a **preset**: selecting it auto-configures the model for every scanner slot. You can still override individual slot models afterward.
 
@@ -55,6 +56,32 @@ Z.ai is a direct, single-provider option using the GLM model family (for example
 ```
 GLM_API_KEY="..."
 ```
+
+---
+
+## Amazon Bedrock (Beta)
+
+CLI 4.0.33-beta adds Bedrock Converse for text, conversation history, vision and
+connectivity checks. WEB 2.0.37-beta adds the source-region control to its CLI
+Provider panel, including region-only edits and connection tests without a key.
+The CLI runtime uses its AWS role/profile credential chain, or an optional
+Bedrock API key from `AWS_BEARER_TOKEN_BEDROCK`. A host AWS profile must be made
+available explicitly when the CLI runs in a container.
+
+Set `BEDROCK_REGION` or use the runtime's AWS region/profile configuration.
+Models and inference profiles must be approved for your account; a source region
+does not guarantee processing stays in that region. The preset uses
+`amazon.nova-pro-v1:0`; explicit `[LLM_MODELS]` overrides must use AWS-compatible IDs.
+
+Bedrock has no external provider fallback by default. Reporting fallback also
+requires the explicit `BEDROCK_ALLOW_EXTERNAL_REPORTING_FAILOVER=true` opt-in
+before sending reporting data to another provider.
+
+**Validation:** offline tests cover the real minimum SDK serializer and bearer/
+SigV4 authentication with network requests intercepted. Live AWS access, model
+permissions, quotas and credential renewal remain unverified. See the
+[setup and account-validation guide](https://github.com/BugTraceAI/BugTraceAI-CLI/blob/main/BEDROCK.md).
+The separate BugTraceAI-API engine, WEB assistant and ModelLab are outside this delivery.
 
 ---
 
