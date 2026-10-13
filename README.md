@@ -17,7 +17,7 @@
   <a href="https://github.com/BugTraceAI/BugTraceAI/releases/download/demo-report/BugTraceAI-Demo-Report.zip"><img src="https://img.shields.io/badge/Demo_Report-Download-red?logo=files&logoColor=white" alt="Demo Report"/></a>
   <img src="https://img.shields.io/badge/License-Apache--2.0-blue.svg" alt="License"/>
   <img src="https://img.shields.io/badge/API-v1.4.11--beta-orange" alt="API Version"/>
-  <img src="https://img.shields.io/badge/CLI-v4.0.33--beta-orange" alt="CLI Version"/>
+  <img src="https://img.shields.io/badge/CLI-v4.0.34--beta-orange" alt="CLI Version"/>
   <img src="https://img.shields.io/badge/WEB-v2.0.37--beta-orange" alt="WEB Version"/>
   <img src="https://img.shields.io/badge/Launcher-v3.3.26-orange" alt="Launcher Version"/>
 </p>
@@ -233,10 +233,10 @@ LLM provider's API key in **Provider/F7**. See the
 
 | Component | Version | Highlights |
 | --- | --- | --- |
-| [CLI](https://github.com/BugTraceAI/BugTraceAI-CLI/releases/tag/v4.0.33-beta) | **4.0.33-beta** | Terminal TUI, web-scanning API/MCP, provider/auth setup and optional global `btai` |
+| [CLI](https://github.com/BugTraceAI/BugTraceAI-CLI/releases/tag/v4.0.34-beta) | **4.0.34-beta** | Terminal TUI, web-scanning API/MCP, provider/auth setup and optional global `btai` |
 | [WEB](https://github.com/BugTraceAI/BugTraceAI-WEB/releases/tag/v2.0.37-beta) | **2.0.37-beta** | Browser workspace for both scanning engines and reports |
 | [API](https://github.com/BugTraceAI/BugTraceAI-API/releases/tag/v1.4.11-beta) | **1.4.11-beta** | Independent API-target engine with REST and MCP |
-| [Launcher](https://github.com/BugTraceAI/BugTraceAI-Launcher/releases/tag/v3.3.33) | **3.3.33** | Universal TUI installer, independent module selection and Wizard or AI setup |
+| [Launcher](https://github.com/BugTraceAI/BugTraceAI-Launcher/releases/tag/v3.3.34) | **3.3.34** | Universal TUI installer, independent module selection and Wizard or AI setup |
 
 These releases include the Bedrock beta CLI provider and WEB region controls,
 model-override and scan safe-mode fixes, and tolerant Launcher output decoding.
