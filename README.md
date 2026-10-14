@@ -228,16 +228,19 @@ LLM provider's API key in **Provider/F7**. See the
 
 | Component | Version | Highlights |
 | --- | --- | --- |
-| [CLI](https://github.com/BugTraceAI/BugTraceAI-CLI/releases/tag/v4.0.34-beta) | **4.0.34-beta** | Terminal TUI, web-scanning API/MCP, provider/auth setup and optional global `btai` |
+| [CLI](https://github.com/BugTraceAI/BugTraceAI-CLI/releases/tag/v4.0.35-beta) | **4.0.35-beta** | Terminal TUI, web-scanning API/MCP, provider/auth setup and optional global `btai` |
 | [WEB](https://github.com/BugTraceAI/BugTraceAI-WEB/releases/tag/v2.0.37-beta) | **2.0.37-beta** | Browser workspace for both scanning engines and reports |
 | [API](https://github.com/BugTraceAI/BugTraceAI-API/releases/tag/v1.4.11-beta) | **1.4.11-beta** | Independent API-target engine with REST and MCP |
-| [Launcher](https://github.com/BugTraceAI/BugTraceAI-Launcher/releases/tag/v3.3.34) | **3.3.34** | Universal TUI installer, independent module selection and Wizard or AI setup |
+| [Launcher](https://github.com/BugTraceAI/BugTraceAI-Launcher/releases/tag/v3.3.35) | **3.3.35** | Universal TUI installer, independent module selection and Wizard or AI setup |
 
-These releases include the Bedrock beta CLI provider and WEB region controls,
-model-override and scan safe-mode fixes, and tolerant Launcher output decoding.
-The source and curated release copies passed offline checks. Real AWS account
+CLI 4.0.35-beta fixes Discovery browser lifecycle cleanup and standalone TUI
+scan controls, and requires Chromium preflight before full scans. Launcher
+3.3.35 pins this CLI release. Syntax, manifest consistency and patch whitespace
+checks completed; a live target scan and a fresh installation have not been run
+for these releases. WEB and API remain at the companion versions shown above.
+
+Bedrock beta support and WEB region controls remain available. Real AWS account
 validation remains pending; see the [Bedrock guide](https://github.com/BugTraceAI/BugTraceAI-CLI/blob/main/BEDROCK.md).
-A fresh full installation, macOS and ARM were not validated in this release review.
 
 ## Demo Report
 
