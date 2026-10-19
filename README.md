@@ -16,7 +16,7 @@ BugTraceAI brings web and API testing engines, an analyst workspace, published m
   <a href="#documentation">Read the docs</a> ·
   <a href="https://demo.bugtraceai.com/bugtraceai">Explore a sample report</a> ·
   <a href="https://huggingface.co/BugTraceAI">Browse BugTraceAI models</a> ·
-  <a href="https://discord.gg/5HjujkScC">Join the community</a>
+  <a href="https://discord.gg/g48NcdGme">Join the community</a>
 </p>
 
 <p align="center">
@@ -385,7 +385,7 @@ Full documentation is available in the **[Project Wiki](https://github.com/BugTr
 | Wiki     | [GitHub Wiki](https://github.com/BugTraceAI/BugTraceAI/wiki)     |
 | DeepWiki | [AI-powered docs](https://deepwiki.com/BugTraceAI/BugTraceAI)    |
 | Issues   | [GitHub Issues](https://github.com/BugTraceAI/BugTraceAI/issues) |
-| Discord  | [Join the BugTraceAI community](https://discord.gg/5HjujkScC)    |
+| Discord  | [Join the BugTraceAI community](https://discord.gg/g48NcdGme)    |
 | Twitter  | [@yz9yt](https://x.com/yz9yt)                                    |
 
 ### Contributing
@@ -404,6 +404,6 @@ See LICENSE file in each repository.
 
 <p align="center">
   <strong>BugTraceAI</strong> -- Build your own self-hosted pentesting platform.<br/>
-  If BugTraceAI helps your authorized security research, consider <a href="https://github.com/BugTraceAI/BugTraceAI/stargazers">giving the project a star</a> or <a href="https://discord.gg/5HjujkScC">joining the community on Discord</a>.<br/>
+  If BugTraceAI helps your authorized security research, consider <a href="https://github.com/BugTraceAI/BugTraceAI/stargazers">giving the project a star</a> or <a href="https://discord.gg/g48NcdGme">joining the community on Discord</a>.<br/>
   <a href="https://github.com/yz9yt">Albert C (@yz9yt)</a>
 </p>
